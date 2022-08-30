@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import LoginForm from "./components/UI/LoginForm/LoginForm";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [connected, setConnected] = useState(false)
+
+    async function connectWallet() {
+        try {
+            await window.solana.connect();
+            setConnected(true)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const isPhantomInstalled = window.solana && window.solana.isPhantom
+
+    if (isPhantomInstalled) {
+        if (connected) {
+            return (
+                <div>
+                    Welcome!
+                </div>
+            )
+        } else {
+            return (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <LoginForm connectPhantom={connectWallet}>
+                    </LoginForm>
+                </div>
+            )
+        }
+    } else {
+        return (
+            window.alert("Get a phantom wallet"),
+            window.location = "https://phantom.app/"
+        );
+    }
 }
 
 export default App;
