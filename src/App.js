@@ -1,45 +1,99 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import LoginForm from "./components/UI/LoginForm/LoginForm";
+import Tabs from "./components/Tabs";
+import CustomSelect from "./components/UI/select/CustomSelect";
 
 function App() {
-    const [connected, setConnected] = useState(false)
+    const [network, setNetwork] = useState('');
+    const [wallet, setWallet] = useState(NaN)
 
-    async function connectWallet() {
+    const [pubKey, setPubKey] = useState(null);
+
+
+
+    const connectWallet = async () => {
         try {
-            await window.solana.connect();
-            setConnected(true)
+            setWallet(await provider.connect())
         } catch (e) {
             console.log(e)
         }
     }
 
-    const isPhantomInstalled = window.solana && window.solana.isPhantom
+    const getProvider = () => {
+        if ('phantom' in window) {
+            const provider = window.phantom?.solana;
 
-    if (isPhantomInstalled) {
-        if (connected) {
-            return (
-                <div>
-                    Welcome!
-                </div>
-            )
+            if (provider?.isPhantom) {
+                return provider;
+            }
         } else {
-            return (
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}
-                >
-                    <LoginForm connectPhantom={connectWallet}>
-                    </LoginForm>
-                </div>
-            )
+            window.alert("Get a phantom wallet")
+            window.location = "https://phantom.app/"
         }
+    };
+
+    const provider = getProvider();
+
+    useEffect(() => {
+
+        provider.on("connect", (publicKey) => {
+            setPubKey(publicKey);
+        });
+
+        provider.on("disconnect", () => {
+            setPubKey(null);
+        });
+
+        provider.on('accountChanged', (publicKey) => {
+            setPubKey(publicKey);
+            connectWallet()
+        });
+    }, [provider]);
+
+    if (pubKey) {
+        return (
+            <div>
+                <Tabs
+                    provider={provider}
+                    network={network}
+                />
+                <div>
+                    <button
+                        style={{marginTop: 30}}
+                        onClick={async () => await provider.disconnect()}
+                    > Logout
+                    </button>
+                </div>
+            </div>
+        )
     } else {
         return (
-            window.alert("Get a phantom wallet"),
-            window.location = "https://phantom.app/"
-        );
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
+            >
+                <div>
+                    <CustomSelect
+                        value={network}
+                        onChange={net => setNetwork(net)}
+                        defaultValue="Network"
+                        options={[
+                            {value: 'devnet', name: 'Devnet'},
+                            {value: 'testnet', name: 'Testnet'},
+                            {value: 'mainnet-beta', name: 'Mainnet-beta'}
+                        ]}
+                    />
+                </div >
+                <button
+                    disabled={network === ''}
+                    onClick={connectWallet}
+                >
+                    Login with phantom
+                </button>
+            </div>
+        )
     }
 }
 

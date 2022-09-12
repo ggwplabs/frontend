@@ -8,23 +8,23 @@ const LoginForm = (props) => {
             <h1>
                 Login
             </h1>
-            <input
-                className={classes.loginInput}
-                type="text"
-                placeholder="Login"
-            />
-            <input
-                className={classes.loginInput}
-                type="text"
-                placeholder="Password"
-            />
-            <input
-                className={classes.loginInput}
-                type="text"
-                placeholder="Code fom e-mail"
-            />
+            {/*<input*/}
+            {/*    className={classes.loginInput}*/}
+            {/*    type="text"*/}
+            {/*    placeholder="Login"*/}
+            {/*/>*/}
+            {/*<input*/}
+            {/*    className={classes.loginInput}*/}
+            {/*    type="text"*/}
+            {/*    placeholder="Password"*/}
+            {/*/>*/}
+            {/*<input*/}
+            {/*    className={classes.loginInput}*/}
+            {/*    type="text"*/}
+            {/*    placeholder="Code fom e-mail"*/}
+            {/*/>*/}
             <LoginButton
-                onClick={() => props.connectPhantom()}
+                onClick={() =>props.connectPhantom()}
             >
                 Login with phantom
             </LoginButton>
