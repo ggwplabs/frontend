@@ -27,12 +27,16 @@ function App() {
                 return provider;
             }
         } else {
-            window.alert("Get a phantom wallet")
-            window.location = "https://phantom.app/"
+            // window.alert("Get a phantom wallet")
+            // window.location = "https://phantom.app/"
         }
     };
 
+
+
     const provider = getProvider();
+
+    console.log(provider)
 
     useEffect(() => {
 
@@ -49,6 +53,12 @@ function App() {
             connectWallet()
         });
     }, [provider]);
+
+    return (
+        <div>
+            TEST
+        </div>
+    )
 
     if (pubKey) {
         return (

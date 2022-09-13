@@ -7,11 +7,8 @@ const StakeForm = ({network, publikKey, GGWPWallet}) => {
     const [amount, setAmount] = useState(0)
     const [tx, seTx] = useState('')
     const [stake, isStakeLoading, stakeError] = useInteract(async () => {
-        // setTimeout(() => {
             const tx = await StakeService.stake(network, publikKey, GGWPWallet, amount)
-            seTx("test hash")
-        // }, 2000)
-
+            seTx(tx)
     })
     return (
         <div>

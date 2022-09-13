@@ -7,6 +7,7 @@ export const useInteract = (callback) => {
     const interact = async () => {
         try {
             setIsLoading(true)
+            setError('')
             await callback()
         } catch (e) {
             setError(e.message)

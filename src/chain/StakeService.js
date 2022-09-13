@@ -9,6 +9,7 @@ const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111')
 const STAKING_INFO = new PublicKey('6pxztvdsDpmAXRj6btu8piVxJmwn3Vu2eiYMn8BnuYDK')
 const ACCUMULATIVE_FUND = new PublicKey('71uJ6ncA8tgPfCiWgLL1XXRBKFAf5gKb6RyHqgRGajd5')
 const PROGRAM_ID = new PublicKey('ELRFw9awBQFuvvxnf3R1Xaihdy6ypWY7sH6nTNXh8EX1')
+
 const opts = {preflightCommitment: "processed"}
 
 export default class StakeService {
@@ -55,29 +56,25 @@ export default class StakeService {
 
     static async stake(network, userAccount, GGWPWallet, amount) {
 
-        const programID = new PublicKey('ELRFw9awBQFuvvxnf3R1Xaihdy6ypWY7sH6nTNXh8EX1')
         let connection = new Connection(
             clusterApiUrl(network),
         );
         const provider = new AnchorProvider(
             connection, window.solana, opts.preflightCommitment,
         )
-        const program = new Program(idlStaking, programID, provider)
+        const program = new Program(idlStaking, PROGRAM_ID, provider)
         const userInfo = await PublicKey.findProgramAddress(
             [
                 Buffer.from('user_info', 'utf8'),
                 STAKING_INFO.toBuffer(),
                 userAccount.toBuffer(),
             ],
-            programID
+            PROGRAM_ID
         )
 
         const stakingInfo = await program.account.stakingInfo.fetch(STAKING_INFO)
-        console.log(network)
-        console.log(userAccount)
-        console.log(GGWPWallet)
-        console.log(amount)
-        const tx = await program.rpc.stake(new BN(amount * 10**9), {
+
+        const tx = await program.rpc.stake(new BN(amount * 10 ** 9), {
             accounts: {
                 user: userAccount,
                 stakingInfo: STAKING_INFO,
@@ -85,6 +82,58 @@ export default class StakeService {
                 userGgwpWallet: new PublicKey(GGWPWallet),
                 treasury: stakingInfo.treasury,
                 accumulativeFund: ACCUMULATIVE_FUND,
+                systemProgram: SYSTEM_PROGRAM_ID,
+                tokenProgram: TOKEN_PROGRAM_ID,
+            }
+        })
+        return tx
+    }
+
+    static async withdraw(network, userAccount, GGWPWallet) {
+        let connection = new Connection(
+            clusterApiUrl(network),
+        );
+        const provider = new AnchorProvider(
+            connection, window.solana, opts.preflightCommitment,
+        )
+        const program = new Program(idlStaking, PROGRAM_ID, provider)
+
+        const stakingInfo = await program.account.stakingInfo.fetch(STAKING_INFO)
+
+        const userInfo = await PublicKey.findProgramAddress(
+            [
+                Buffer.from('user_info', 'utf8'),
+                STAKING_INFO.toBuffer(),
+                userAccount.toBuffer(),
+            ],
+            PROGRAM_ID
+        )
+        const treasuryAuth = await PublicKey.findProgramAddress(
+            [
+                Buffer.from('treasury_auth', 'utf8'),
+                STAKING_INFO.toBuffer(),
+            ],
+            PROGRAM_ID
+        )
+        const stakingFundAuth = await PublicKey.findProgramAddress(
+            [
+                Buffer.from('staking_fund_auth', 'utf8'),
+                STAKING_INFO.toBuffer(),
+            ],
+            PROGRAM_ID
+        )
+        const stakingFund = new PublicKey('59W5xgePwhTgy8WiUbrgmAwQ7btzkNQaL4foZNbPMyLm');
+        const tx = await program.rpc.withdraw({
+            accounts:{
+                user: userAccount,
+                stakingInfo: STAKING_INFO,
+                userInfo: userInfo[0],
+                userGgwpWallet: new PublicKey(GGWPWallet),
+                treasuryAuth: treasuryAuth[0],
+                stakingFundAuth: stakingFundAuth[0],
+                treasury: stakingInfo.treasury,
+                accumulativeFund: stakingInfo.accumulativeFund,
+                stakingFund: stakingFund,
                 systemProgram: SYSTEM_PROGRAM_ID,
                 tokenProgram: TOKEN_PROGRAM_ID,
             }
