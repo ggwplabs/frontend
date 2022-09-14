@@ -5,6 +5,7 @@ import CustomSelect from "./components/UI/select/CustomSelect";
 
 function App() {
     const [pubKey, setPubKey] = useState(null);
+    console.log(window)
 
     // const getProvider = () => {
     //     if ('phantom' in window) {
@@ -18,56 +19,57 @@ function App() {
 
     // const isPhantomInstalled = window.phantom?.solana?.isPhantom
 
-    useEffect(() => {
+    // useEffect(() => {
+    //
+    //     window.solana.on("connect", (publicKey) => {
+    //         console.log('connect')
+    //         setPubKey(publicKey);
+    //     });
+    //
+    //     window.solana.on("disconnect", () => {
+    //         console.log('disconnect')
+    //         setPubKey(null);
+    //     });
+    //
+    //     window.solana.on('accountChanged', (publicKey) => {
+    //         setPubKey(publicKey);
+    //         window.solana.connect()
+    //     });
+    // }, [window.solana]);
+    //
+    // if (pubKey) {
+    //     return (
+    //         <div>
+    //             <Tabs
+    //                 publicKey={pubKey}
+    //             />
+    //             <button
+    //                 style={{marginTop: 30}}
+    //                 onClick={async () => await window.solana.disconnect()}
+    //             > Logout
+    //             </button>
+    //         </div>
+    //     )
+    // } else {
+    //     return (
+    //         <div
+    //             style={{
+    //                 display: 'flex',
+    //                 justifyContent: 'center'
+    //             }}
+    //         >
+    //             <button
+    //                 style={{
+    //                     marginTop: 30
+    //                 }}
+    //                 onClick={async () => await window.solana.connect()}
+    //             >
+    //                 Login with phantom
+    //             </button>
+    //         </div>
+    //     )
+    // }
 
-        window.solana.on("connect", (publicKey) => {
-            console.log('connect')
-            setPubKey(publicKey);
-        });
-
-        window.solana.on("disconnect", () => {
-            console.log('disconnect')
-            setPubKey(null);
-        });
-
-        window.solana.on('accountChanged', (publicKey) => {
-            setPubKey(publicKey);
-            window.solana.connect()
-        });
-    }, [window.solana]);
-
-    if (pubKey) {
-        return (
-            <div>
-                <Tabs
-                    publicKey={pubKey}
-                />
-                <button
-                    style={{marginTop: 30}}
-                    onClick={async () => await window.solana.disconnect()}
-                > Logout
-                </button>
-            </div>
-        )
-    } else {
-        return (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                <button
-                    style={{
-                        marginTop: 30
-                    }}
-                    onClick={async () => await window.solana.connect()}
-                >
-                    Login with phantom
-                </button>
-            </div>
-        )
-    }
     // return(
     //     <div>
     //         <a
@@ -78,6 +80,11 @@ function App() {
     //         </a>
     //     </div>
     // )
+    return (
+        <div>
+            test
+        </div>
+    )
 }
 
 export default App;
