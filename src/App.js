@@ -16,71 +16,68 @@ function App() {
     //     }
     // };
 
-    const isPhantomInstalled = window.phantom?.solana?.isPhantom
+    // const isPhantomInstalled = window.phantom?.solana?.isPhantom
 
-    // useEffect( () => {
-    //
-    //     provider.on("connect", (publicKey) => {
-    //         console.log('connect')
-    //         setPubKey(publicKey);
-    //     });
-    //
-    //     provider.on("disconnect", () => {
-    //         console.log('disconnect')
-    //         setPubKey(null);
-    //     });
-    //
-    //     provider.on('accountChanged', (publicKey) => {
-    //         setPubKey(publicKey);
-    //         provider.connect()
-    //     });
-    // }, [provider]);
+    useEffect(() => {
 
-    if (isPhantomInstalled){
-        const provider = window.phantom?.solana;
-        if (pubKey) {
-            return (
-                <div>
-                    <Tabs
-                        publicKey={pubKey}
-                    />
-                    <button
-                        style={{marginTop: 30}}
-                        onClick={async () => await provider.disconnect()}
-                    > Logout
-                    </button>
-                </div>
-            )
-        } else {
-            return (
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}
-                >
-                    <button
-                        style={{
-                            marginTop: 30}}
-                        onClick={async () => await provider.connect()}
-                    >
-                        Login with phantom
-                    </button>
-                </div>
-            )
-        }
-    } else {
-        return(
+        window.solana.on("connect", (publicKey) => {
+            console.log('connect')
+            setPubKey(publicKey);
+        });
+
+        window.solana.on("disconnect", () => {
+            console.log('disconnect')
+            setPubKey(null);
+        });
+
+        window.solana.on('accountChanged', (publicKey) => {
+            setPubKey(publicKey);
+            window.solana.connect()
+        });
+    }, [window.solana]);
+
+    if (pubKey) {
+        return (
             <div>
-                <a
-                    target={"_blank"}
-                    href={"https://phantom.app/"}
+                <Tabs
+                    publicKey={pubKey}
+                />
+                <button
+                    style={{marginTop: 30}}
+                    onClick={async () => await window.solana.disconnect()}
+                > Logout
+                </button>
+            </div>
+        )
+    } else {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
+            >
+                <button
+                    style={{
+                        marginTop: 30
+                    }}
+                    onClick={async () => await window.solana.connect()}
                 >
-                    Install phantom
-                </a>
+                    Login with phantom
+                </button>
             </div>
         )
     }
+    // return(
+    //     <div>
+    //         <a
+    //             target={"_blank"}
+    //             href={"https://phantom.app/"}
+    //         >
+    //             Install phantom
+    //         </a>
+    //     </div>
+    // )
 }
 
 export default App;
