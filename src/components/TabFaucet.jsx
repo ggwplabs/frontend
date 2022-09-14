@@ -1,26 +1,26 @@
 import React, {useState} from 'react';
 import {useInteract} from "./hooks/useInteract";
 import Loader from "./UI/Loader/Loader";
-import StakeService from "../chain/StakeService";
+import FaucetService from "../chain/FaucetService";
 
-const StakeForm = ({network, publikKey, GGWPWallet}) => {
+const TabFaucet = ({publicKey}) => {
     const [amount, setAmount] = useState(0)
     const [tx, seTx] = useState('')
-    const [stake, isStakeLoading, stakeError] = useInteract(async () => {
-            const tx = await StakeService.stake(network, publikKey, GGWPWallet, amount)
-            seTx(tx)
+    const [airdrop, isAirdropLoading, airdropError] = useInteract(async () => {
+        const tx = await FaucetService.airdrop('devnet', publicKey, amount)
+        seTx(tx)
     })
     return (
         <div>
-            {isStakeLoading
+            {isAirdropLoading
                 ? <div
                     style={{display: 'flex', justifyContent: 'center', marginTop: 10, marginBottom: 10}}>
                     <Loader/>
                 </div>
                 : <div>
-                    {stakeError
+                    {airdropError
                         ? <div>
-                            <p>Error! {stakeError}</p>
+                            <p>Error! {airdropError}</p>
                         </div>
                         : <div>
                             {tx
@@ -28,7 +28,7 @@ const StakeForm = ({network, publikKey, GGWPWallet}) => {
                                     <p>Successful! {tx}</p>
                                     <a
                                         target={"_blank"}
-                                        href={"https://explorer.solana.com/tx/"+ tx +'?cluster=devnet'}
+                                        href={"https://explorer.solana.com/"+ tx +'?cluster=devnet'}
                                     >
                                         View in solana explorer
                                     </a>
@@ -37,12 +37,12 @@ const StakeForm = ({network, publikKey, GGWPWallet}) => {
                                     <input
                                         type='number'
                                         onChange={e => setAmount(e.target.value)}
-                                        placeholder="Amount for stake"
+                                        placeholder="Amount for airdrop"
                                     />
                                     <button
-                                        onClick={stake}
-                                        >
-                                        Stake
+                                        onClick={airdrop}
+                                    >
+                                        Airdrop
                                     </button>
                                 </div>
                             }
@@ -54,4 +54,4 @@ const StakeForm = ({network, publikKey, GGWPWallet}) => {
     );
 };
 
-export default StakeForm;
+export default TabFaucet;

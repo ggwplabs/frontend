@@ -9,6 +9,7 @@ const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111')
 const STAKING_INFO = new PublicKey('6pxztvdsDpmAXRj6btu8piVxJmwn3Vu2eiYMn8BnuYDK')
 const ACCUMULATIVE_FUND = new PublicKey('71uJ6ncA8tgPfCiWgLL1XXRBKFAf5gKb6RyHqgRGajd5')
 const PROGRAM_ID = new PublicKey('ELRFw9awBQFuvvxnf3R1Xaihdy6ypWY7sH6nTNXh8EX1')
+const STAKING_FUND = new PublicKey('59W5xgePwhTgy8WiUbrgmAwQ7btzkNQaL4foZNbPMyLm');
 
 const opts = {preflightCommitment: "processed"}
 
@@ -59,6 +60,7 @@ export default class StakeService {
         let connection = new Connection(
             clusterApiUrl(network),
         );
+        console.log(userAccount)
         const provider = new AnchorProvider(
             connection, window.solana, opts.preflightCommitment,
         )
@@ -122,7 +124,7 @@ export default class StakeService {
             ],
             PROGRAM_ID
         )
-        const stakingFund = new PublicKey('59W5xgePwhTgy8WiUbrgmAwQ7btzkNQaL4foZNbPMyLm');
+
         const tx = await program.rpc.withdraw({
             accounts:{
                 user: userAccount,
@@ -133,7 +135,7 @@ export default class StakeService {
                 stakingFundAuth: stakingFundAuth[0],
                 treasury: stakingInfo.treasury,
                 accumulativeFund: stakingInfo.accumulativeFund,
-                stakingFund: stakingFund,
+                stakingFund: STAKING_FUND,
                 systemProgram: SYSTEM_PROGRAM_ID,
                 tokenProgram: TOKEN_PROGRAM_ID,
             }
