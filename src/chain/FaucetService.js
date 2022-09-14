@@ -1,4 +1,4 @@
-import {clusterApiUrl, Connection, PublicKey, TransactionInstruction} from "@solana/web3.js";
+import {clusterApiUrl, Connection, PublicKey} from "@solana/web3.js";
 import idlFaucet from './idl/faucet.json'
 import {AnchorProvider, BN, Program} from "@project-serum/anchor";
 import {createAssociatedTokenAccountInstruction} from "@solana/spl-token";

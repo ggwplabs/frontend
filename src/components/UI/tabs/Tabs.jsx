@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import TabStaking from "./TabStaking";
-import TabNFT from "./TabNFT";
-import TabGameCenter from "./TabGameCenter";
 import TabFaucet from "./TabFaucet";
 
 const Tabs = ({publicKey}) => {

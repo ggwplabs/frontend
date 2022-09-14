@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import StakeService from "../chain/StakeService";
-import Loader from "./UI/Loader/Loader";
-import {useInteract} from "./hooks/useInteract";
+import StakeService from "../../../chain/StakeService";
+import Loader from "../Loader/Loader";
+import {useInteract} from "../../hooks/useInteract";
 import StakeForm from "./StakeForm";
-import ModalWindow from "./UI/ModalWindow/ModalWindow";
+import ModalWindow from "../ModalWindow/ModalWindow";
 import StakeInfo from "./StakeInfo";
 
 const TabStaking = ({publicKey}) => {
@@ -47,8 +47,8 @@ const TabStaking = ({publicKey}) => {
             {stakeInfoError
                 ? <div>
                     {stakeInfoError === 'failed to get token account balance: Invalid param: could not find account'
-                        ?<p>Now you have not GGWP tokens, use faucet for mint</p>
-                        :<p>
+                        ? <p>Now you have not GGWP tokens, use faucet for mint</p>
+                        : <p>
                             Error! {stakeInfoError}
                         </p>
                     }
@@ -110,7 +110,7 @@ const TabStaking = ({publicKey}) => {
                                                     Successful! {withdrawTx}
                                                     <a
                                                         target={"_blank"}
-                                                        href={"https://explorer.solana.com/tx/"+ withdrawTx +'?cluster=devnet'}
+                                                        href={"https://explorer.solana.com/tx/" + withdrawTx + '?cluster=devnet'}
                                                     >
                                                         View in solana explorer
                                                     </a>

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import LoginForm from "./components/UI/LoginForm/LoginForm";
-import Tabs from "./components/Tabs";
-import CustomSelect from "./components/UI/select/CustomSelect";
+import Tabs from "./components/UI/tabs/Tabs";
+
 
 function App() {
     const [pubKey, setPubKey] = useState(null);
@@ -19,21 +18,41 @@ function App() {
 
     const provider = getProvider()
 
+    useEffect(() => {
+
+        if (isPhantomInstalled) {
+            window.solana.on("connect", (publicKey) => {
+                console.log('connect')
+                setPubKey(publicKey);
+            });
+
+            window.solana.on("disconnect", () => {
+                console.log('disconnect')
+                setPubKey(null);
+            });
+
+            window.solana.on('accountChanged', (publicKey) => {
+                setPubKey(publicKey);
+                window.solana.connect()
+            });
+        }
+
+    }, [window.solana, isPhantomInstalled]);
+
     if (!isPhantomInstalled) {
         return (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center'
-            }}>
-            For continuum, please install
-            <a
-                target={"_blank"}
-                href={"https://phantom.app/"}
-            >
-                 Phantom
-            </a>
-        </div>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}>
+                <p>For continuum, please install <a
+                    target={"_blank"}
+                    href={"https://phantom.app/"}
+                >
+                    phantom
+                </a></p>
+            </div>
         )
     }
 
@@ -70,7 +89,7 @@ function App() {
         )
     }
 
-    return(
+    return (
         <div>
             <a
                 target={"_blank"}

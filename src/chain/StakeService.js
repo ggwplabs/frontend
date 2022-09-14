@@ -49,7 +49,7 @@ export default class StakeService {
         try {
             userInfoAccount = await program.account.userInfo.fetch(userInfo[0].toString())
         } catch (e) {
-            if (e.message == 'Account does not exist ' + userInfo[0].toString()) {
+            if (e.message === 'Account does not exist ' + userInfo[0].toString()) {
                 userInfoAccount = {
                     amount: 0,
                     stakeTime: 0,
