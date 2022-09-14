@@ -15,12 +15,11 @@ function App() {
             }
         } else {
             window.alert("Get a phantom wallet")
-            window.location = "https://phantom.app/"
+            // window.location = "https://phantom.app/"
         }
     };
 
     const provider = getProvider();
-    console.log(provider)
 
     useEffect(() => {
 
