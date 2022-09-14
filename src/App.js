@@ -13,21 +13,21 @@ function App() {
             if (provider?.isPhantom) {
                 return provider;
             }
-        } else {
-            window.alert("Get a phantom wallet")
-            // window.location = "https://phantom.app/"
         }
+        window.open('https://phantom.app/', '_blank');
     };
 
     const provider = getProvider();
 
-    useEffect(() => {
+    useEffect( () => {
 
         provider.on("connect", (publicKey) => {
+            console.log('connect')
             setPubKey(publicKey);
         });
 
         provider.on("disconnect", () => {
+            console.log('disconnect')
             setPubKey(null);
         });
 
@@ -36,6 +36,8 @@ function App() {
             provider.connect()
         });
     }, [provider]);
+
+
 
     if (pubKey) {
         return (
