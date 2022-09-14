@@ -15,13 +15,14 @@ function App() {
             }
         } else {
             window.alert("Get a phantom wallet")
-            // window.location = "https://phantom.app/"
+            window.location = "https://phantom.app/"
         }
     };
 
     const provider = getProvider();
+    console.log(provider)
 
-    useEffect( () => {
+    useEffect(() => {
 
         provider.on("connect", (publicKey) => {
             setPubKey(publicKey);
@@ -38,7 +39,7 @@ function App() {
     }, [provider]);
 
     if (pubKey) {
-        return(
+        return (
             <div>
                 <Tabs
                     publicKey={pubKey}
@@ -51,10 +52,16 @@ function App() {
             </div>
         )
     } else {
-        return(
-            <div>
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
+            >
                 <button
-                    style={{marginTop: 30}}
+                    style={{
+                        marginTop: 30}}
                     onClick={async () => await provider.connect()}
                 >
                     Login with phantom
@@ -62,52 +69,6 @@ function App() {
             </div>
         )
     }
-
-    // if (pubKey) {
-    //     return (
-    //         <div>
-    //             <Tabs
-    //                 provider={provider}
-    //                 network={network}
-    //             />
-    //             <div>
-    //                 <button
-    //                     style={{marginTop: 30}}
-    //                     onClick={async () => await provider.disconnect()}
-    //                 > Logout
-    //                 </button>
-    //             </div>
-    //         </div>
-    //     )
-    // } else {
-    //     return (
-    //         <div
-    //             style={{
-    //                 display: 'flex',
-    //                 justifyContent: 'center'
-    //             }}
-    //         >
-    //             <div>
-    //                 <CustomSelect
-    //                     value={network}
-    //                     onChange={net => setNetwork(net)}
-    //                     defaultValue="Network"
-    //                     options={[
-    //                         {value: 'devnet', name: 'Devnet'},
-    //                         {value: 'testnet', name: 'Testnet'},
-    //                         {value: 'mainnet-beta', name: 'Mainnet-beta'}
-    //                     ]}
-    //                 />
-    //             </div>
-    //             <button
-    //                 disabled={network === ''}
-    //                 onClick={connectWallet}
-    //             >
-    //                 Login with phantom
-    //             </button>
-    //         </div>
-    //     )
-    // }
 }
 
 export default App;

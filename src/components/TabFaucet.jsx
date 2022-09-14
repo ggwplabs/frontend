@@ -28,7 +28,7 @@ const TabFaucet = ({publicKey}) => {
                                     <p>Successful! {tx}</p>
                                     <a
                                         target={"_blank"}
-                                        href={"https://explorer.solana.com/"+ tx +'?cluster=devnet'}
+                                        href={"https://explorer.solana.com/tx/"+ tx +'?cluster=devnet'}
                                     >
                                         View in solana explorer
                                     </a>

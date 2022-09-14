@@ -44,7 +44,18 @@ export default class StakeService {
             ],
             PROGRAM_ID
         )
-        const userInfoAccount = await program.account.userInfo.fetch(userInfo[0].toString())
+
+        let userInfoAccount;
+        try {
+            userInfoAccount = await program.account.userInfo.fetch(userInfo[0].toString())
+        } catch (e) {
+            if (e.message == 'Account does not exist ' + userInfo[0].toString()) {
+                userInfoAccount = {
+                    amount: 0,
+                    stakeTime: 0,
+                }
+            }
+        }
 
         return ({
             GGWPWallet: account[0].toString(),
@@ -126,7 +137,7 @@ export default class StakeService {
         )
 
         const tx = await program.rpc.withdraw({
-            accounts:{
+            accounts: {
                 user: userAccount,
                 stakingInfo: STAKING_INFO,
                 userInfo: userInfo[0],
@@ -143,38 +154,4 @@ export default class StakeService {
         return tx
     }
 
-    // async function Airdrop() {
-    //     let connection = new web3.Connection(
-    //         web3.clusterApiUrl(props.network),
-    //     );
-    //
-    //     let airdropSignature = await connection.requestAirdrop(
-    //         props.provider.publicKey,
-    //         web3.LAMPORTS_PER_SOL,
-    //     );
-    //     await connection.confirmTransaction(airdropSignature);
-    // }
-    //
-    // async function Send() {
-    //     let connection = new web3.Connection(
-    //         web3.clusterApiUrl(props.network),
-    //     );
-    //
-    //     const recieverWallet = new web3.PublicKey(accTo.toString())
-    //
-    //     const transaction = new web3.Transaction().add(
-    //         web3.SystemProgram.transfer({
-    //             fromPubkey: props.provider.publicKey,
-    //             toPubkey: recieverWallet,
-    //             lamports: web3.LAMPORTS_PER_SOL / 2
-    //         }),
-    //     );
-    //
-    //     transaction.feePayer = await props.provider.publicKey;
-    //     let blockhashObj = await connection.getRecentBlockhash();
-    //     transaction.recentBlockhash = await blockhashObj.blockhash;
-    //     let signed = await props.provider.signTransaction(transaction);
-    //     let signature = await connection.sendRawTransaction(signed.serialize());
-    //     await connection.confirmTransaction(signature);
-    // }
 }

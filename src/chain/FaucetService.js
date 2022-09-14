@@ -1,8 +1,7 @@
-
 import {clusterApiUrl, Connection, PublicKey, TransactionInstruction} from "@solana/web3.js";
 import idlFaucet from './idl/faucet.json'
 import {AnchorProvider, BN, Program} from "@project-serum/anchor";
-import {createAssociatedTokenAccountInstruction, getOrCreateAssociatedTokenAccount} from "@solana/spl-token";
+import {createAssociatedTokenAccountInstruction} from "@solana/spl-token";
 
 const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
 const GGWPM_MINT = new PublicKey('5J5iMoraQ962XW7uApXQRTCu9jEahBnVCsGvzAjQKm9x')
@@ -25,9 +24,6 @@ export default class FaucetService {
         const program = new Program(idlFaucet, PROGRAM_ID, provider)
         const preInstructions = [];
 
-        // const GGPWWallet = await getOrCreateAssociatedTokenAccount(connection, userAccount, GGWPM_MINT, userAccount)
-        // console.log(GGPWWallet)
-
         const GGPWWallet = await PublicKey.findProgramAddress(
             [
                 userAccount.toBuffer(),
@@ -38,7 +34,7 @@ export default class FaucetService {
         )
 
         const isInitGGPWWallet = await connection.getAccountInfo(GGPWWallet[0])
-        if (isInitGGPWWallet === null){
+        if (isInitGGPWWallet === null) {
             preInstructions.push(
                 createAssociatedTokenAccountInstruction(
                     userAccount,
@@ -58,7 +54,7 @@ export default class FaucetService {
             PROGRAM_ID
         )
 
-        const tx = await program.methods.airdrop(new BN(amount))
+        const tx = await program.methods.airdrop(new BN(amount * 10 ** 9))
             .accounts({
                 user: userAccount,
                 userGgwpWallet: GGPWWallet[0],
@@ -69,7 +65,6 @@ export default class FaucetService {
             })
             .preInstructions(preInstructions)
             .rpc()
-
 
         return tx
     }
