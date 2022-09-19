@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import TabStaking from "./TabStaking";
 import TabFaucet from "./TabFaucet";
+import TabFreezing from "./TabFreezing";
 
 const Tabs = ({publicKey}) => {
     const [currentTab, setCurrentTab] = useState('1');
@@ -17,6 +18,13 @@ const Tabs = ({publicKey}) => {
             id: 2,
             tabTitle: 'Faucet',
             content: <TabFaucet
+                publicKey={publicKey}
+            />
+        },
+        {
+            id: 3,
+            tabTitle: 'Freezing',
+            content: <TabFreezing
                 publicKey={publicKey}
             />
         },

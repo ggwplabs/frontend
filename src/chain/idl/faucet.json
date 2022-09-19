@@ -38,10 +38,57 @@
       ],
       "args": [
         {
+          "name": "totalAmount",
+          "type": "u64"
+        },
+        {
+          "name": "oneTimeAirdropAmountLimit",
+          "type": "u64"
+        },
+        {
+          "name": "airdropLimitInTime",
+          "type": "u64"
+        },
+        {
+          "name": "resetCounterTime",
+          "type": "i64"
+        },
+        {
           "name": "supplyLimit",
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "returnMintAuth",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "faucetInfo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpMintAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     },
     {
       "name": "updateSupplyLimit",
@@ -69,8 +116,13 @@
       "accounts": [
         {
           "name": "user",
-          "isMut": false,
+          "isMut": true,
           "isSigner": true
+        },
+        {
+          "name": "userInfo",
+          "isMut": true,
+          "isSigner": false
         },
         {
           "name": "userGgwpWallet",
@@ -89,6 +141,11 @@
         },
         {
           "name": "ggwpMintAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -165,8 +222,36 @@
             "type": "u64"
           },
           {
+            "name": "oneTimeAirdropAmountLimit",
+            "type": "u64"
+          },
+          {
+            "name": "airdropLimitInTime",
+            "type": "u64"
+          },
+          {
+            "name": "resetCounterTime",
+            "type": "i64"
+          },
+          {
             "name": "supplyLimit",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "airdropCount",
+            "type": "u64"
+          },
+          {
+            "name": "lastResetCounter",
+            "type": "i64"
           }
         ]
       }
@@ -212,6 +297,16 @@
       "code": 6007,
       "name": "ZeroBurnAmount",
       "msg": "Zero burn amount"
+    },
+    {
+      "code": 6008,
+      "name": "OneTimeLimitExceeded",
+      "msg": "One time airdrop limit exceeded"
+    },
+    {
+      "code": 6009,
+      "name": "AirdropLimitInTimeExceeded",
+      "msg": "Airdrop limit in time exceeded"
     }
   ]
 }

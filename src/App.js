@@ -22,12 +22,10 @@ function App() {
 
         if (isPhantomInstalled) {
             window.solana.on("connect", (publicKey) => {
-                console.log('connect')
                 setPubKey(publicKey);
             });
 
             window.solana.on("disconnect", () => {
-                console.log('disconnect')
                 setPubKey(null);
             });
 
