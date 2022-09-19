@@ -9,6 +9,7 @@ const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111')
 const STAKING_INFO = new PublicKey('6pxztvdsDpmAXRj6btu8piVxJmwn3Vu2eiYMn8BnuYDK')
 const ACCUMULATIVE_FUND = new PublicKey('71uJ6ncA8tgPfCiWgLL1XXRBKFAf5gKb6RyHqgRGajd5')
 const PROGRAM_ID = new PublicKey('ELRFw9awBQFuvvxnf3R1Xaihdy6ypWY7sH6nTNXh8EX1')
+const STAKING_FUND = new PublicKey('59W5xgePwhTgy8WiUbrgmAwQ7btzkNQaL4foZNbPMyLm');
 
 const opts = {preflightCommitment: "processed"}
 
@@ -43,7 +44,18 @@ export default class StakeService {
             ],
             PROGRAM_ID
         )
-        const userInfoAccount = await program.account.userInfo.fetch(userInfo[0].toString())
+
+        let userInfoAccount;
+        try {
+            userInfoAccount = await program.account.userInfo.fetch(userInfo[0].toString())
+        } catch (e) {
+            if (e.message === 'Account does not exist ' + userInfo[0].toString()) {
+                userInfoAccount = {
+                    amount: 0,
+                    stakeTime: 0,
+                }
+            }
+        }
 
         return ({
             GGWPWallet: account[0].toString(),
@@ -59,6 +71,7 @@ export default class StakeService {
         let connection = new Connection(
             clusterApiUrl(network),
         );
+        console.log(userAccount)
         const provider = new AnchorProvider(
             connection, window.solana, opts.preflightCommitment,
         )
@@ -122,9 +135,9 @@ export default class StakeService {
             ],
             PROGRAM_ID
         )
-        const stakingFund = new PublicKey('59W5xgePwhTgy8WiUbrgmAwQ7btzkNQaL4foZNbPMyLm');
+
         const tx = await program.rpc.withdraw({
-            accounts:{
+            accounts: {
                 user: userAccount,
                 stakingInfo: STAKING_INFO,
                 userInfo: userInfo[0],
@@ -133,7 +146,7 @@ export default class StakeService {
                 stakingFundAuth: stakingFundAuth[0],
                 treasury: stakingInfo.treasury,
                 accumulativeFund: stakingInfo.accumulativeFund,
-                stakingFund: stakingFund,
+                stakingFund: STAKING_FUND,
                 systemProgram: SYSTEM_PROGRAM_ID,
                 tokenProgram: TOKEN_PROGRAM_ID,
             }
@@ -141,38 +154,4 @@ export default class StakeService {
         return tx
     }
 
-    // async function Airdrop() {
-    //     let connection = new web3.Connection(
-    //         web3.clusterApiUrl(props.network),
-    //     );
-    //
-    //     let airdropSignature = await connection.requestAirdrop(
-    //         props.provider.publicKey,
-    //         web3.LAMPORTS_PER_SOL,
-    //     );
-    //     await connection.confirmTransaction(airdropSignature);
-    // }
-    //
-    // async function Send() {
-    //     let connection = new web3.Connection(
-    //         web3.clusterApiUrl(props.network),
-    //     );
-    //
-    //     const recieverWallet = new web3.PublicKey(accTo.toString())
-    //
-    //     const transaction = new web3.Transaction().add(
-    //         web3.SystemProgram.transfer({
-    //             fromPubkey: props.provider.publicKey,
-    //             toPubkey: recieverWallet,
-    //             lamports: web3.LAMPORTS_PER_SOL / 2
-    //         }),
-    //     );
-    //
-    //     transaction.feePayer = await props.provider.publicKey;
-    //     let blockhashObj = await connection.getRecentBlockhash();
-    //     transaction.recentBlockhash = await blockhashObj.blockhash;
-    //     let signed = await props.provider.signTransaction(transaction);
-    //     let signature = await connection.sendRawTransaction(signed.serialize());
-    //     await connection.confirmTransaction(signature);
-    // }
 }
