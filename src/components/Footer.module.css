@@ -1,0 +1,70 @@
+.First_box {
+    /*margin-top: 10px;*/
+    display: flex;
+    margin-left: 180px;
+}
+
+.Second_box {
+    display: flex;
+    margin-left: 180px;
+}
+
+.Info_box {
+    border: 0.5px #147EFF;
+    border-style: none none none solid;
+    margin-top: 100px;
+
+    font-family: ProximaNova;
+    font-style: normal;
+    font-size: 18px;
+    color: #147EFF;
+
+    margin-right: 10px;
+    padding-left: 10px;
+}
+
+.Info {
+    margin-top: 100px;
+
+    font-family: ProximaNova;
+    font-style: normal;
+    font-size: 18px;
+    color: #00EA88;
+
+    margin-right: 10px;
+    padding-left: 10px;
+
+}
+
+.Info a {
+    font-family: ProximaNova;
+    font-style: normal;
+    font-size: 18px;
+    color: #00EA88;
+    text-decoration: none;
+}
+
+.Logo{
+    margin-top: 40px;
+}
+
+.Menu{
+    list-style-type: none;
+}
+
+.Menu li {
+    margin-top: 20px;
+    display: block;
+}
+
+.Menu a {
+    font-family: ProximaNova;
+    font-style: normal;
+    font-size: 18px;
+    color: #147EFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-left: 113px;
+    display: flex;
+    align-items: center;
+}

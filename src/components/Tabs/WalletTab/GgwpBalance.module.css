@@ -1,0 +1,45 @@
+.BalanceBox{
+    display: flex;
+    justify-content: center;
+
+    border: 1px solid #147EFF;
+    padding: 20px 20px;
+    margin-top: 40px;
+    border-radius: 4px;
+}
+
+.Balance__text{
+    font-family: ProximaNova;
+    font-style: normal;
+    font-size: 20px;
+    color: #147EFF;
+
+    display: flex;
+    align-items: center;
+
+    margin: 50px 20px;
+
+}
+
+.Balance__amount{
+
+    font-family: ProximaNova;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 64px;
+    line-height: 78px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #147EFF;
+    padding: 20px 20px;
+}
+
+.Balance__icon{
+    border: 1px #147EFF;
+    border-style: none none none solid;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+
+}

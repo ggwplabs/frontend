@@ -1,0 +1,33 @@
+.Header{
+    background: #147EFF;
+    opacity: 0.95;
+    height: 80px;
+    display: flex;
+}
+.Logo{
+    margin-top: 24px;
+    margin-bottom: 24px;
+    margin-left: 180px;
+}
+.Menu{
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.Menu a {
+    font-family: ProximaNova;
+    font-style: normal;
+    font-size: 14px;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+
+}
+.Menu li {
+    list-style-type: none;
+}

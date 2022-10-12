@@ -1,0 +1,16 @@
+.message {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid;
+    border-radius: 4px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.error {
+    background: #FF1469;
+}
+.successful{
+    background: #12D6C2;
+}

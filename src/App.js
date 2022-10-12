@@ -1,5 +1,10 @@
 import React, {useEffect, useState} from "react";
-import Tabs from "./components/UI/tabs/Tabs";
+import Tabs from "./components/Tabs/Tabs";
+import Phantom from "./components/Phantom/Phantom";
+import './styles/App.css'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import LoginButton from "./components/UI/Buttons/LoginButton";
 
 
 function App() {
@@ -7,7 +12,7 @@ function App() {
     const isPhantomInstalled = window.phantom?.solana?.isPhantom
 
     const getProvider = () => {
-        if ('phantom' in window) {
+        if ('Phantom' in window) {
             const provider = window.phantom?.solana;
 
             if (provider?.isPhantom) {
@@ -37,64 +42,41 @@ function App() {
 
     }, [window.solana, isPhantomInstalled]);
 
-    if (!isPhantomInstalled) {
-        return (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}>
-                <p>For continuum, please install <a
-                    target={"_blank"}
-                    href={"https://phantom.app/"}
-                >
-                    phantom
-                </a></p>
-            </div>
-        )
-    }
-
-    if (pubKey) {
-        return (
-            <div>
-                <Tabs
-                    publicKey={pubKey}
-                />
-                <button
-                    style={{marginTop: 30}}
-                    onClick={async () => await provider.disconnect()}
-                > Logout
-                </button>
-            </div>
-        )
-    } else {
-        return (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                <button
-                    style={{
-                        marginTop: 30
-                    }}
-                    onClick={async () => await window.solana.connect()}
-                >
-                    Login with phantom
-                </button>
-            </div>
-        )
-    }
 
     return (
         <div>
-            <a
-                target={"_blank"}
-                href={"https://phantom.app/"}
-            >
-                Install phantom
-            </a>
+            {!isPhantomInstalled
+                ? <div>
+                    <Header/>
+                    <div className="Login">
+                        <Phantom/>
+                    </div>
+                    <Footer/>
+                </div>
+                : <div>
+                    {pubKey
+                        ? <div>
+                            <Header/>
+                            <div className="Body"></div>
+                            <Tabs
+                                publicKey={pubKey}
+                            />
+                            <Footer/>
+                        </div>
+                        : <div>
+                            <Header/>
+                            <div className="Login">
+                                <LoginButton
+                                    onClick={async () => await window.solana.connect()}
+                                >
+                                    Login with Phantom
+                                </LoginButton>
+                            </div>
+                            <Footer/>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     )
 }

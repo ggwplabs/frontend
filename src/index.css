@@ -1,0 +1,5 @@
+@font-face {
+    font-family: ProximaNova;
+    src:
+            local('fonts'), url(./components/fonts/ProximaNova-Regular.woff) format('woff');
+}

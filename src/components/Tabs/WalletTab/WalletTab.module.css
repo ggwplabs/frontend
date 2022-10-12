@@ -1,0 +1,10 @@
+.WalletTab_box{
+    border: 5px solid red;
+    /*display: flex;*/
+    justify-content: center;
+}
+
+.GgwpBalance_box{
+    display: flex;
+    justify-content: center;
+}

@@ -1,42 +1,34 @@
 import React, {useState} from 'react';
-import {useInteract} from "../../hooks/useInteract";
-import FreezeService from "../../../chain/FreezeService";
-import Loader from "../Loader/Loader";
+import {useInteract} from "../hooks/useInteract";
+import Loader from "../UI/Loader/Loader";
+import StakeService from "../../chain/StakeService";
 
-
-const TabFreezing = ({publicKey}) => {
-    const network = 'devnet'
-    const [freezingTX, setFreezingTX] = useState(NaN)
+const StakeForm = ({network, publikKey, GGWPWallet}) => {
     const [amount, setAmount] = useState(0)
-    const [freezing, isFreezingLoading, stakeInfoError] = useInteract(async () => {
-        const tx = await FreezeService.freezing(network, publicKey, amount)
-        setFreezingTX(tx)
+    const [tx, seTx] = useState('')
+    const [stake, isStakeLoading, stakeError] = useInteract(async () => {
+        const tx = await StakeService.stake(network, publikKey, GGWPWallet, amount)
+        seTx(tx)
     })
-
-
-    const test = () => {
-        console.log('test')
-    }
-
     return (
         <div>
-            {isFreezingLoading
+            {isStakeLoading
                 ? <div
                     style={{display: 'flex', justifyContent: 'center', marginTop: 10, marginBottom: 10}}>
                     <Loader/>
                 </div>
                 : <div>
-                    {stakeInfoError
+                    {stakeError
                         ? <div>
-                            <p>Error! {stakeInfoError}</p>
+                            <p>Error! {stakeError}</p>
                         </div>
                         : <div>
-                            {freezingTX
+                            {tx
                                 ? <div>
-                                    <p>Successful! {freezingTX}</p>
+                                    <p>Successful! {tx}</p>
                                     <a
                                         target={"_blank"}
-                                        href={"https://explorer.solana.com/tx/" + freezingTX + '?cluster=devnet'}
+                                        href={"https://explorer.solana.com/tx/" + tx + '?cluster=devnet'}
                                     >
                                         View in solana explorer
                                     </a>
@@ -45,12 +37,12 @@ const TabFreezing = ({publicKey}) => {
                                     <input
                                         type='number'
                                         onChange={e => setAmount(e.target.value)}
-                                        placeholder="Amount for airdrop"
+                                        placeholder="Amount for stake"
                                     />
                                     <button
-                                        onClick={freezing}
+                                        onClick={stake}
                                     >
-                                        Freezing
+                                        Stake
                                     </button>
                                 </div>
                             }
@@ -62,4 +54,4 @@ const TabFreezing = ({publicKey}) => {
     );
 };
 
-export default TabFreezing;
+export default StakeForm;

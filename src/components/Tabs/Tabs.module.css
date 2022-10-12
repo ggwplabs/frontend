@@ -1,0 +1,14 @@
+.Tabs_box{
+    /*display: flex;*/
+    /*align-content: center;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+
+}
+
+.Tabs{
+    display: flex;
+    justify-content: center;
+}

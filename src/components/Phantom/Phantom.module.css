@@ -1,0 +1,49 @@
+.phantom{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.phantom__box{
+    padding-top: 20px;
+    padding-left: 116px;
+    padding-right: 116px;
+
+    border: 1px solid #147EFF;
+    border-radius: 4px;
+    background: #ffffff;
+
+    display: block;
+
+}
+
+.phantom__text{
+    font-family: ProximaNova;
+    font-style: normal;
+    font-size: 24px;
+    color: #147EFF;
+    text-transform: uppercase;
+
+    display: flex;
+    justify-content: center;
+}
+
+.phantom__linc{
+    font-family: ProximaNova;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+
+    margin-top: 40px;
+    padding-bottom: 30px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.phantom__linc a {
+    color: #147EFF;
+}
