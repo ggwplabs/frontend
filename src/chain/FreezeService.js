@@ -8,8 +8,8 @@ const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111')
 const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
 const GGWPM_MINT = new PublicKey('5J5iMoraQ962XW7uApXQRTCu9jEahBnVCsGvzAjQKm9x')
 const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
-const FREEZING_INFO = new PublicKey('9kP4Rdf3S3Zyqh6LHmQpdr2KzWxMCVYgGyUvYtEgcc3z')
-const GPASS_INFO = new PublicKey('6HXsq5dPigVxj3ReBNv2S7bp8LxYBhdQJAuY32toj4qG')
+const FREEZING_INFO = new PublicKey('5CnPng7bfgZ5Nnchwe7ZFrvxro9JAZNPHk2e3Gh94n2S')
+const GPASS_INFO = new PublicKey('A956aTN5e27jxtNtv7tEzb1Aam9akUW7gmNx5tYQtZzy')
 const GPASS_PROGRAM_ID = new PublicKey('Gv9WAng6iPymaDwXMQrbsh2uTkDpAPTB89Ld4ctJejMG')
 const FREEZING_PROGRAM_ID = new PublicKey('ABHUowgjyTkmbMRRuMYJ5ui4wAz6Z6HE4PQMHy9YqMrQ')
 

@@ -44,12 +44,12 @@ function App() {
                     display: 'flex',
                     justifyContent: 'center'
                 }}>
-                <p>For continuum, please install <a
+                <p>Please install <a
                     target={"_blank"}
                     href={"https://phantom.app/"}
                 >
-                    phantom
-                </a></p>
+                    PHANTOM
+                </a> to continue</p>
             </div>
         )
     }
