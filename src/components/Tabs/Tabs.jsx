@@ -21,7 +21,14 @@ const Tabs = ({publicKey}) => {
         {
             id: 2,
             tabTitle: 'Staking',
-            content: <div>TEST2</div>
+            content: <div className={cl.style_1}>
+                <div className={cl.style_2}>
+                    block 1
+                </div>
+                <div className={cl.style_3}>
+                    block 2
+                </div>
+            </div>
                 // <TabStaking
                 //     publicKey={publicKey}
                 // />
@@ -49,21 +56,23 @@ const Tabs = ({publicKey}) => {
     }
 
     return (
-        <div className={cl.Tabs_box}>
-            <div className={cl.Tabs}>
-                {tabs.map((tab, i) =>
-                    <TabButton key={i} id={tab.id} disabled={currentTab === `${tab.id}`}
-                            onClick={(handleTabClick)}>{tab.tabTitle}</TabButton>
-                )}
-            </div>
-            <div>
-                {tabs.map((tab, i) =>
-                    <div key={i}>
-                        {currentTab === `${tab.id}` && <div><p className='title'>{tab.title}</p>
-                            <div>{tab.content}</div>
-                        </div>}
-                    </div>
-                )}
+        <div className={cl.Father}>
+            <div className={cl.Tabs_box}>
+                <div className={cl.Tabs}>
+                    {tabs.map((tab, i) =>
+                        <TabButton key={i} id={tab.id} disabled={currentTab === `${tab.id}`}
+                                   onClick={(handleTabClick)}>{tab.tabTitle}</TabButton>
+                    )}
+                </div>
+                <div>
+                    {tabs.map((tab, i) =>
+                        <div key={i}>
+                            {currentTab === `${tab.id}` && <div><p className='title'>{tab.title}</p>
+                                <div>{tab.content}</div>
+                            </div>}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

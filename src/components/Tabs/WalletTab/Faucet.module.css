@@ -1,0 +1,65 @@
+.Faucet_box{
+    border: 1px #147EFF;
+    border-style: solid none solid none;
+    margin-top: 100px;
+    color: #147EFF;
+    padding: 0px 20px;
+}
+
+.Label{
+    font-family: ProximaNovaExtrabold;
+    font-size: 24px;
+    margin: 20px 0px;
+}
+
+.Text{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    padding: 0px 8px;
+}
+
+.Input{
+    border: 1px solid #147EFF;
+    width: 522px;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 0px 8px;
+}
+
+.Input::placeholder{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    color: #D2D2D2;
+}
+
+.Input:focus{
+    border: 1px solid #147EFF;
+    outline: none !important;
+}
+
+.Button{
+    font-family: ProximaNovaBold;
+    font-size: 20px;
+
+    margin-left: 20px;
+    border-radius: 2px;
+    /*padding: 8px 14px;*/
+    width: 160px;
+    height: 40px;
+    text-transform: uppercase;
+    color: white;
+    background-color: #147EFF;
+
+}
+
+.Button:disabled{
+    background-color: #D2D2D2;
+}
+
+.Button:hover{
+    background-color: #1E5FDF;
+}
+
+.Button:active{
+    background-color: #00EA88;
+}

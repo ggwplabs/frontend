@@ -1,33 +1,54 @@
 .Header{
     background: #147EFF;
     opacity: 0.95;
-    height: 80px;
     display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
-.Logo{
-    margin-top: 24px;
-    margin-bottom: 24px;
-    margin-left: 180px;
+
+.Menu__box{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    width: 1080px;
+    height: 40px;
+    margin: 20px 0px;
 }
+
+.Login__btn{
+    background: #147EFF;
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: white;
+    border: 1px solid white;
+    border-radius: 2px;
+    padding: 8px 14px;
+}
+
 .Menu{
     display: flex;
     margin-top: 20px;
     margin-bottom: 20px;
     align-items: center;
+    margin-right: 30px;
 }
 
 .Menu a {
-    font-family: ProximaNova;
-    font-style: normal;
+    font-family: ProximaNovaRegular;
     font-size: 14px;
     color: white;
     text-transform: uppercase;
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 50px;
     display: flex;
     align-items: center;
 
 }
+
 .Menu li {
     list-style-type: none;
 }

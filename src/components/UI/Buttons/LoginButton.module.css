@@ -8,8 +8,7 @@
 }
 
 .Login__btn{
-    font-family: ProximaNova;
-    font-style: normal;
+    font-family: ProximaNovaBold;
     font-size: 28px;
     display: flex;
     align-items: center;

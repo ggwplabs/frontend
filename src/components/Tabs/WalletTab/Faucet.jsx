@@ -1,33 +1,22 @@
 import React from 'react';
+import cl from './Faucet.module.css'
 
 const Faucet = ({setAmount, isAirdropLoading, createMessage}) => {
     return (
-        <div
-            style={{
-                borderStyle: "solid none solid none",
-                borderWidth: 1,
-                borderColor: '#147EFF',
-                padding: '10px 10px'
-            }}
-        >
-            FAUCET
+        <div className={cl.Faucet_box}>
+            <div className={cl.Label}>FAUCET</div>
             <div>
-                <div>
+                <div className={cl.Text}>
                     Enter amount GGWP
                 </div>
                 <input
-                    style={{
-                        marginTop: 5,
-                        marginBottom: 5,
-                        marginRight: 15,
-                        width: '522px',
-                        height: '40px',
-                    }}
-                    type='number'
+                    className={cl.Input}
+                    type='text'
                     onChange={e => setAmount(e.target.value)}
-                    placeholder="Maximum 3000 GGWP per time"
+                    placeholder="Maximum 3000 GGWP"
                 />
                 <button
+                    className={cl.Button}
                     disabled={isAirdropLoading}
                     onClick={createMessage}
                 >

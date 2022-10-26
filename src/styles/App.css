@@ -13,10 +13,10 @@
 
 .Login{
     height: 704px;
-    background: url(../images/login.jpg) no-repeat center /cover;
+    background: url(../images/login.jpg)  center;
 }
 
 .Body{
     height: 100px;
-    background: url(../images/login.jpg) no-repeat center /cover;
+    background: url(../images/login.jpg)  center;
 }

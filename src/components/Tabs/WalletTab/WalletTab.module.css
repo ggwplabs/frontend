@@ -1,10 +1,38 @@
-.WalletTab_box{
-    border: 5px solid red;
-    /*display: flex;*/
-    justify-content: center;
-}
-
-.GgwpBalance_box{
+.Father {
     display: flex;
     justify-content: center;
 }
+
+.WalletTab_box {
+    justify-content: center;
+}
+
+.Wallet_block {
+    width: 1080px;
+    height: 140px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Solscan{
+    border: 1px solid #147EFF;
+    border-radius: 4px;
+    margin-top: 80px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Solscan a {
+    font-family: ProximaNovaExtrabold;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #147EFF;
+}
+
+
+
+
+

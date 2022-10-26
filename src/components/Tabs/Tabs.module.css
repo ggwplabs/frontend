@@ -1,11 +1,10 @@
-.Tabs_box{
-    /*display: flex;*/
-    /*align-content: center;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-    /*width: 100px;*/
-    /*height: 100px;*/
+.Father{
+    display: flex;
+    justify-content: center;
+}
 
+.Tabs_box{
+    width: 1080px;
 }
 
 .Tabs{
