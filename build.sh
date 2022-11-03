@@ -14,7 +14,7 @@ case $1 in
   git pull
   npm i
   npm run build
-  sudo cp -r ./build/* dev.account.ggwp.world
+  sudo cp -r ./build/* /var/www/dev.account.ggwp.world
   ;;
 *) echo "Branch must have been choose. Now there are two branches: master and devnet" ;;
 esac
