@@ -1,5 +1,6 @@
 import React from 'react';
 import cl from './Faucet.module.css'
+import InterButton from "../../UI/Buttons/InterButton";
 
 const Faucet = ({setAmount, isAirdropLoading, createMessage}) => {
     return (
@@ -15,13 +16,12 @@ const Faucet = ({setAmount, isAirdropLoading, createMessage}) => {
                     onChange={e => setAmount(e.target.value)}
                     placeholder="Maximum 3000 GGWP"
                 />
-                <button
-                    className={cl.Button}
+                <InterButton
                     disabled={isAirdropLoading}
                     onClick={createMessage}
                 >
                     Airdrop
-                </button>
+                </InterButton>
             </div>
         </div>
     );

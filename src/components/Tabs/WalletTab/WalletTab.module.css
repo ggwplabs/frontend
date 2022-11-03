@@ -13,26 +13,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-.Solscan{
-    border: 1px solid #147EFF;
-    border-radius: 4px;
-    margin-top: 80px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.Solscan a {
-    font-family: ProximaNovaExtrabold;
-    font-size: 14px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #147EFF;
-}
-
-
-
-
-

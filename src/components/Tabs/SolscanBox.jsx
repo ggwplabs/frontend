@@ -1,8 +1,10 @@
 import React from 'react';
-import cl from "./Solscan.module.css";
+import cl from "./SolscanBox.module.css";
 import {ReactComponent as Arrow} from "../../images/Tabs/arrow.svg";
+import {ReactComponent as Solscan} from "../../images/Tabs/solscan.svg";
 
-const Solscan = () => {
+
+const SolscanBox = () => {
     return (
         <div className={cl.Solscan}>
             <Solscan/>
@@ -14,4 +16,4 @@ const Solscan = () => {
     );
 };
 
-export default Solscan;
+export default SolscanBox;

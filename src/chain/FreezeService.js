@@ -19,7 +19,7 @@ const opts = {preflightCommitment: "processed"}
 export default class FreezeService {
     static async freezing(network, userAccount, amount) {
 
-        let connection = new Connection(clusterApiUrl(network),);
+        let connection = new Connection(clusterApiUrl(network));
 
         const provider = new AnchorProvider(connection, window.solana, opts.preflightCommitment,)
         const programFreezing = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
@@ -97,5 +97,37 @@ export default class FreezeService {
             .rpc()
 
         return tx
+    }
+
+    static async getInfo(network, userAccount) {
+
+        let connection = new Connection(clusterApiUrl(network));
+
+        const provider = new AnchorProvider(
+            connection, window.solana, opts.preflightCommitment,
+        )
+        const program = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
+
+        const userInfo = await PublicKey.findProgramAddress([
+                Buffer.from('user_info', 'utf8'),
+                FREEZING_INFO.toBuffer(),
+                userAccount.toBuffer(),
+            ],
+            FREEZING_PROGRAM_ID
+        )
+
+        let userInfoAccount;
+        try {
+            userInfoAccount = await program.account.userInfo.fetch(userInfo[0].toString())
+            return {
+                amount: Number(userInfoAccount.freezedAmount),
+                freezedTime: Number(userInfoAccount.freezedTime),
+                lastGettingGpass: Number(userInfoAccount.lastGettingGpass)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+        return userInfoAccount
     }
 }

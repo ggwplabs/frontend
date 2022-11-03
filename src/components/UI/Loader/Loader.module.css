@@ -1,17 +1,25 @@
 .loader {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 3px dashed deepskyblue;
-    animation: rotate 1s infinite linear;
+    height: 100%;
+    width: 622px;
+    font-family: ProximaNovaBold;
+    font-size: 24px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: flow 2s ease-in-out infinite;
+    background: linear-gradient(to right, #00EA88, #147EFF, #00EA88, #147EFF);
+    background-size: 300%;
+    background-position: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-@keyframes rotate {
+@keyframes flow {
     from {
-        transform: rotate(0deg) scale(1);
+        background-position: 100%;
     }
     to {
-        transform: rotate(360deg) scale(1.4);
+        background-position: 0%;
     }
-
 }

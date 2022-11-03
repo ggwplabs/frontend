@@ -37,29 +37,3 @@
     outline: none !important;
 }
 
-.Button{
-    font-family: ProximaNovaBold;
-    font-size: 20px;
-
-    margin-left: 20px;
-    border-radius: 2px;
-    /*padding: 8px 14px;*/
-    width: 160px;
-    height: 40px;
-    text-transform: uppercase;
-    color: white;
-    background-color: #147EFF;
-
-}
-
-.Button:disabled{
-    background-color: #D2D2D2;
-}
-
-.Button:hover{
-    background-color: #1E5FDF;
-}
-
-.Button:active{
-    background-color: #00EA88;
-}

@@ -5,11 +5,10 @@ import MessagesList from "../../MessageList/MessagesList";
 import WalletService from "../../../chain/WalletService";
 import cl from './WalletTab.module.css'
 import GgwpBalance from "./GgwpBalance";
-import {ReactComponent as Arrow} from "../../../images/Tabs/Wallet/arrow.svg";
-import {ReactComponent as Solscan} from "../../../images/Tabs/solscan.svg";
 import Faucet from "./Faucet";
 import Convertor from "./Convertor";
 import BuyGgwp from "./BuyGgwp";
+import SolscanBox from "../SolscanBox";
 
 const TabWallet = ({publicKey}) => {
     const network = 'devnet'
@@ -64,7 +63,8 @@ const TabWallet = ({publicKey}) => {
     useEffect(() => {
         getBalance()
 
-    }, [publicKey]);
+    }, [publicKey, isAirdropLoading]);
+
 
     const links = [
         {name: "eToro", ref: "#"},
@@ -110,13 +110,7 @@ const TabWallet = ({publicKey}) => {
                     isAirdropLoading={isAirdropLoading}
                     createMessage={createMessage}
                 />
-                <div className={cl.Solscan}>
-                    <Solscan/>
-                    <a href='#'>
-                        more info about GGWP token
-                    </a>
-                    <Arrow/>
-                </div>
+                <SolscanBox/>
             </div>
         </div>
     )

@@ -1,0 +1,95 @@
+.Gpass_info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.Text {
+    width: 620px;
+    color: #147EFF;
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+}
+
+.Text p {
+    margin-top: 25px;
+}
+
+.Frozen{
+    border: 5px solid pink;
+    display: flex;
+    width: 1080px;
+    height: 210px;
+    margin-top: 40px;
+}
+
+.Ggwp_frozen{
+    border: 1px solid #147EFF;
+    width: 622px;
+    height: 210px;
+    background: #EAF2FD;
+    border-radius: 4px;
+}
+
+.Frozen_balance{
+    /*border: 1px solid red;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 20px;
+}
+
+.Balance__amount{
+    font-family: ProximaNovaExtrabold;
+    font-style: normal;
+    font-size: 64px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #147EFF;
+}
+
+.Balance__icon{
+    display: flex;
+    align-items: center;
+    margin: 25px 0px;
+}
+
+.Balance__text{
+    font-family: ProximaNovaBold;
+    font-style: normal;
+    font-size: 20px;
+    color: #147EFF;
+    display: flex;
+    align-items: center;
+    margin: 25px 0px;
+}
+
+.Rewards{
+
+}
+
+.Get_reward{
+    display: flex;
+}
+
+.Info {
+    border: 1px #147EFF;
+    border-style: solid none none none;
+    margin-top: 60px;
+    padding-top: 80px;
+}
+
+.Info h1 {
+    font-family: ProximaNovaBold;
+    font-size: 24px;
+    color: #147EFF;
+    margin-bottom: 30px;
+}
+
+.Info li {
+    font-family: ProximaNovaRegular;
+    font-size: 24px;
+    color: #147EFF;
+    margin-left: 20px;
+}

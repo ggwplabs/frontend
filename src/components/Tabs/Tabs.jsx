@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import TabStaking from "./TabStaking";
 import TabWallet from "./WalletTab/TabWallet";
-import TabFreezing from "./TabFreezing";
+import TabFreezing from "./FreezingTab/TabFreezing";
 import cl from './Tabs.module.css'
 import TabButton from "../UI/Buttons/TabButton";
 
@@ -20,6 +20,14 @@ const Tabs = ({publicKey}) => {
         },
         {
             id: 2,
+            tabTitle: 'Freezing',
+            content:
+            <TabFreezing
+                publicKey={publicKey}
+            />
+        },
+        {
+            id: 3,
             tabTitle: 'Staking',
             content: <div className={cl.style_1}>
                 <div className={cl.style_2}>
@@ -34,18 +42,10 @@ const Tabs = ({publicKey}) => {
                 // />
         },
         {
-            id: 3,
-            tabTitle: 'Freezing',
-            content: <div>TEST3</div>
-                // <TabFreezing
-                //     publicKey={publicKey}
-                // />
-        },
-        {
             id: 4,
             tabTitle: 'NFT',
             content: <div>TEST4</div>
-            // <TabFreezing
+            // <FreezingTab
             //     publicKey={publicKey}
             // />
         },

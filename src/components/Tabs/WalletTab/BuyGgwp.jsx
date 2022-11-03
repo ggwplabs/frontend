@@ -1,6 +1,6 @@
 import React from 'react';
 import cl from "./BuyGgwp.module.css";
-import {ReactComponent as Arrow} from "../../../images/Tabs/Wallet/arrow.svg";
+import {ReactComponent as Arrow} from "../../../images/Tabs/arrow.svg";
 
 const BuyGgwp = ({currency, links}) => {
     return (
