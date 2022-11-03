@@ -1,0 +1,398 @@
+{
+  "version": "0.1.0",
+  "name": "gpass",
+  "instructions": [
+    {
+      "name": "initialize",
+      "docs": [
+        "First time initialization of contract parameters.",
+        "burn_period - period in seconds.",
+        "update_auth - authority for update instructions.",
+        "minters - list of minters.",
+        "burners - list of burners."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "burnPeriod",
+          "type": "u64"
+        },
+        {
+          "name": "updateAuth",
+          "type": "publicKey"
+        },
+        {
+          "name": "minters",
+          "type": {
+            "vec": "publicKey"
+          }
+        },
+        {
+          "name": "burners",
+          "type": {
+            "vec": "publicKey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateAdmin",
+      "docs": [
+        "Current admin can set the new admin."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "admin",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "setUpdateAuthority",
+      "docs": [
+        "Admin cat set the new update authority"
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "updateAuth",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateBurnPeriod",
+      "docs": [
+        "Update authority can set the new burn period value."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "burnPeriod",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updateMinters",
+      "docs": [
+        "Update authority can set the new minters list."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "minters",
+          "type": {
+            "vec": "publicKey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateBurners",
+      "docs": [
+        "Update authority can set the new burner list."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "burners",
+          "type": {
+            "vec": "publicKey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "createWallet",
+      "docs": [
+        "Creating the new wallet for user by payer (can be same)."
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "wallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mintTo",
+      "docs": [
+        "Mint the amount of GPASS to user wallet. Available only for minters.",
+        "There is trying to burn overdues before minting."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "to",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "burn",
+      "docs": [
+        "Burn the amount of GPASS from user wallet. Available only for burners.",
+        "There is trying to burn overdues before burning."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "tryBurnInPeriod",
+      "docs": [
+        "Everyone in any time can synchronize user GPASS balance and burn overdues."
+      ],
+      "accounts": [
+        {
+          "name": "wallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gpassInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "GpassInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "updateAuth",
+            "type": "publicKey"
+          },
+          {
+            "name": "burnPeriod",
+            "type": "u64"
+          },
+          {
+            "name": "totalAmount",
+            "type": "u64"
+          },
+          {
+            "name": "minters",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "burners",
+            "type": {
+              "vec": "publicKey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wallet",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "lastBurned",
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AccessDenied",
+      "msg": "Access denied"
+    },
+    {
+      "code": 6001,
+      "name": "Overflow",
+      "msg": "Operation overflow"
+    },
+    {
+      "code": 6002,
+      "name": "MaxMintersSizeExceeded",
+      "msg": "Max minters size exceeded"
+    },
+    {
+      "code": 6003,
+      "name": "MaxBurnersSizeExceeded",
+      "msg": "Max burners size exceeded"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidBurnPeriodValue",
+      "msg": "Invalid burn period value"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidMintAuthority",
+      "msg": "Invalid mint authority"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidBurnAuthority",
+      "msg": "Invalid burn authority"
+    },
+    {
+      "code": 6007,
+      "name": "ZeroMintAmount",
+      "msg": "Mint amount cannot be zero"
+    },
+    {
+      "code": 6008,
+      "name": "ZeroBurnAmount",
+      "msg": "Burn amount cannot be zero"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidLastBurnedValue",
+      "msg": "Invalid last burned value"
+    }
+  ]
+}

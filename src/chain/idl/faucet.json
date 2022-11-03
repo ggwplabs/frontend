@@ -1,0 +1,312 @@
+{
+  "version": "0.1.0",
+  "name": "faucet",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "faucetInfo",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "ggwpToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpMintAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "totalAmount",
+          "type": "u64"
+        },
+        {
+          "name": "oneTimeAirdropAmountLimit",
+          "type": "u64"
+        },
+        {
+          "name": "airdropLimitInTime",
+          "type": "u64"
+        },
+        {
+          "name": "resetCounterTime",
+          "type": "i64"
+        },
+        {
+          "name": "supplyLimit",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "returnMintAuth",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "faucetInfo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpMintAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "updateSupplyLimit",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "faucetInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "supplyLimit",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "airdrop",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userGgwpWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "faucetInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpMintAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "burn",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "userGgwpWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "faucetInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "FaucetInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "ggwpToken",
+            "type": "publicKey"
+          },
+          {
+            "name": "ggwpMintAuthBump",
+            "type": "u8"
+          },
+          {
+            "name": "totalAmount",
+            "type": "u64"
+          },
+          {
+            "name": "oneTimeAirdropAmountLimit",
+            "type": "u64"
+          },
+          {
+            "name": "airdropLimitInTime",
+            "type": "u64"
+          },
+          {
+            "name": "resetCounterTime",
+            "type": "i64"
+          },
+          {
+            "name": "supplyLimit",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "airdropCount",
+            "type": "u64"
+          },
+          {
+            "name": "lastResetCounter",
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AccessDenied",
+      "msg": "Access denied"
+    },
+    {
+      "code": 6001,
+      "name": "Overflow",
+      "msg": "Operation overflow"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidGGWPTokenOwner",
+      "msg": "Invalid GGWP Token owner"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidGGWPTokenPK",
+      "msg": "Invalid GGWP Token PK"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidGGWPWalletOwner",
+      "msg": "Invalid GGWP Wallet owner"
+    },
+    {
+      "code": 6005,
+      "name": "GGWPTokenSupplyLimitExceeded",
+      "msg": "GGWP Token supply limit exceeded"
+    },
+    {
+      "code": 6006,
+      "name": "ZeroAirdropAmount",
+      "msg": "Zero airdrop amount"
+    },
+    {
+      "code": 6007,
+      "name": "ZeroBurnAmount",
+      "msg": "Zero burn amount"
+    },
+    {
+      "code": 6008,
+      "name": "OneTimeLimitExceeded",
+      "msg": "One time airdrop limit exceeded"
+    },
+    {
+      "code": 6009,
+      "name": "AirdropLimitInTimeExceeded",
+      "msg": "Airdrop limit in time exceeded"
+    }
+  ]
+}

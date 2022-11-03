@@ -1,46 +1,102 @@
-import React, {useState} from "react";
-import LoginForm from "./components/UI/LoginForm/LoginForm";
+import React, {useEffect, useState} from "react";
+import Tabs from "./components/UI/tabs/Tabs";
+
 
 function App() {
-    const [connected, setConnected] = useState(false)
+    const [pubKey, setPubKey] = useState(null);
+    const isPhantomInstalled = window.phantom?.solana?.isPhantom
 
-    async function connectWallet() {
-        try {
-            await window.solana.connect();
-            setConnected(true)
-        } catch (e) {
-            console.log(e)
+    const getProvider = () => {
+        if ('phantom' in window) {
+            const provider = window.phantom?.solana;
+
+            if (provider?.isPhantom) {
+                return provider;
+            }
         }
+    };
+
+    const provider = getProvider()
+
+    useEffect(() => {
+
+        if (isPhantomInstalled) {
+            window.solana.on("connect", (publicKey) => {
+                setPubKey(publicKey);
+            });
+
+            window.solana.on("disconnect", () => {
+                setPubKey(null);
+            });
+
+            window.solana.on('accountChanged', (publicKey) => {
+                setPubKey(publicKey);
+                window.solana.connect()
+            });
+        }
+
+    }, [window.solana, isPhantomInstalled]);
+
+    if (!isPhantomInstalled) {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}>
+                <p>Please install <a
+                    target={"_blank"}
+                    href={"https://phantom.app/"}
+                >
+                    PHANTOM
+                </a> to continue</p>
+            </div>
+        )
     }
 
-    const isPhantomInstalled = window.solana && window.solana.isPhantom
-
-    if (isPhantomInstalled) {
-        if (connected) {
-            return (
-                <div>
-                    Welcome!
-                </div>
-            )
-        } else {
-            return (
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}
-                >
-                    <LoginForm connectPhantom={connectWallet}>
-                    </LoginForm>
-                </div>
-            )
-        }
+    if (pubKey) {
+        return (
+            <div>
+                <Tabs
+                    publicKey={pubKey}
+                />
+                <button
+                    style={{marginTop: 30}}
+                    onClick={async () => await provider.disconnect()}
+                > Logout
+                </button>
+            </div>
+        )
     } else {
         return (
-            window.alert("Get a phantom wallet"),
-            window.location = "https://phantom.app/"
-        );
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
+            >
+                <button
+                    style={{
+                        marginTop: 30
+                    }}
+                    onClick={async () => await window.solana.connect()}
+                >
+                    Login with phantom
+                </button>
+            </div>
+        )
     }
+
+    return (
+        <div>
+            <a
+                target={"_blank"}
+                href={"https://phantom.app/"}
+            >
+                Install phantom
+            </a>
+        </div>
+    )
 }
 
 export default App;

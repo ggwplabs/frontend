@@ -1,0 +1,591 @@
+{
+  "version": "0.1.0",
+  "name": "staking",
+  "instructions": [
+    {
+      "name": "initialize",
+      "docs": [
+        "Initialize new staking info account with params."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "treasuryAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stakingFundAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ggwpToken",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "accumulativeFund",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stakingFund",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "updateAuth",
+          "type": "publicKey"
+        },
+        {
+          "name": "epochPeriodDays",
+          "type": "u16"
+        },
+        {
+          "name": "minStakeAmount",
+          "type": "u64"
+        },
+        {
+          "name": "holdPeriodDays",
+          "type": "u16"
+        },
+        {
+          "name": "holdRoyalty",
+          "type": "u8"
+        },
+        {
+          "name": "royalty",
+          "type": "u8"
+        },
+        {
+          "name": "aprStart",
+          "type": "u8"
+        },
+        {
+          "name": "aprStep",
+          "type": "u8"
+        },
+        {
+          "name": "aprEnd",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "updateAdmin",
+      "docs": [
+        "Current admin can set the new admin."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "admin",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "setUpdateAuthority",
+      "docs": [
+        "Admin can set the new update authority"
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "updateAuth",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateEpochPeriodDays",
+      "docs": [
+        "Update authority can set new epoch period in days."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "epochPeriodDays",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "updateMinStakeAmount",
+      "docs": [
+        "Update authority can set new min stake amount."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "minStakeAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updateHoldPeriodDays",
+      "docs": [
+        "Update authority can set new hold period in days."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "holdPeriodDays",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "updateHoldRoyalty",
+      "docs": [
+        "Update authority can set new hold royalty in percent."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "holdRoyalty",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "updateRoyalty",
+      "docs": [
+        "Update authority can set new royalty in percent."
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "royalty",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "stake",
+      "docs": [
+        "User can stake amount of GGWP to earn extra GGWP."
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userGgwpWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accumulativeFund",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "docs": [
+        "User can withdraw full amount of GGWP with extra reward."
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "stakingInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userGgwpWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "stakingFundAuth",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accumulativeFund",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stakingFund",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "StakingInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "updateAuth",
+            "type": "publicKey"
+          },
+          {
+            "name": "ggwpToken",
+            "type": "publicKey"
+          },
+          {
+            "name": "accumulativeFund",
+            "type": "publicKey"
+          },
+          {
+            "name": "stakingFund",
+            "type": "publicKey"
+          },
+          {
+            "name": "stakingFundAuthBump",
+            "type": "u8"
+          },
+          {
+            "name": "treasury",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasuryAuthBump",
+            "type": "u8"
+          },
+          {
+            "name": "totalStaked",
+            "type": "u64"
+          },
+          {
+            "name": "startTime",
+            "type": "i64"
+          },
+          {
+            "name": "epoch",
+            "type": "u64"
+          },
+          {
+            "name": "epochPeriodDays",
+            "type": "u16"
+          },
+          {
+            "name": "minStakeAmount",
+            "type": "u64"
+          },
+          {
+            "name": "holdPeriodDays",
+            "type": "u16"
+          },
+          {
+            "name": "holdRoyalty",
+            "type": "u8"
+          },
+          {
+            "name": "royalty",
+            "type": "u8"
+          },
+          {
+            "name": "aprStart",
+            "type": "u8"
+          },
+          {
+            "name": "aprStep",
+            "type": "u8"
+          },
+          {
+            "name": "aprEnd",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isInitialized",
+            "type": "bool"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "stakeTime",
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AccessDenied",
+      "msg": "Access denied"
+    },
+    {
+      "code": 6001,
+      "name": "Overflow",
+      "msg": "Operation overflow"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidEpochPeriodDays",
+      "msg": "Invalid epoch period days"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidMinStakeAmount",
+      "msg": "Invalid min stake amount"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidHoldPeriodDays",
+      "msg": "Invalid hold period days"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidHoldRoyalty",
+      "msg": "Invalid hold royalty"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidRoyalty",
+      "msg": "Invalid royalty"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidAPR",
+      "msg": "Invalid APR"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidAccumulativeFundMint",
+      "msg": "Invalid accumulative fund mint PK"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidAccumulativeFundPK",
+      "msg": "Invalid accumulative fund pk"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidTreasuryMint",
+      "msg": "Invalid treasury mint PK"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidTreasuryPK",
+      "msg": "Invalid treasury PK"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidTreasuryOwner",
+      "msg": "Invalid treasury owner PK"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidUserGGWPWalletMint",
+      "msg": "Invalid user GGWP wallet mint"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidUserGGWPWalletOwner",
+      "msg": "Invalid user GGWP wallet owner"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidStakingFundMint",
+      "msg": "Invalid staking fund mint PK"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidStakingFundOwner",
+      "msg": "Invalid staking fund owner PK"
+    },
+    {
+      "code": 6017,
+      "name": "MinStakeAmountExceeded",
+      "msg": "Minimum stake amount exceeded"
+    },
+    {
+      "code": 6018,
+      "name": "AdditionalStakeNotAllowed",
+      "msg": "Additional stake not allowed"
+    },
+    {
+      "code": 6019,
+      "name": "NothingToWithdraw",
+      "msg": "Nothing to withdraw"
+    }
+  ]
+}
