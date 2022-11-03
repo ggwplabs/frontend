@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {useInteract} from "../hooks/useInteract";
-import FreezeService from "../../chain/FreezeService";
-import Loader from "../UI/Loader/Loader";
-import FaucetService from "../../chain/FaucetService";
+import {useInteract} from "../../hooks/useInteract";
+import FreezeService from "../../../chain/FreezeService";
+import Loader from "../../UI/Loader/Loader";
+import FaucetService from "../../../chain/FaucetService";
 
 
 const TabFreezing = ({publicKey}) => {
