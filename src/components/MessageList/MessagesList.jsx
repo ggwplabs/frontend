@@ -1,6 +1,7 @@
 import React from 'react';
 import cl from './MessagesList.module.css'
 import LoaderMessage from "../UI/Loader/LoaderMessage";
+import {ReactComponent as Cross} from '../../images/MessageList/Cross.svg';
 
 const MessagesList = ({messages, remove, isLoading}) => {
 
@@ -18,9 +19,11 @@ const MessagesList = ({messages, remove, isLoading}) => {
                         >
                             Error! {message.text}
                             <button
+                                // className={cl.Button_faild}
                                 onClick={() => remove(message.id)}
                             >
-                                close
+                                Close
+                                {/*<Cross/>*/}
                             </button>
                         </div>
                         : <div
@@ -36,7 +39,8 @@ const MessagesList = ({messages, remove, isLoading}) => {
                             <button
                                 onClick={() => remove(message.id)}
                             >
-                                close
+                                Close
+                                {/*<Cross/>*/}
                             </button>
                         </div>
                     }

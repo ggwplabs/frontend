@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import cl from './RadioCards.module.css'
-import {ReactComponent as Gpass} from '../../../images/Tabs/g_pass_logo.svg'
-import InterButton from "../../UI/Buttons/InterButton";
+import {ReactComponent as Gpass} from '../../../../images/Tabs/g_pass_logo.svg'
+import InterButton from "../../../UI/Buttons/InterButton";
+import FreezeService from "../../../../chain/FreezeService";
 
-const RadioCards = ({create, setAmount}) => {
+const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading}) => {
     const [value, setValue] = useState(1)
     const items = [
         {id: 1, gpass: 5,  ggwp: 1000, color: '#5DDFA5'},
@@ -13,6 +14,19 @@ const RadioCards = ({create, setAmount}) => {
         {id: 5, gpass: 25, ggwp: 4800, color: '#FFCB14'},
     ]
 
+    const freeze = async () => {
+        const amount = items.filter(item => item.id === value)[0].ggwp
+        setIsMessageLoading(true)
+        try {
+            const tx = await FreezeService.freezing('devnet', publicKey, amount)
+            create({id: Date.now(), error: false, text: tx})
+        } catch (e) {
+            create({id: Date.now(), error: true, text: e.message})
+        }
+        finally {
+            setIsMessageLoading(false)
+        }
+    }
 
     return (
         <div className={cl.Radio_box}
@@ -20,7 +34,7 @@ const RadioCards = ({create, setAmount}) => {
             {items.map(item => (
                     <div
                         key={item.id}
-                        onClick={() => {setValue(item.id); setAmount(item.ggwp)}}
+                        onClick={() => setValue(item.id)}
                         className={cl.Item}
                         style={{
                             borderColor: item.color,
@@ -53,7 +67,8 @@ const RadioCards = ({create, setAmount}) => {
                 )
             )}
             <InterButton
-                onClick={create}
+                disabled={isMessageLoading}
+                onClick={freeze}
             >
                 freezing
             </InterButton>

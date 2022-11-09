@@ -136,8 +136,24 @@ export default class StakeService {
             PROGRAM_ID
         )
 
-        const tx = await program.rpc.withdraw({
-            accounts: {
+        // const tx = await program.rpc.withdraw({
+        //     accounts: {
+        //         user: userAccount,
+        //         stakingInfo: STAKING_INFO,
+        //         userInfo: userInfo[0],
+        //         userGgwpWallet: new PublicKey(GGWPWallet),
+        //         treasuryAuth: treasuryAuth[0],
+        //         stakingFundAuth: stakingFundAuth[0],
+        //         treasury: stakingInfo.treasury,
+        //         accumulativeFund: stakingInfo.accumulativeFund,
+        //         stakingFund: STAKING_FUND,
+        //         systemProgram: SYSTEM_PROGRAM_ID,
+        //         tokenProgram: TOKEN_PROGRAM_ID,
+        //     }
+        // })
+
+        const tx = await program.methods.withdraw()
+            .accounts({
                 user: userAccount,
                 stakingInfo: STAKING_INFO,
                 userInfo: userInfo[0],
@@ -149,8 +165,8 @@ export default class StakeService {
                 stakingFund: STAKING_FUND,
                 systemProgram: SYSTEM_PROGRAM_ID,
                 tokenProgram: TOKEN_PROGRAM_ID,
-            }
-        })
+            })
+            .rpc()
         return tx
     }
 

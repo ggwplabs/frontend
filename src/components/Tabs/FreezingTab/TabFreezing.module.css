@@ -1,3 +1,10 @@
+.Loader_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
 .Gpass_info {
     display: flex;
     justify-content: space-between;
@@ -13,64 +20,6 @@
 
 .Text p {
     margin-top: 25px;
-}
-
-.Frozen{
-    border: 5px solid pink;
-    display: flex;
-    width: 1080px;
-    height: 210px;
-    margin-top: 40px;
-}
-
-.Ggwp_frozen{
-    border: 1px solid #147EFF;
-    width: 622px;
-    height: 210px;
-    background: #EAF2FD;
-    border-radius: 4px;
-}
-
-.Frozen_balance{
-    /*border: 1px solid red;*/
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 20px;
-}
-
-.Balance__amount{
-    font-family: ProximaNovaExtrabold;
-    font-style: normal;
-    font-size: 64px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #147EFF;
-}
-
-.Balance__icon{
-    display: flex;
-    align-items: center;
-    margin: 25px 0px;
-}
-
-.Balance__text{
-    font-family: ProximaNovaBold;
-    font-style: normal;
-    font-size: 20px;
-    color: #147EFF;
-    display: flex;
-    align-items: center;
-    margin: 25px 0px;
-}
-
-.Rewards{
-
-}
-
-.Get_reward{
-    display: flex;
 }
 
 .Info {

@@ -11,18 +11,6 @@ function App() {
     const [pubKey, setPubKey] = useState(null);
     const isPhantomInstalled = window.phantom?.solana?.isPhantom
 
-    const getProvider = () => {
-        if ('Phantom' in window) {
-            const provider = window.phantom?.solana;
-
-            if (provider?.isPhantom) {
-                return provider;
-            }
-        }
-    };
-
-    const provider = getProvider()
-
     useEffect(() => {
 
         if (isPhantomInstalled) {
@@ -41,7 +29,6 @@ function App() {
         }
 
     }, [window.solana, isPhantomInstalled]);
-
 
     return (
         <div>

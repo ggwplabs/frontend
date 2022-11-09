@@ -10,18 +10,20 @@ const Faucet = ({setAmount, isAirdropLoading, createMessage}) => {
                 <div className={cl.Text}>
                     Enter amount GGWP
                 </div>
-                <input
-                    className={cl.Input}
-                    type='text'
-                    onChange={e => setAmount(e.target.value)}
-                    placeholder="Maximum 3000 GGWP"
-                />
-                <InterButton
-                    disabled={isAirdropLoading}
-                    onClick={createMessage}
-                >
-                    Airdrop
-                </InterButton>
+                <div className={cl.Inter_box}>
+                    <input
+                        className={cl.Input}
+                        type='text'
+                        onChange={e => setAmount(e.target.value)}
+                        placeholder="Maximum 3000 GGWP"
+                    />
+                    <InterButton
+                        disabled={isAirdropLoading}
+                        onClick={createMessage}
+                    >
+                        Airdrop
+                    </InterButton>
+                </div>
             </div>
         </div>
     );
