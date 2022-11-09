@@ -1,0 +1,94 @@
+.Footer {
+    margin-top: 100px;
+}
+
+.Father_box {
+    display: flex;
+    justify-content: center;
+}
+
+.First_box {
+    display: flex;
+    justify-content: space-between;
+    width: 1080px;
+}
+
+
+.Log__box {
+    margin-left: 90px;
+}
+
+.Log__btn {
+    background: #147EFF;
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: white;
+    border: 1px solid white;
+    border-radius: 2px;
+    padding: 8px 14px;
+}
+
+.Menu {
+    list-style-type: none;
+}
+
+.Menu li {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.Menu a {
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 17.45px;
+    color: #147EFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.Second_box {
+    display: flex;
+    justify-content: center;
+    width: 1080px;
+}
+
+.Info_box {
+    border: 0.5px #147EFF;
+    border-style: none none none solid;
+    margin-top: 80px;
+
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 18px;
+    color: #147EFF;
+
+    margin-right: 10px;
+    padding-left: 10px;
+}
+
+.Info {
+    margin-top: 80px;
+
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 18px;
+    color: #00EA88;
+
+    margin-right: 10px;
+    padding-left: 10px;
+
+}
+
+.Info a {
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 18px;
+    color: #00EA88;
+    text-decoration: none;
+}
+
+

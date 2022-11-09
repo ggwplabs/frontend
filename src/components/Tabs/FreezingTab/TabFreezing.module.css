@@ -1,0 +1,44 @@
+.Loader_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.Gpass_info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.Text {
+    width: 620px;
+    color: #147EFF;
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+}
+
+.Text p {
+    margin-top: 25px;
+}
+
+.Info {
+    border: 1px #147EFF;
+    border-style: solid none none none;
+    margin-top: 60px;
+    padding-top: 80px;
+}
+
+.Info h1 {
+    font-family: ProximaNovaBold;
+    font-size: 24px;
+    color: #147EFF;
+    margin-bottom: 30px;
+}
+
+.Info li {
+    font-family: ProximaNovaRegular;
+    font-size: 24px;
+    color: #147EFF;
+    margin-left: 20px;
+}

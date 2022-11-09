@@ -5,10 +5,18 @@
 }
 
 #root {
-    display: flex;
-    justify-content: center;
+
 }
 
 .App{
-    width: 800px;
+}
+
+.Login{
+    height: 704px;
+    background: url(../images/login.jpg)  center;
+}
+
+.Body{
+    height: 100px;
+    background: url(../images/login.jpg)  center;
 }

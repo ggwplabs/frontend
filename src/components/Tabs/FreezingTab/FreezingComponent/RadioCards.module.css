@@ -1,0 +1,66 @@
+.Radio_box{
+    /*border: 2px solid red;*/
+
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    flex-wrap: wrap;
+
+    width: 1080px;
+    /*height: 50px;*/
+}
+
+.Item{
+    border: 1px solid;
+    border-radius: 4px;
+    width: 255px;
+    height: 200px;
+    margin: 20px 0px;
+}
+
+.Circle{
+    border: 1px solid;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.Level{
+    font-family: ProximaNovaExtrabold;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    border: 1px;
+    border-style: none  none solid none;
+    padding: 10px 0px;
+    margin: 10px 20px;
+}
+
+.Text{
+    text-transform: uppercase;
+    margin: 10px 20px;
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+}
+
+.Info{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    margin: 0px 20px;
+}
+
+.Gpass{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.Amount{
+    font-family: ProximaNovaExtrabold;
+    font-size: 46px;
+    margin-right: 20px;
+
+}

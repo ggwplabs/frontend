@@ -1,0 +1,13 @@
+.Father{
+    display: flex;
+    justify-content: center;
+}
+
+.Tabs_box{
+    width: 1080px;
+}
+
+.Tabs{
+    display: flex;
+    justify-content: center;
+}

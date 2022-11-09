@@ -1,0 +1,16 @@
+.Tab__btn{
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #1E5FDF;
+    width: 270px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #1E5FDF;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.Tab__btn:disabled {
+    background: #147EFF;
+    color: #FFFFFF;
+}

@@ -1,0 +1,60 @@
+.Links_box{
+    margin-top: 80px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Buy_GGWP{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 20px;
+    padding: 0px 20px;
+    width: 1080px;
+
+    font-family: ProximaNovaExtrabold;
+    font-size: 24px;
+    color: #147EFF;
+    text-transform: uppercase;
+}
+
+.Exchange{
+    display: flex;
+    align-items: center;
+    border: 1px solid #147EFF;
+    border-radius: 4px;
+}
+
+.Name{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    padding: 12px 10px;
+}
+
+.Value{
+    border: 1px #147EFF;
+    border-style: none none none solid;
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+    padding: 0px 10px;
+}
+
+.Link{
+    border: 1px solid #147EFF;
+    border-radius: 4px;
+    width: 245px;
+    height: 60px;
+    margin: 20px 0px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 14px 0px 8px
+}
+
+.Link a {
+    font-family: ProximaNovaExtrabold;
+    font-size: 14px;
+    text-decoration: none;
+    color: #147EFF;
+}

@@ -1,0 +1,46 @@
+.Faucet_box{
+    border: 1px #147EFF;
+    border-style: solid none solid none;
+    margin-top: 100px;
+    color: #147EFF;
+    padding: 0px 20px;
+}
+
+.Label{
+    font-family: ProximaNovaExtrabold;
+    font-size: 24px;
+    margin: 20px 0px;
+}
+
+.Text{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    padding: 0px 8px;
+}
+
+.Inter_box{
+
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.Input{
+    border: 1px solid #147EFF;
+    width: 522px;
+    height: 40px;
+    margin-right: 20px;
+    padding: 0px 8px;
+}
+
+.Input::placeholder{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    color: #D2D2D2;
+}
+
+.Input:focus{
+    border: 1px solid #147EFF;
+    outline: none !important;
+}
+

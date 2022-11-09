@@ -19,7 +19,7 @@ const opts = {preflightCommitment: "processed"}
 export default class FreezeService {
     static async freezing(network, userAccount, amount) {
 
-        let connection = new Connection(clusterApiUrl(network),);
+        let connection = new Connection(clusterApiUrl(network));
 
         const provider = new AnchorProvider(connection, window.solana, opts.preflightCommitment,)
         const programFreezing = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
@@ -98,4 +98,170 @@ export default class FreezeService {
 
         return tx
     }
+
+    static async getInfo(network, userAccount) {
+        let connection = new Connection(clusterApiUrl(network));
+
+        const provider = new AnchorProvider(
+            connection, window.solana, opts.preflightCommitment,
+        )
+        const programFreezing = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
+
+        const userInfo = await PublicKey.findProgramAddress([
+                Buffer.from('user_info', 'utf8'),
+                FREEZING_INFO.toBuffer(),
+                userAccount.toBuffer(),
+            ],
+            FREEZING_PROGRAM_ID
+        )
+
+        const freezingInfo = await programFreezing.account.freezingInfo.fetch(FREEZING_INFO)
+
+        const isInitUserInfo = await connection.getAccountInfo(userInfo[0])
+
+        if (isInitUserInfo === null) {
+            return {
+                amount: 0,
+                freezedTime: 0,
+                lastGettingGpass: 0,
+                rewardPeriod: 0
+            }
+        }
+
+        let userInfoAccount;
+
+        try {
+            userInfoAccount = await programFreezing.account.userInfo.fetch(userInfo[0].toString())
+            return {
+                amount: Number(userInfoAccount.freezedAmount) / 10**9,
+                freezedTime: Number(userInfoAccount.freezedTime),
+                lastGettingGpass: Number(userInfoAccount.lastGettingGpass),
+                rewardPeriod: Number(freezingInfo.rewardPeriod)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    static async withdrawGpass(network, userAccount) {
+        let connection = new Connection(
+            clusterApiUrl(network),
+        );
+
+        const provider = new AnchorProvider(
+            connection, window.solana, opts.preflightCommitment,
+        )
+        const programFreezing = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
+
+        const userInfo = await PublicKey.findProgramAddress([
+                Buffer.from('user_info', 'utf8'),
+                FREEZING_INFO.toBuffer(),
+                userAccount.toBuffer(),
+            ],
+            FREEZING_PROGRAM_ID
+        )
+
+        const gpassWallet = await PublicKey.findProgramAddress([
+                Buffer.from('user_gpass_wallet', 'utf8'),
+                GPASS_INFO.toBuffer(),
+                userAccount.toBuffer(),
+            ],
+            GPASS_PROGRAM_ID
+        )
+
+        const gpassMintAuth = await PublicKey.findProgramAddress([
+                Buffer.from('gpass_mint_auth', 'utf8'),
+                FREEZING_INFO.toBuffer(),
+                GPASS_INFO.toBuffer(),
+            ],
+            FREEZING_PROGRAM_ID
+        )
+
+        const tx = await programFreezing.methods.withdrawGpass()
+            .accounts({
+                user: userAccount,
+                userInfo: userInfo[0],
+                freezingInfo: FREEZING_INFO,
+                gpassInfo: GPASS_INFO,
+                userGpassWallet: gpassWallet[0],
+                gpassMintAuth: gpassMintAuth[0],
+                gpassProgram: GPASS_PROGRAM_ID
+            })
+            .rpc()
+
+        return tx;
+    }
+
+    static async unfreeze(network, userAccount) {
+        let connection = new Connection(
+            clusterApiUrl(network),
+        );
+
+        const provider = new AnchorProvider(
+            connection, window.solana, opts.preflightCommitment,
+        )
+        const programFreezing = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
+
+        const userInfo = await PublicKey.findProgramAddress([
+                Buffer.from('user_info', 'utf8'),
+                FREEZING_INFO.toBuffer(),
+                userAccount.toBuffer(),
+            ],
+            FREEZING_PROGRAM_ID
+        )
+
+        const gpassWallet = await PublicKey.findProgramAddress([
+                Buffer.from('user_gpass_wallet', 'utf8'),
+                GPASS_INFO.toBuffer(),
+                userAccount.toBuffer(),
+            ],
+            GPASS_PROGRAM_ID
+        )
+
+        const GGPWWallet = await PublicKey.findProgramAddress([
+                userAccount.toBuffer(),
+                TOKEN_PROGRAM_ID.toBuffer(),
+                GGWPM_MINT.toBuffer(),
+            ],
+            SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+        )
+
+        const gpassMintAuth = await PublicKey.findProgramAddress([
+                Buffer.from('gpass_mint_auth', 'utf8'),
+                FREEZING_INFO.toBuffer(),
+                GPASS_INFO.toBuffer(),
+            ],
+            FREEZING_PROGRAM_ID
+        )
+
+        const freezingInfo = await programFreezing.account.freezingInfo.fetch(FREEZING_INFO)
+
+        const treasuryAuth = await PublicKey.findProgramAddress([
+                Buffer.from('treasury_auth', 'utf8'),
+                FREEZING_INFO.toBuffer(),
+            ],
+            FREEZING_PROGRAM_ID
+        )
+
+        const tx = await programFreezing.methods.unfreeze()
+            .accounts({
+                user: userAccount,
+                userInfo: userInfo[0],
+                freezingInfo: FREEZING_INFO,
+                gpassInfo: GPASS_INFO,
+                userGpassWallet: gpassWallet[0],
+                userGgwpWallet: GGPWWallet[0],
+                gpassMintAuth: gpassMintAuth[0],
+                accumulativeFund: freezingInfo.accumulativeFund,
+                treasury: freezingInfo.treasury,
+                treasuryAuth: treasuryAuth[0],
+                tokenProgram: TOKEN_PROGRAM_ID,
+                gpassProgram: GPASS_PROGRAM_ID
+            })
+            .rpc()
+
+        return tx
+
+    }
+
 }
