@@ -6,10 +6,10 @@ const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b
 const GGWPM_MINT_ACCOUNT = new PublicKey('5J5iMoraQ962XW7uApXQRTCu9jEahBnVCsGvzAjQKm9x')
 const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
 const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111')
-const STAKING_INFO = new PublicKey('6pxztvdsDpmAXRj6btu8piVxJmwn3Vu2eiYMn8BnuYDK')
-const ACCUMULATIVE_FUND = new PublicKey('71uJ6ncA8tgPfCiWgLL1XXRBKFAf5gKb6RyHqgRGajd5')
+const STAKING_INFO = new PublicKey('X6bHGGFC7RwgNyMKWRpLpy63gmNogSAdpZcb58Ut35K')
+const ACCUMULATIVE_FUND = new PublicKey('6Z1QsKwN2DUcuS7gpF1tvrmafPg3nQvdDctGgDUQqLLf')
 const PROGRAM_ID = new PublicKey('ELRFw9awBQFuvvxnf3R1Xaihdy6ypWY7sH6nTNXh8EX1')
-const STAKING_FUND = new PublicKey('59W5xgePwhTgy8WiUbrgmAwQ7btzkNQaL4foZNbPMyLm');
+const STAKING_FUND = new PublicKey('6hmnXJEvdoWKY7CfGocFdtVvZeai1qsCFjwgLUKim99R');
 
 const opts = {preflightCommitment: "processed"}
 
