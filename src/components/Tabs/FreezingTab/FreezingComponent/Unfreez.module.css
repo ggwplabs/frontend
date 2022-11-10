@@ -80,7 +80,7 @@
     border: 1px solid #147EFF;
     border-radius: 2px;
     width: 582px;
-
+    padding: 8px 0px;
 }
 
 .Unfreeze_button:hover{
@@ -94,6 +94,16 @@
 }
 
 .Unfreeze_button:disabled{
+    color: #D2D2D2;
+    border-color: #D2D2D2;
+}
+
+.Unfreeze_button:disabled:hover{
+    color: #D2D2D2;
+    border-color: #D2D2D2;
+}
+
+.Unfreeze_button:disabled:active{
     color: #D2D2D2;
     border-color: #D2D2D2;
 }

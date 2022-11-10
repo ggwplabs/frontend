@@ -8,7 +8,7 @@
     flex-wrap: wrap;
 
     width: 1080px;
-    /*height: 50px;*/
+    /*height: 440px;*/
 }
 
 .Item{
@@ -17,6 +17,10 @@
     width: 255px;
     height: 200px;
     margin: 20px 0px;
+}
+
+.Item:hover{
+    border-width: 2px;
 }
 
 .Circle{
@@ -62,5 +66,4 @@
     font-family: ProximaNovaExtrabold;
     font-size: 46px;
     margin-right: 20px;
-
 }
