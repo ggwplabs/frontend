@@ -10,7 +10,7 @@ const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b
 const GGWPM_MINT = new PublicKey('5J5iMoraQ962XW7uApXQRTCu9jEahBnVCsGvzAjQKm9x')
 const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
 const FREEZING_INFO = new PublicKey('9kP4Rdf3S3Zyqh6LHmQpdr2KzWxMCVYgGyUvYtEgcc3z')
-const GPASS_INFO = new PublicKey('6HXsq5dPigVxj3ReBNv2S7bp8LxYBhdQJAuY32toj4qG')
+const GPASS_INFO = new PublicKey('A956aTN5e27jxtNtv7tEzb1Aam9akUW7gmNx5tYQtZzy')
 const GPASS_PROGRAM_ID = new PublicKey('Gv9WAng6iPymaDwXMQrbsh2uTkDpAPTB89Ld4ctJejMG')
 const FREEZING_PROGRAM_ID = new PublicKey('ABHUowgjyTkmbMRRuMYJ5ui4wAz6Z6HE4PQMHy9YqMrQ')
 
@@ -20,7 +20,6 @@ const opts = {preflightCommitment: "processed"}
 export default class GpassService {
 
     static async getBalance(network, userAccount) {
-
         let connection = new Connection(
             clusterApiUrl(network),
         );
@@ -28,6 +27,8 @@ export default class GpassService {
         const provider = new AnchorProvider(
             connection, window.solana, opts.preflightCommitment,
         )
+        // const programFreezing = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
+
         const program = new Program(idlGpass, GPASS_PROGRAM_ID, provider)
 
         const walletAccount = await PublicKey.findProgramAddress(

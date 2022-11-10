@@ -2,15 +2,25 @@
     font-family: ProximaNovaRegular;
     font-size: 18px;
     text-transform: uppercase;
-    color: #1E5FDF;
+    color: #147EFF;
     width: 270px;
     height: 40px;
     background: #FFFFFF;
-    border: 1px solid #1E5FDF;
+    border: 1px solid #147EFF;
     border-radius: 4px 4px 0px 0px;
 }
 
 .Tab__btn:disabled {
     background: #147EFF;
     color: #FFFFFF;
+}
+
+.Tab__btn:disabled:hover {
+    background: #147EFF;
+    color: #FFFFFF;
+}
+
+.Tab__btn:hover {
+    color: #1E5FDF;
+    border-color: #1E5FDF;
 }

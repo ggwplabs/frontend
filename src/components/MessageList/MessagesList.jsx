@@ -19,11 +19,10 @@ const MessagesList = ({messages, remove, isLoading}) => {
                         >
                             Error! {message.text}
                             <button
-                                // className={cl.Button_faild}
+                                className={cl.Button_failed}
                                 onClick={() => remove(message.id)}
                             >
-                                Close
-                                {/*<Cross/>*/}
+                                Close <Cross fill={"#FF8CB5"} />
                             </button>
                         </div>
                         : <div
@@ -37,10 +36,10 @@ const MessagesList = ({messages, remove, isLoading}) => {
                                 {message.text}
                             </a>
                             <button
+                                className={cl.Button_sucessful}
                                 onClick={() => remove(message.id)}
                             >
-                                Close
-                                {/*<Cross/>*/}
+                                Close <Cross fill={"#00EA88"} />
                             </button>
                         </div>
                     }

@@ -151,6 +151,7 @@ export default class FreezeService {
         const provider = new AnchorProvider(
             connection, window.solana, opts.preflightCommitment,
         )
+
         const programFreezing = new Program(idlFreezing, FREEZING_PROGRAM_ID, provider)
 
         const userInfo = await PublicKey.findProgramAddress([

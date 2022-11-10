@@ -35,7 +35,6 @@ const FreezingComponent = ({network, publicKey, createMessage, setIsMessageLoadi
 
         setGpassBalance(Number(wallet.amount))
         setLastBurned(Number(wallet.lastBurned))
-
     })
 
     useEffect(() => {

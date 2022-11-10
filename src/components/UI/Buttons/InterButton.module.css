@@ -16,6 +16,16 @@
     border-color: #D2D2D2;
 }
 
+.Button:disabled:hover{
+    background-color: #D2D2D2;
+    border-color: #D2D2D2;
+}
+
+.Button:disabled:active{
+    background-color: #D2D2D2;
+    border-color: #D2D2D2;
+}
+
 .Button:hover{
     background-color: #1E5FDF;
     border-color: #1E5FDF;
