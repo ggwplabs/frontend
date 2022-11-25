@@ -4,6 +4,7 @@
     color: #FFFFFF;
     display: flex;
     justify-content: space-between;
+    width: 438px;
 }
 
 .Rewards_balance_and_time{
@@ -13,6 +14,7 @@
 .Rewards_balance{
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .Rewards_text{
@@ -23,7 +25,7 @@
 .Rewards_amount{
     font-family: ProximaNovaExtrabold;
     font-size: 64px;
-    padding-left: 60px;
+    padding: 0px 10px;
 }
 
 .Rewards_icon{

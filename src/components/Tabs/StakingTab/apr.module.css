@@ -47,7 +47,7 @@
 
 .Time{
     display: flex;
-    justify-content: space-between;
+
     font-family: ProximaNovaRegular;
     font-size: 14px;
     color: #147EFF;
@@ -57,7 +57,7 @@
 .Clock{
     display: flex;
     justify-content: space-between;
-    fill: #147EFF;
+
 }
 
 .Time__elem{

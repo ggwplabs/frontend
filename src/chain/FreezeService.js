@@ -116,25 +116,21 @@ export default class FreezeService {
         )
 
         const freezingInfo = await programFreezing.account.freezingInfo.fetch(FREEZING_INFO)
-
         const isInitUserInfo = await connection.getAccountInfo(userInfo[0])
 
         if (isInitUserInfo === null) {
             return {
                 amount: 0,
-                freezedTime: 0,
                 lastGettingGpass: 0,
                 rewardPeriod: 0
             }
         }
 
         let userInfoAccount;
-
         try {
             userInfoAccount = await programFreezing.account.userInfo.fetch(userInfo[0].toString())
             return {
                 amount: Number(userInfoAccount.freezedAmount) / 10**9,
-                freezedTime: Number(userInfoAccount.freezedTime),
                 lastGettingGpass: Number(userInfoAccount.lastGettingGpass),
                 rewardPeriod: Number(freezingInfo.rewardPeriod)
             }
@@ -262,7 +258,6 @@ export default class FreezeService {
             .rpc()
 
         return tx
-
     }
 
 }

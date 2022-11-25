@@ -4,15 +4,8 @@ import {ReactComponent as Gpass} from '../../../../images/Tabs/g_pass_logo.svg'
 import InterButton from "../../../UI/Buttons/InterButton";
 import FreezeService from "../../../../chain/FreezeService";
 
-const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading}) => {
+const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading, items}) => {
     const [value, setValue] = useState(1)
-    const items = [
-        {id: 1, gpass: 5,  ggwp: 1000, color: '#5DDFA5'},
-        {id: 2, gpass: 10, ggwp: 2000, color: '#12D6C2'},
-        {id: 3, gpass: 15, ggwp: 3000, color: '#1E5FDF'},
-        {id: 4, gpass: 20, ggwp: 4000, color: '#147EFF'},
-        {id: 5, gpass: 25, ggwp: 4800, color: '#FFCB14'},
-    ]
 
     const freeze = async () => {
         const amount = items.filter(item => item.id === value)[0].ggwp
@@ -39,7 +32,8 @@ const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading}) 
                         style={{
                             borderColor: item.color,
                             color: item.id === value ? "#fff" : item.color,
-                            backgroundColor: item.id === value ? item.color : "#fff"
+                            backgroundColor: item.id === value ? item.color : "#fff",
+                            boxShadow: item.id === value ? "0px 0px 10px rgba(30, 95, 223, 0.5)": "",
                         }}
                     >
                         <div className={cl.Level}>

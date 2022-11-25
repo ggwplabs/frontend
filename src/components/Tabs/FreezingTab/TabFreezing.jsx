@@ -1,22 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useInteract} from "../../hooks/useInteract";
 import FreezeService from "../../../chain/FreezeService";
-import Loader from "../../UI/Loader/Loader";
 import SolscanBox from "../SolscanBox";
 import cl from './TabFreezing.module.css'
-import RadioCards from "./FreezingComponent/RadioCards";
 import MessagesList from "../../MessageList/MessagesList";
-import {ReactComponent as GgIcon} from "../../../images/Tabs/Wallet/GG_coin_icon.svg";
-import {ReactComponent as Clock} from "../../../images/Tabs/Freezing/clock.svg";
 import FreezingComponent from "./FreezingComponent/FreezingComponent";
+import GpassService from "../../../chain/GpassService";
+import GpassBalance from "./FreezingComponent/GpassBalance";
 
 
 const TabFreezing = ({publicKey}) => {
     const network = 'devnet'
     const [messages, setMessages] = useState([])
-
     const [isMessageLoading, setIsMessageLoading] = useState(false)
-
     const removeMessage = (id) => {
         setMessages(messages.filter(message => message.id !== id))
     }
@@ -28,6 +24,28 @@ const TabFreezing = ({publicKey}) => {
             setMessages([message, ...messages.splice(0, 4)])
         }
     }
+
+    const [frozenBalance, setFrozenBalance] = useState()
+    const [lastGettingGpass, setLastGettingGpass] = useState()
+    const [rewardPeriod, setRewardPeriod] = useState()
+    const [gpassBalance, setGpassBalance] = useState()
+    const [willBurn, setWillBurn] = useState()
+
+    const [getInfo, isInfoLoading, getInfoError] = useInteract(async () => {
+        const gpassInfo = await GpassService.getInfo(network, publicKey)
+        const freezingInfo = await FreezeService.getInfo(network, publicKey)
+
+        await setWillBurn((Number(gpassInfo.lastBurned) + Number(gpassInfo.burnPeriod)));
+        await setFrozenBalance(freezingInfo.amount)
+        await setLastGettingGpass(freezingInfo.lastGettingGpass)
+        await setRewardPeriod(freezingInfo.rewardPeriod)
+        await setGpassBalance(Number(gpassInfo.amount))
+    })
+
+    useEffect(() => {
+        getInfo()
+
+    }, [publicKey, isMessageLoading]);
 
     return (
         <div>
@@ -44,15 +62,26 @@ const TabFreezing = ({publicKey}) => {
                     <p>Losing does not lead to extra burning of tokens.</p>
                 </div>
                 <div className={cl.loader}>
-
+                    {(gpassBalance > 0 && frozenBalance === 0 && !isInfoLoading && (willBurn - (Date.now() / 1000)) > 0)
+                        ? <GpassBalance
+                            gpassBalance={gpassBalance}
+                            willBurn={willBurn}
+                        />
+                        : <div></div>
+                    }
                 </div>
             </div>
             <FreezingComponent
-                network="devnet"
                 publicKey={publicKey}
                 createMessage={createMessage}
                 setIsMessageLoading={setIsMessageLoading}
                 isMessageLoading={isMessageLoading}
+                isLoadingInfo={isInfoLoading}
+                frozenBalance={frozenBalance}
+                gpassBalance={gpassBalance}
+                willBurn={willBurn}
+                lastGettingGpass={lastGettingGpass}
+                rewardPeriod={rewardPeriod}
             />
             <div className={cl.Info}>
                 <h1>TOKENS CAN BE UNFROZEN ACCORDING TO THE FOLLOWING</h1>

@@ -15,47 +15,47 @@ const Footer = () => {
                     <GGWP className={cl.Logo}/>
                     <ul className={cl.Menu}>
                         <li>
-                            <a href="#"> nft's </a>
+                            <a href="#/"> nft's </a>
                         </li>
                         <li>
-                            <a href="#"> staking </a>
+                            <a href="#/"> staking </a>
                         </li>
                         <li>
-                            <a href="#"> game center </a>
+                            <a href="#/"> game center </a>
                         </li>
                         <li>
-                            <a href="#"> white paper </a>
+                            <a href="#/"> white paper </a>
                         </li>
                         <li>
-                            <a href="#"> faq </a>
+                            <a href="#/"> faq </a>
                         </li>
                         <li>
-                            <a href="#"> community </a>
-                        </li>
-                    </ul>
-                    <ul className={cl.Menu}>
-                        <li>
-                            <a href="#"><img src={fb}/></a>
-                        </li>
-                        <li>
-                            <a href="#"><img src={insta}/></a>
-                        </li>
-                        <li>
-                            <a href="#"><img src={yt}/></a>
-                        </li>
-                        <li>
-                            <a href="#"><img src={mail}/></a>
-                        </li>
-                        <li>
-                            <a href="#"><img src={tg}/></a>
+                            <a href="#/"> community </a>
                         </li>
                     </ul>
                     <ul className={cl.Menu}>
                         <li>
-                            <a href="#"><img src={tg}/></a>
+                            <a href="#/"><img src={fb}/></a>
                         </li>
                         <li>
-                            <a href="#"><img src={tg}/></a>
+                            <a href="#/"><img src={insta}/></a>
+                        </li>
+                        <li>
+                            <a href="#/"><img src={yt}/></a>
+                        </li>
+                        <li>
+                            <a href="#/"><img src={mail}/></a>
+                        </li>
+                        <li>
+                            <a href="#/"><img src={tg}/></a>
+                        </li>
+                    </ul>
+                    <ul className={cl.Menu}>
+                        <li>
+                            <a href="#/"><img src={tg}/></a>
+                        </li>
+                        <li>
+                            <a href="#/"><img src={tg}/></a>
                         </li>
                     </ul>
                     <div className={cl.Log__box}>
@@ -79,9 +79,9 @@ const Footer = () => {
                             01248 719 254 | info@ggwp.world
                         </div>
                         <div className={cl.Info}>
-                            <a href="#"> Privacy Policy </a> |
-                            <a href="#"> Terms of Use </a> |
-                            <a href="#"> Cookies </a>
+                            <a href="#/"> Privacy Policy </a> |
+                            <a href="#/"> Terms of Use </a> |
+                            <a href="#/"> Cookies </a>
                         </div>
                     </div>
                 </div>
