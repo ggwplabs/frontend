@@ -1,0 +1,64 @@
+.Rewards{
+    border-radius: 4px;
+    background-color: #147EFF;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    width: 438px;
+}
+
+.Rewards_balance_and_time{
+    padding: 20px;
+}
+
+.Rewards_balance{
+    display: flex;
+    align-items: center;
+}
+
+.Rewards_text{
+    font-family: ProximaNovaBold;
+    font-size: 20px;
+}
+
+.Rewards_amount{
+    font-family: ProximaNovaExtrabold;
+    font-size: 64px;
+    padding-left: 60px;
+}
+
+.Rewards_icon{
+    fill: #FFFFFF;
+    margin: 20px 0px;
+    padding: 0px 20px;
+    border: 1px #FFFFFF;
+    border-style: none none none solid;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.Rewards_time{
+    display: flex;
+    align-items: center;
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+}
+
+.Rewards_burn{
+    fill: #FFFFFF;
+    margin-right: 8px;
+}
+
+.Time__elem{
+    padding: 0px 8px;
+}
+
+
+.Time__border_white{
+    border: 1px #FFFFFF;
+    border-style: none solid none solid;
+    padding: 0px 8px;
+}

@@ -20,6 +20,7 @@
 
     border-radius: 4px;
     border-color: #147EFF;
+    box-shadow: 0px 0px 20px rgba(30, 95, 223, 0.3);
 }
 
 .Login__btn:hover {

@@ -1,71 +1,59 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import cl from "../TabFreezing.module.css";
-import {ReactComponent as GgIcon} from "../../../../images/Tabs/Wallet/GG_coin_icon.svg";
-import {ReactComponent as Clock} from "../../../../images/Tabs/Freezing/clock.svg";
-import {useInteract} from "../../../hooks/useInteract";
-import FreezeService from "../../../../chain/FreezeService";
 import RadioCards from "./RadioCards";
 import Unfreez from "./Unfreez";
-import GpassService from "../../../../chain/GpassService";
 import Loader from "../../../UI/Loader/Loader";
 
-const FreezingComponent = ({network, publicKey, createMessage, setIsMessageLoading, isMessageLoading}) => {
+const FreezingComponent = ({
+                               publicKey,
+                               createMessage,
+                               setIsMessageLoading,
+                               isMessageLoading,
+                               isLoadingInfo,
+                               frozenBalance,
+                               gpassBalance,
+                               willBurn,
+                               lastGettingGpass,
+                               rewardPeriod
+                           }) => {
 
-    const [balance, setBalance] = useState()
-    const [freezedTime, setFreezedTime] = useState()
-    const [lastGettingGpass, setLastGettingGpass] = useState()
-    const [rewardPeriod, setRewardPeriod] = useState()
+    const items = [
+        {id: 1, gpass: 5,  ggwp: 1080, color: '#5DDFA5'},
+        {id: 2, gpass: 10, ggwp: 2160, color: '#12D6C2'},
+        {id: 3, gpass: 15, ggwp: 3240, color: '#1E5FDF'},
+        {id: 4, gpass: 20, ggwp: 4320, color: '#147EFF'},
+        {id: 5, gpass: 25, ggwp: 5184, color: '#FFCB14'},
+    ]
 
-    const [gpassBalance, setGpassBalance] = useState()
-    const [lastBurned, setLastBurned] = useState()
 
-    const nextReward = lastGettingGpass + rewardPeriod*24*60*60;
-    const nextRewardTimer = nextReward - Date.now()
-
-    const [FreezingInfo, isFreezingInfoLoading, freezingInfoError] = useInteract(async () => {
-        const info = await FreezeService.getInfo(network, publicKey)
-        setBalance(info.amount)
-        setFreezedTime(info.freezedTime)
-        setLastGettingGpass(info.lastGettingGpass)
-        setRewardPeriod(info.rewardPeriod)
-    })
-
-    const [getGpassBalance, isGetGpassBalanceLoading, gpassBalanceError] = useInteract(async () => {
-        const wallet = await GpassService.getBalance(network, publicKey)
-
-        setGpassBalance(Number(wallet.amount))
-        setLastBurned(Number(wallet.lastBurned))
-    })
-
-    useEffect(() => {
-        FreezingInfo()
-        getGpassBalance()
-
-    }, [publicKey,  isMessageLoading]);
 
     return (
         <div>
-            {isFreezingInfoLoading
+            {isLoadingInfo
                 ? <div className={cl.Loader_box}>
                     <Loader/>
                 </div>
                 : <div>
-                    {balance === 0
+                    {frozenBalance === 0
                         ? <RadioCards
                             publicKey={publicKey}
                             create={createMessage}
                             setIsMessageLoading={setIsMessageLoading}
                             isMessageLoading={isMessageLoading}
+                            items={items}
                         />
                         : <Unfreez
                             publicKey={publicKey}
-                            balance={balance}
-                            nextReward={nextReward}
+                            frozenBalance={frozenBalance}
+                            nextReward={0}
                             gpassBalance={gpassBalance}
-                            lastBurned={lastBurned}
+                            willBurn={willBurn}
                             create={createMessage}
                             setIsMessageLoading={setIsMessageLoading}
                             isMessageLoading={isMessageLoading}
+                            lastGettingGpass={lastGettingGpass}
+                            rewardPeriod={rewardPeriod}
+                            items={items}
                         />
                     }
                 </div>

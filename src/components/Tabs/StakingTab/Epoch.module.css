@@ -1,0 +1,36 @@
+.Epoch_box{
+    border: 1px solid #147EFF;
+    border-radius: 4px;
+    color: #147EFF;
+    text-align: center;
+    width: 163px;
+    height: 160px;
+}
+
+.Epoch_title{
+    font-family: ProximaNovaExtrabold;
+    font-size: 24px;
+    text-transform: uppercase;
+    padding: 10px 20px 0px 20px;
+}
+
+.Epoch_date{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    border: 1px #147EFF;
+    border-style: none none solid none;
+    text-align: center;
+    padding-bottom: 5px;
+    margin: 0px 20px;
+}
+
+.Epoch_apr_text{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding-top: 5px;
+}
+.Epoch_apr_amount{
+    font-family: ProximaNovaExtrabold;
+    font-size: 46px;
+}

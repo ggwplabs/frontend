@@ -491,6 +491,18 @@
             "type": "u64"
           },
           {
+            "name": "currentUsersFreezed",
+            "type": "u64"
+          },
+          {
+            "name": "dailyGpassReward",
+            "type": "u64"
+          },
+          {
+            "name": "dailyGpassRewardLastReset",
+            "type": "i64"
+          },
+          {
             "name": "rewardPeriod",
             "type": "i64"
           },

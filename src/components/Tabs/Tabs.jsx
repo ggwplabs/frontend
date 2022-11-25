@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import TabStaking from "./TabStaking";
 import TabWallet from "./WalletTab/TabWallet";
 import TabFreezing from "./FreezingTab/TabFreezing";
 import cl from './Tabs.module.css'
 import TabButton from "../UI/Buttons/TabButton";
+import TabStaking from "./StakingTab/TabStaking";
 
 
 const Tabs = ({publicKey}) => {
@@ -22,33 +22,23 @@ const Tabs = ({publicKey}) => {
             id: 2,
             tabTitle: 'Freezing',
             content:
-            <TabFreezing
-                publicKey={publicKey}
-            />
+                <TabFreezing
+                    publicKey={publicKey}
+                />
         },
         {
             id: 3,
             tabTitle: 'Staking',
-            content: <div className={cl.style_1}>
-                <div className={cl.style_2}>
-                    block 1
-                </div>
-                <div className={cl.style_3}>
-                    block 2
-                </div>
-            </div>
-                // <TabStaking
-                //     publicKey={publicKey}
-                // />
+            content:
+                <TabStaking
+                    publicKey={publicKey}
+                />
         },
-        {
-            id: 4,
-            tabTitle: 'NFT',
-            content: <div>TEST4</div>
-            // <FreezingTab
-            //     publicKey={publicKey}
-            // />
-        },
+        // {
+        //     id: 4,
+        //     tabTitle: 'NFT',
+        //     content: <div>TEST4</div>
+        // },
     ];
 
     const handleTabClick = (e) => {
@@ -63,6 +53,7 @@ const Tabs = ({publicKey}) => {
                         <TabButton key={i} id={tab.id} disabled={currentTab === `${tab.id}`}
                                    onClick={(handleTabClick)}>{tab.tabTitle}</TabButton>
                     )}
+                    <button className={cl.NFT}>nft</button>
                 </div>
                 <div>
                     {tabs.map((tab, i) =>
