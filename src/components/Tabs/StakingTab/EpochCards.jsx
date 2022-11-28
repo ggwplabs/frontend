@@ -8,6 +8,17 @@ const EpochCards = ({info}) => {
     const numEpoch = (info.aprStart - info.aprEnd) / info.aprStep;
     const Actualepoch =  ((Date.now() /1000 |0) - info.startTime) / (info.epochPeriodDays * 86400) |0;
     const cards = [];
+    console.log(info)
+    console.log(Actualepoch)
+
+    const getAprByEpoch = (epoch, startApr, stepApr, endApr) => {
+        let currentApr = startApr - (stepApr * (epoch - 1))
+        if (currentApr < endApr) {
+            return endApr
+        } else {
+            return currentApr
+        }
+    }
 
     switch (Actualepoch) {
         case 1: {
@@ -17,7 +28,7 @@ const EpochCards = ({info}) => {
                     epoch={Actualepoch}
                     start={info.startTime}
                     end={info.startTime + (info.epochPeriodDays * 86400)}
-                    apr={info.aprStart}
+                    apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                 />
             )
             for (let i = 1; i < 5; i++) {
@@ -27,7 +38,7 @@ const EpochCards = ({info}) => {
                         epoch={i + 1}
                         isFuture={true}
                         time={info.startTime + (info.epochPeriodDays * 86400) * i}
-                        apr={info.aprStart - info.aprStep * (i)}
+                        apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                     />
                 )
             }
@@ -40,7 +51,7 @@ const EpochCards = ({info}) => {
                     epoch={1}
                     isFuture={false}
                     time={info.startTime + (info.epochPeriodDays * 86400)}
-                    apr={info.aprStart}
+                    apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                 />
             )
             cards.push(
@@ -49,7 +60,7 @@ const EpochCards = ({info}) => {
                     epoch={Actualepoch}
                     start={info.startTime + (info.epochPeriodDays * 86400)}
                     end={info.startTime + ((info.epochPeriodDays * 86400) * 2)}
-                    apr={info.aprStart - info.aprStep}
+                    apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                 />
             )
             for (let i = 2; i < 5; i++) {
@@ -59,7 +70,7 @@ const EpochCards = ({info}) => {
                         epoch={i + 1}
                         isFuture={true}
                         time={info.startTime + (info.epochPeriodDays * 86400) * (i + 1)}
-                        apr={info.aprStart - info.aprStep * i}
+                        apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                     />
                 )
             }
@@ -73,7 +84,7 @@ const EpochCards = ({info}) => {
                         epoch={numEpoch - (4 - i)}
                         isFuture={false}
                         time={info.startTime + ((info.epochPeriodDays * 86400) * (numEpoch - (4 - i)))}
-                        apr={info.aprStart - (info.aprStep * (numEpoch - (5 - i)))}
+                        apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                     />
                 )
             }
@@ -83,7 +94,7 @@ const EpochCards = ({info}) => {
                     epoch={numEpoch - 1}
                     start={info.startTime + ((info.epochPeriodDays * 86400) * (numEpoch - 2))}
                     end={info.startTime + ((info.epochPeriodDays * 86400) * (numEpoch - 1))}
-                    apr={info.aprStart - (info.aprStep * (numEpoch - 2))}
+                    apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                 />
             )
             cards.push(
@@ -92,7 +103,7 @@ const EpochCards = ({info}) => {
                     epoch={numEpoch}
                     isFuture={true}
                     time={info.startTime + ((info.epochPeriodDays * 86400) * (numEpoch - 1))}
-                    apr={info.aprStart - info.aprStep * (numEpoch - 1)}
+                    apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                 />
             )
             break;
@@ -105,7 +116,7 @@ const EpochCards = ({info}) => {
                         epoch={numEpoch - (4 - i)}
                         isFuture={false}
                         time={info.startTime + ((info.epochPeriodDays * 86400) * (numEpoch - (4 - i)))}
-                        apr={info.aprStart - (info.aprStep * numEpoch - (5 - i))}
+                        apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                     />
                 )
             }
@@ -115,7 +126,7 @@ const EpochCards = ({info}) => {
                     epoch={numEpoch}
                     start={info.startTime + ((info.epochPeriodDays * 86400) * (numEpoch - 1))}
                     end={info.startTime + ((info.epochPeriodDays * 86400) * (numEpoch))}
-                    apr={info.aprStart - (info.aprStep * (numEpoch - 1))}
+                    apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                 />
             )
             break;
@@ -129,7 +140,7 @@ const EpochCards = ({info}) => {
                             epoch={i}
                             start={info.startTime + ((info.epochPeriodDays * 86400) * (i))}
                             end={info.startTime + ((info.epochPeriodDays * 86400) * (i + 1))}
-                            apr={info.aprStart - (info.aprStep * (i - 1))}
+                            apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                         />
                     )
                 } else if (i < Actualepoch) {
@@ -139,7 +150,7 @@ const EpochCards = ({info}) => {
                             epoch={i}
                             isFuture={false}
                             time={info.startTime + (info.epochPeriodDays * 86400 * i)}
-                            apr={info.aprStart - (info.aprStep * (i - 1))}
+                            apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                         />
                     )
                 } else {
@@ -149,7 +160,7 @@ const EpochCards = ({info}) => {
                             epoch={i}
                             isFuture={true}
                             time={info.startTime + (info.epochPeriodDays * 86400 * i)}
-                            apr={info.aprStart - (info.aprStep * (i - 1))}
+                            apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                         />
                     )
                 }
