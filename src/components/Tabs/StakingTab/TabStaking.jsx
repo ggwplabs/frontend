@@ -35,6 +35,7 @@ const TabStaking = ({publicKey}) => {
         getInfo()
 
     }, [publicKey, isMessageLoading]);
+    const TIME = 1668830756
 
     return (
         <div>

@@ -42,21 +42,21 @@ const Apr = ({publicKey, info, setIsMessageLoading, isMessageLoading, create}) =
     }
 
     const calcReawards = () =>{
-
         const [startEpoch, endEpoch] = calcUserPastEpoch(info.startTime, info.stakeTime, (Date.now() /1000 |0), info.epochPeriodDays)
-
+        if ((endEpoch - startEpoch) === 0 ) {
+            return 0
+        }
         let newAmount = info.amount / (10 ** 9);
         for (let i = startEpoch; i <= endEpoch; i++) {
             const currentApr = getAprByEpoch(i, info.aprStart, info.aprStep, info.aprEnd) / 100
             newAmount = (newAmount * (1 + currentApr / 365)) ** info.epochPeriodDays
         }
         const reward = newAmount
-        // const reward = newAmount - info.amount
         return reward
 
     }
 
-    const unfreeze = async () => {
+    const unstake = async () => {
         setIsMessageLoading(true)
         try {
             const tx = await StakeService.withdraw('devnet', publicKey)
@@ -90,7 +90,7 @@ const Apr = ({publicKey, info, setIsMessageLoading, isMessageLoading, create}) =
                     </div>
                     <div>
                         <button
-                            onClick={unfreeze}
+                            onClick={unstake}
                             disabled={isMessageLoading}
                             className={cl.Unfreeze_button}
                         >

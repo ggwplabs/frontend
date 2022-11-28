@@ -34,11 +34,6 @@ const Tabs = ({publicKey}) => {
                     publicKey={publicKey}
                 />
         },
-        // {
-        //     id: 4,
-        //     tabTitle: 'NFT',
-        //     content: <div>TEST4</div>
-        // },
     ];
 
     const handleTabClick = (e) => {
