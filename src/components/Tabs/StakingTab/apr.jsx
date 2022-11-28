@@ -102,7 +102,7 @@ const Apr = ({publicKey, info, setIsMessageLoading, isMessageLoading, create}) =
                     <Staked
                         balance={(calcReawards() / 10 ** 9).toFixed(5)}
                         start={info.startTime + (info.epochPeriodDays * 86400 * (Actualepoch + 1))}
-                        apr={info.aprStart - ((Actualepoch - 1) * info.aprStep)}
+                        apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                     />
                 </div>
             </div>
