@@ -8,45 +8,38 @@ import LoginButton from "./components/UI/Buttons/LoginButton";
 
 
 function App() {
-    const [pubKey, setPubKey] = useState(null);
-    const isPhantomInstalled = window.phantom?.solana?.isPhantom
 
-    useEffect(() => {
+    const [wallet, setWallet] = useState(null);
+    const isPetraInstalled = window.aptos
 
-        if (isPhantomInstalled) {
-            window.solana.on("connect", (publicKey) => {
-                setPubKey(publicKey);
-            });
 
-            window.solana.on("disconnect", () => {
-                setPubKey(null);
-            });
+    if (isPetraInstalled) {
+        window.aptos.onAccountChange((newAccount) => {
+            setWallet(newAccount)
+            connect()
+        })
+    }
 
-            window.solana.on('accountChanged', (publicKey) => {
-                setPubKey(publicKey);
-                window.solana.connect()
-            });
-        }
 
-    }, [window.solana, isPhantomInstalled]);
+    const connect = async () => {
+        await window.aptos.connect()
+        setWallet(await window.aptos.account())
+    }
 
-    return (
-        <div>
-            {!isPhantomInstalled
+    const disconnect = async () => {
+        await window.aptos.disconnect()
+        setWallet(null)
+    }
+
+    return (<div>
+            {isPetraInstalled
                 ? <div>
-                    <Header/>
-                    <div className="Login">
-                        <Phantom/>
-                    </div>
-                    <Footer/>
-                </div>
-                : <div>
-                    {pubKey
+                    {wallet
                         ? <div>
                             <Header/>
                             <div className="Body"></div>
                             <Tabs
-                                publicKey={pubKey}
+                                wallet={wallet}
                             />
                             <Footer/>
                         </div>
@@ -54,14 +47,21 @@ function App() {
                             <Header/>
                             <div className="Login">
                                 <LoginButton
-                                    onClick={async () => await window.solana.connect()}
+                                    onClick={connect}
                                 >
-                                    Login with Phantom
+                                    Login with Petra
                                 </LoginButton>
                             </div>
                             <Footer/>
                         </div>
                     }
+                </div>
+                : <div>
+                    <Header/>
+                    <div className="Login">
+                        <Phantom/>
+                    </div>
+                    <Footer/>
                 </div>
             }
         </div>

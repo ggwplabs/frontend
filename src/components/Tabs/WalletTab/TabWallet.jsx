@@ -10,8 +10,7 @@ import Convertor from "./Convertor";
 import BuyGgwp from "./BuyGgwp";
 import SolscanBox from "../SolscanBox";
 
-const TabWallet = ({publicKey}) => {
-    const network = 'devnet'
+const TabWallet = ({wallet}) => {
     const currencyList = [
         {id: '1', name: 'USDT', value: 0.5},
         {id: '2', name: 'USDC', value: 0.25},
@@ -34,7 +33,7 @@ const TabWallet = ({publicKey}) => {
     const [balance, setBalance] = useState(0)
     const [isAirdropLoading, setIsAirdropLoading] = useState(false)
     const [getBalance, isBalanceloading, balanceError] = useInteract(async () => {
-        setBalance(await WalletService.getGgwpBalance(network, publicKey))
+        setBalance(await WalletService.getGgwpBalance(wallet))
     })
 
     const removeMessage = (id) => {
@@ -45,7 +44,7 @@ const TabWallet = ({publicKey}) => {
         let message;
         try {
             setIsAirdropLoading(true)
-            const tx = await FaucetService.airdrop(network, publicKey, amount)
+            const tx = await FaucetService.airdrop(wallet)
             message = {id: Date.now(), error: false, text: tx}
         } catch (e) {
             message = {id: Date.now(), error: true, text: e.message}
@@ -63,7 +62,7 @@ const TabWallet = ({publicKey}) => {
     useEffect(() => {
         getBalance()
 
-    }, [publicKey, isAirdropLoading]);
+    }, [wallet, isAirdropLoading]);
 
 
     const links = [
@@ -109,6 +108,7 @@ const TabWallet = ({publicKey}) => {
                     setAmount={setAmount}
                     isAirdropLoading={isAirdropLoading}
                     createMessage={createMessage}
+                    wallet={wallet}
                 />
                 <SolscanBox/>
             </div>

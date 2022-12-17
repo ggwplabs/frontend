@@ -2,6 +2,7 @@ import {clusterApiUrl, Connection, PublicKey} from "@solana/web3.js";
 import idlFaucet from './idl/faucet.json'
 import {AnchorProvider, BN, Program} from "@project-serum/anchor";
 import {createAssociatedTokenAccountInstruction} from "@solana/spl-token";
+import {AptosClient} from "aptos";
 
 const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111')
 const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
@@ -12,8 +13,18 @@ const PROGRAM_ID = new PublicKey('6nA8HNRnMTwjn1VwA4Q2fX8D78hocs1zBDExngaaiTRH')
 
 const opts = {preflightCommitment: "processed"}
 
+
+const FAUCET_ACCOUNT = 'f1a9e4828f80ac6c7c64590a450fca0763f30f5dac6883e2647ec52e55897bd6'
+
+function stringToHex(text) {
+    const encoder = new TextEncoder();
+    const encoded = encoder.encode(text);
+    return Array.from(encoded, (i) => i.toString(16).padStart(2, "0")).join("");
+}
+
+
 export default class FaucetService {
-    static async airdrop(network, userAccount, amount) {
+    static async airdrop1(network, userAccount, amount) {
 
         let connection = new Connection(
             clusterApiUrl(network),
@@ -79,5 +90,25 @@ export default class FaucetService {
             .rpc()
 
         return tx
+    }
+
+
+    static async airdrop(wallet) {
+        const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1')
+        const res = await client.getAccountModules(FAUCET_ACCOUNT)
+        console.log(res)
+        // const m = await client.getAccountModule(FAUCET_ACCOUNT, '0xf1a9e4828f80ac6c7c64590a450fca0763f30f5dac6883e2647ec52e55897bd6::faucet::request')
+        // console.log(m)
+
+        const transaction = {
+            type: "entry_function_payload",
+            function: '0x' + FAUCET_ACCOUNT + '::faucet::request',
+            arguments: [FAUCET_ACCOUNT],
+            type_arguments: ['&signer', 'address'],
+        };
+        const resp = await window.aptos.signAndSubmitTransaction(transaction);
+
+        // console.log(resp)
+
     }
 }

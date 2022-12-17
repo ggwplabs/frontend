@@ -6,7 +6,7 @@ import TabButton from "../UI/Buttons/TabButton";
 import TabStaking from "./StakingTab/TabStaking";
 
 
-const Tabs = ({publicKey}) => {
+const Tabs = ({wallet}) => {
     const [currentTab, setCurrentTab] = useState('1');
 
     const tabs = [
@@ -15,7 +15,7 @@ const Tabs = ({publicKey}) => {
             tabTitle: 'Wallet',
             content:
                 <TabWallet
-                    publicKey={publicKey}
+                    wallet={wallet}
                 />
         },
         {
@@ -23,17 +23,16 @@ const Tabs = ({publicKey}) => {
             tabTitle: 'Freezing',
             content:
                 <TabFreezing
-                    publicKey={publicKey}
                 />
         },
-        {
-            id: 3,
-            tabTitle: 'Staking',
-            content:
-                <TabStaking
-                    publicKey={publicKey}
-                />
-        },
+        // {
+        //     id: 3,
+        //     tabTitle: 'Staking',
+        //     content:
+        //         <TabStaking
+        //             publicKey={publicKey}
+        //         />
+        // },
     ];
 
     const handleTabClick = (e) => {
