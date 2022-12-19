@@ -29,7 +29,6 @@ const TabWallet = ({wallet}) => {
 
     const [currency, setCurrency] = useState(currencyList[0])
     const [messages, setMessages] = useState([])
-    const [amount, setAmount] = useState(0)
     const [balance, setBalance] = useState(0)
     const [isAirdropLoading, setIsAirdropLoading] = useState(false)
     const [getBalance, isBalanceloading, balanceError] = useInteract(async () => {
@@ -105,7 +104,6 @@ const TabWallet = ({wallet}) => {
                     links={links}
                 />
                 <Faucet
-                    setAmount={setAmount}
                     isAirdropLoading={isAirdropLoading}
                     createMessage={createMessage}
                     wallet={wallet}
