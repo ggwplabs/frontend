@@ -44,7 +44,7 @@ const TabWallet = ({wallet}) => {
         let message;
         try {
             setIsAirdropLoading(true)
-            const tx = await FaucetService.airdrop(wallet)
+            const tx = await FaucetService.airdrop()
             message = {id: Date.now(), error: false, text: tx}
         } catch (e) {
             message = {id: Date.now(), error: true, text: e.message}

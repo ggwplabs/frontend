@@ -13,8 +13,9 @@ const PROGRAM_ID = new PublicKey('6nA8HNRnMTwjn1VwA4Q2fX8D78hocs1zBDExngaaiTRH')
 
 const opts = {preflightCommitment: "processed"}
 
-
+const COIN_ACCOUNT = '57de268d237c952d9598180e90c751f1d5831358bf644d8750f455310961d86f'
 const FAUCET_ACCOUNT = 'f1a9e4828f80ac6c7c64590a450fca0763f30f5dac6883e2647ec52e55897bd6'
+const GGWP_COIN = '0x' + COIN_ACCOUNT + '::ggwp::GGWPCoin';
 
 function stringToHex(text) {
     const encoder = new TextEncoder();
@@ -92,23 +93,13 @@ export default class FaucetService {
         return tx
     }
 
-
-    static async airdrop(wallet) {
-        const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1')
-        const res = await client.getAccountModules(FAUCET_ACCOUNT)
-        console.log(res)
-        // const m = await client.getAccountModule(FAUCET_ACCOUNT, '0xf1a9e4828f80ac6c7c64590a450fca0763f30f5dac6883e2647ec52e55897bd6::faucet::request')
-        // console.log(m)
-
+    static async airdrop() {
         const transaction = {
             type: "entry_function_payload",
             function: '0x' + FAUCET_ACCOUNT + '::faucet::request',
             arguments: [FAUCET_ACCOUNT],
-            type_arguments: ['&signer', 'address'],
+            type_arguments: [GGWP_COIN],
         };
-        const resp = await window.aptos.signAndSubmitTransaction(transaction);
-
-        // console.log(resp)
-
+        await window.aptos.signAndSubmitTransaction(transaction);
     }
 }
