@@ -1,55 +1,26 @@
-import {clusterApiUrl, Connection, PublicKey} from "@solana/web3.js";
-import idlGpass from './idl/gpass.json'
-import {AnchorProvider, Program} from "@project-serum/anchor";
-const GPASS_INFO = new PublicKey('A956aTN5e27jxtNtv7tEzb1Aam9akUW7gmNx5tYQtZzy')
-const GPASS_PROGRAM_ID = new PublicKey('Gv9WAng6iPymaDwXMQrbsh2uTkDpAPTB89Ld4ctJejMG')
+import {AptosClient} from "aptos";
+import * as Addr from "./Addresses";
 
-
-const opts = {preflightCommitment: "processed"}
 
 export default class GpassService {
 
-    static async getInfo(network, userAccount) {
-        let connection = new Connection(
-            clusterApiUrl(network),
-        );
-
-        const provider = new AnchorProvider(
-            connection, window.solana, opts.preflightCommitment,
-        )
-
-        const program = new Program(idlGpass, GPASS_PROGRAM_ID, provider)
-
-        const walletAccount = await PublicKey.findProgramAddress(
-            [
-                Buffer.from('user_gpass_wallet', 'utf8'),
-                GPASS_INFO.toBuffer(),
-                userAccount.toBuffer(),
-            ],
-            GPASS_PROGRAM_ID
-        )
-
-        const info = await program.account.gpassInfo.fetch(GPASS_INFO)
-
-        let wallet;
-        try {
-            wallet = await program.account.wallet.fetch(walletAccount[0].toString())
-        } catch (e) {
-            if (e.message === 'Account does not exist ' + walletAccount[0].toString()) {
-                wallet = {
-                    amount: 0,
-                    lastBurned: 0,
-                    burnPeriod: info.burnPeriod
+    static async getInfo(wallet) {
+        const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1')
+        const resources = await client.getAccountResources(Addr.CORE_ACCOUNT)
+        const userResources = await client.getAccountResources(wallet.address)
+        for (var i = 0; i < userResources.length; i++) {
+            if (userResources[i].type === '0x6442c17767e7f2cdb1b931565680dc84ab857c1fc12e68fadc7cec1ab4bfa3::gpass::Wallet') {
+                return {
+                    amount: userResources[0].data.amount,
+                    lastBurned: userResources[0].data.last_burned,
+                    burnPeriod: resources[1].data.burn_period
                 }
-            } else {
-                console.log(e)
             }
         }
-
         return {
-            amount: wallet.amount,
-            lastBurned: wallet.lastBurned,
-            burnPeriod: info.burnPeriod
+            amount: 0,
+            lastBurned: 0,
+            burnPeriod: resources[1].data.burn_period
         }
     }
 

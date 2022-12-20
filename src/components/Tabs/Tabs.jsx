@@ -23,16 +23,17 @@ const Tabs = ({wallet}) => {
             tabTitle: 'Freezing',
             content:
                 <TabFreezing
+                    wallet={wallet}
                 />
         },
-        // {
-        //     id: 3,
-        //     tabTitle: 'Staking',
-        //     content:
-        //         <TabStaking
-        //             publicKey={publicKey}
-        //         />
-        // },
+        {
+            id: 3,
+            tabTitle: 'Staking',
+            content:
+                <TabStaking
+                    wallet={wallet}
+                />
+        },
     ];
 
     const handleTabClick = (e) => {

@@ -8,8 +8,6 @@ const EpochCards = ({info}) => {
     const numEpoch = (info.aprStart - info.aprEnd) / info.aprStep;
     const Actualepoch =  ((Date.now() /1000 |0) - info.startTime) / (info.epochPeriodDays * 86400) |0;
     const cards = [];
-    console.log(info)
-    console.log(Actualepoch)
 
     const getAprByEpoch = (epoch, startApr, stepApr, endApr) => {
         let currentApr = startApr - (stepApr * (epoch - 1))
@@ -51,7 +49,7 @@ const EpochCards = ({info}) => {
                     epoch={1}
                     isFuture={false}
                     time={info.startTime + (info.epochPeriodDays * 86400)}
-                    apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
+                    apr={getAprByEpoch(1, info.aprStart, info.aprStep, info.aprEnd)}
                 />
             )
             cards.push(
@@ -70,7 +68,7 @@ const EpochCards = ({info}) => {
                         epoch={i + 1}
                         isFuture={true}
                         time={info.startTime + (info.epochPeriodDays * 86400) * (i + 1)}
-                        apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
+                        apr={getAprByEpoch(i + 1, info.aprStart, info.aprStep, info.aprEnd)}
                     />
                 )
             }

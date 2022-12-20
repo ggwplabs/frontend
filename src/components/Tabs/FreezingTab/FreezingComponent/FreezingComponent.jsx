@@ -18,13 +18,12 @@ const FreezingComponent = ({
                            }) => {
 
     const items = [
-        {id: 1, gpass: 5,  ggwp: 1080, color: '#5DDFA5'},
-        {id: 2, gpass: 10, ggwp: 2160, color: '#12D6C2'},
-        {id: 3, gpass: 15, ggwp: 3240, color: '#1E5FDF'},
-        {id: 4, gpass: 20, ggwp: 4320, color: '#147EFF'},
-        {id: 5, gpass: 25, ggwp: 5184, color: '#FFCB14'},
+        {id: 1, gpass: 5,  ggwp: 1000, color: '#5DDFA5'},
+        {id: 2, gpass: 10, ggwp: 2000, color: '#12D6C2'},
+        {id: 3, gpass: 15, ggwp: 3000, color: '#1E5FDF'},
+        {id: 4, gpass: 20, ggwp: 4000, color: '#147EFF'},
+        {id: 5, gpass: 25, ggwp: 4800, color: '#FFCB14'},
     ]
-
 
 
     return (

@@ -11,7 +11,7 @@ const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading, i
         const amount = items.filter(item => item.id === value)[0].ggwp
         setIsMessageLoading(true)
         try {
-            const tx = await FreezeService.freezing('devnet', publicKey, amount)
+            const tx = await FreezeService.freezing(amount)
             create({id: Date.now(), error: false, text: tx})
         } catch (e) {
             create({id: Date.now(), error: true, text: e.message})
