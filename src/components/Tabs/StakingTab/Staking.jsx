@@ -30,7 +30,7 @@ const Staking = ({publicKey, isLoading, setIsLoading, createMessage, minStakeAmo
                         className={cl.Input}
                         type='text'
                         onChange={e => setAmount(e.target.value)}
-                        placeholder={"Minimum " + minStakeAmount / (10**9) + " GGWP"}
+                        placeholder={"Minimum " + minStakeAmount / (10**8) + " GGWP"}
                     />
                     <InterButton
                         disabled={isLoading}

@@ -29,9 +29,9 @@ const MessagesList = ({messages, remove, isLoading}) => {
                             className={[cl.message, cl.successful].join(' ')}
                         >
                             <a
-                                title={'View in explorer.solana.com'}
+                                title={'View in explorer.aptoslabs.com'}
                                 target={"_blank"}
-                                href={"https://explorer.solana.com/tx/" + message.text + '?cluster=devnet'}
+                                href={"https://explorer.aptoslabs.com/txn/" + message.text + '?network=testnet'}
                             >
                                 {message.text}
                             </a>

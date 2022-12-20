@@ -9,8 +9,7 @@ import GpassService from "../../../chain/GpassService";
 import GpassBalance from "./FreezingComponent/GpassBalance";
 
 
-const TabFreezing = ({publicKey}) => {
-    const network = 'devnet'
+const TabFreezing = ({wallet}) => {
     const [messages, setMessages] = useState([])
     const [isMessageLoading, setIsMessageLoading] = useState(false)
     const removeMessage = (id) => {
@@ -32,8 +31,8 @@ const TabFreezing = ({publicKey}) => {
     const [willBurn, setWillBurn] = useState()
 
     const [getInfo, isInfoLoading, getInfoError] = useInteract(async () => {
-        const gpassInfo = await GpassService.getInfo(network, publicKey)
-        const freezingInfo = await FreezeService.getInfo(network, publicKey)
+        const gpassInfo = await GpassService.getInfo(wallet)
+        const freezingInfo = await FreezeService.getInfo(wallet)
 
         await setWillBurn((Number(gpassInfo.lastBurned) + Number(gpassInfo.burnPeriod)));
         await setFrozenBalance(freezingInfo.amount)
@@ -45,7 +44,7 @@ const TabFreezing = ({publicKey}) => {
     useEffect(() => {
         getInfo()
 
-    }, [publicKey, isMessageLoading]);
+    }, [wallet, isMessageLoading]);
 
     return (
         <div>
@@ -72,7 +71,6 @@ const TabFreezing = ({publicKey}) => {
                 </div>
             </div>
             <FreezingComponent
-                publicKey={publicKey}
                 createMessage={createMessage}
                 setIsMessageLoading={setIsMessageLoading}
                 isMessageLoading={isMessageLoading}

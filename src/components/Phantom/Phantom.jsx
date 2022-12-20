@@ -6,10 +6,10 @@ const Phantom = () => {
         <div className={cl.phantom}>
             <div className={cl.phantom__box}>
                 <div className={cl.phantom__text}
-                >Please install PHANTOM to continue
+                >Please install PETRA to continue
                 </div>
                 <div className={cl.phantom__linc}>
-                    <a href="https://phantom.app/">Download phantom.app</a>
+                    <a href="https://petra.app/">Download petra.app</a>
                 </div>
             </div>
         </div>

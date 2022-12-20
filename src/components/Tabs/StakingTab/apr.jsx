@@ -4,7 +4,7 @@ import {ReactComponent as GgIcon} from "../../../images/Tabs/Wallet/GG_coin_icon
 import Staked from "./Staked";
 import StakeService from "../../../chain/StakeService";
 
-const Apr = ({publicKey, info, setIsMessageLoading, isMessageLoading, create}) => {
+const Apr = ({info, setIsMessageLoading, isMessageLoading, create}) => {
     let Actualepoch = 1;
     if (((Date.now() /1000 |0) - info.startTime) > 0) {
         Actualepoch = ((Date.now() /1000 |0) - info.startTime) / (info.epochPeriodDays * 86400) |0
@@ -59,7 +59,7 @@ const Apr = ({publicKey, info, setIsMessageLoading, isMessageLoading, create}) =
     const unstake = async () => {
         setIsMessageLoading(true)
         try {
-            const tx = await StakeService.withdraw('devnet', publicKey)
+            const tx = await StakeService.withdraw()
             create({id: Date.now(), error: false, text: tx})
         } catch (e) {
             create({id: Date.now(), error: true, text: e.message})
@@ -77,7 +77,7 @@ const Apr = ({publicKey, info, setIsMessageLoading, isMessageLoading, create}) =
                             GGWP Staked:
                         </div>
                         <div className={cl.Balance__amount}>
-                            <div>{Number(info.amount / (10 ** 9)).toLocaleString('ru-RU')}</div>
+                            <div>{Number(info.amount / (10**8)).toLocaleString('ru-RU')}</div>
                         </div>
                         <div className={cl.Balance__icon}>
                             <GgIcon/>

@@ -9,11 +9,11 @@ import SolscanBox from "../SolscanBox";
 import Staking from "./Staking";
 import Apr from "./apr";
 
-const TabStaking = ({publicKey}) => {
+const TabStaking = ({wallet}) => {
 
     const [info, setInfo] = useState(NaN)
     const [getInfo, isInfoLoading, getInfoError] = useInteract(async () => {
-        const inf = await StakeService.getInfo('devnet', publicKey)
+        const inf = await StakeService.getInfo(wallet)
         setInfo(inf)
     })
 
@@ -34,8 +34,7 @@ const TabStaking = ({publicKey}) => {
     useEffect(() => {
         getInfo()
 
-    }, [publicKey, isMessageLoading]);
-    const TIME = 1668830756
+    }, [wallet, isMessageLoading]);
 
     return (
         <div>
@@ -54,14 +53,12 @@ const TabStaking = ({publicKey}) => {
                     />
                     {info.amount === 0
                         ? <Staking
-                            publicKey={publicKey}
                             isLoading={isMessageLoading}
                             setIsLoading={setIsMessageLoading}
                             createMessage={createMessage}
                             minStakeAmount={info.minStakeAmount}
                         />
                         : <Apr
-                            publicKey={publicKey}
                             info={info}
                             setIsMessageLoading={setIsMessageLoading}
                             isMessageLoading={isMessageLoading}
