@@ -27,7 +27,6 @@ export default class FreezeService {
                 retVol.burnPeriod = Number(resources[1].data.burn_period);
             }
         }
-        console.log(retVol)
         return retVol
     }
 

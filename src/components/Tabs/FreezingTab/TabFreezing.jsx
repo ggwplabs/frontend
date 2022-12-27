@@ -15,14 +15,13 @@ const TabFreezing = ({wallet}) => {
     const [chainInfo, setChainInfo] = useState(NaN)
     const [timeOutFlag, setTimeOutFlag] = useState(false)
 
-    const calcReadyToClaim = (time, lastBurned, burnPeriod, lastGetingRewaed, rewardPeriod, reward) => {
-        if ((time - lastBurned) < burnPeriod) {
-            const amount = reward * ((time - lastBurned - lastGetingRewaed) / rewardPeriod | 0)
-            return amount < 0 ? 0 : amount
+    const calcReadyToClaim = (time, lastBurned, burnPeriod, lastGetingReward, rewardPeriod, reward) => {
+        const numBurned = (time - lastBurned) / burnPeriod | 0
+        const lastMustBurn = lastBurned + numBurned * burnPeriod
+        if (lastGetingReward > lastMustBurn) {
+            return reward * (((time - lastGetingReward)) / rewardPeriod | 0)
         } else {
-            const numBurned = (time - lastBurned) / burnPeriod | 0
-            const amount = reward * (((time - lastBurned) - numBurned * burnPeriod - lastGetingRewaed) / rewardPeriod | 0)
-            return amount < 0 ? 0 : amount
+            return reward * (((time - lastMustBurn)) / rewardPeriod | 0)
         }
     }
 
