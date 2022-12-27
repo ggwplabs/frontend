@@ -7,52 +7,39 @@ import InterButton from "../../../UI/Buttons/InterButton";
 import GpassBalance from "./GpassBalance";
 
 const Unfreez = ({
-                     publicKey,
                      setIsMessageLoading,
                      isMessageLoading,
                      create,
-                     frozenBalance,
-                     gpassBalance,
-                     willBurn,
-                     lastGettingGpass,
-                     rewardPeriod,
-                     items
+                     info,
+                     calc
                  }) => {
 
-    const [accGpass, setAccGpass] = useState()
-    const [nextRewardTime, setNextRewardTime] = useState()
     const [time, setTime] = useState()
 
-    const calcReawards = () =>{
-        const cnt = Math.floor((Math.floor(Date.now() / 1000) - lastGettingGpass) / rewardPeriod)
-        const reward = items.filter(item => item.ggwp <= frozenBalance).pop()
-        if (reward) {
-            setAccGpass(reward.gpass * cnt)
-        }
-        const time = lastGettingGpass + rewardPeriod * (cnt + 1)
-        setTime(time - Math.floor(Date.now() / 1000))
-        setNextRewardTime(time)
-    }
-
-    useEffect( () => {
-        calcReawards()
-    }, [lastGettingGpass])
+    useEffect(() => {
+        setTime(info.nextReward)
+    }, [info]);
 
     useEffect(() => {
-        const interval = setInterval( () => {
+        const interval = setInterval(() => {
             setTime((time) => time >= 1 ? time - 1 : 0);
-        }, 999)
+        }, 1000)
     }, [])
+
 
     const hours = Math.floor(time / 3600)
     const min = Math.floor((time % 3600) / 60)
     const sec = (time % 3600) % 60
 
+    if (hours === 0 && min === 0 && sec === 0) {
+        calc(true)
+    }
+
 
     const unfreeze = async () => {
         setIsMessageLoading(true)
         try {
-            const tx = await FreezeService.unfreeze('devnet', publicKey)
+            const tx = await FreezeService.unfreeze()
             create({id: Date.now(), error: false, text: tx})
         } catch (e) {
             create({id: Date.now(), error: true, text: e.message})
@@ -64,7 +51,7 @@ const Unfreez = ({
     const getReward = async () => {
         setIsMessageLoading(true)
         try {
-            const tx = await FreezeService.withdrawGpass('devnet', publicKey)
+            const tx = await FreezeService.withdrawGpass()
             create({id: Date.now(), error: false, text: tx})
         } catch (e) {
             create({id: Date.now(), error: true, text: e.message})
@@ -82,7 +69,7 @@ const Unfreez = ({
                             GGWP Frozen:
                         </div>
                         <div className={cl.Balance__amount}>
-                            <div>{Number(frozenBalance).toLocaleString('ru-RU')}</div>
+                            <div>{Number(info.frozenBalance).toLocaleString('ru-RU')}</div>
                         </div>
                         <div className={cl.Balance__icon}>
                             <GgIcon/>
@@ -90,7 +77,8 @@ const Unfreez = ({
                     </div>
                     <div className={cl.Time}>
                         <div>
-                            Your next reward {new Date(nextRewardTime * 1000).toLocaleDateString("en-US")} at: {new Date(nextRewardTime * 1000).toLocaleTimeString("en-US")}
+                            Your next
+                            reward {new Date(info.nextReward * 1000).toLocaleDateString("en-US")} at: {new Date(info.nextReward * 1000).toLocaleTimeString("en-US")}
                         </div>
                         <div className={cl.Clock}>
                             <Clock/>
@@ -111,14 +99,14 @@ const Unfreez = ({
                     </div>
                 </div>
                 <div className={cl.Rewards_box}>
-                   <GpassBalance
-                       gpassBalance={gpassBalance}
-                       willBurn={willBurn}
-                   />
+                    <GpassBalance
+                        info={info}
+                        calc={calc}
+                    />
                     <div className={cl.Get_reward}>
                         <div className={cl.Accum_rewards}>
-                            <div className={cl.Accum_rewards_text}>Redy to claim </div>
-                            <div className={cl.Accum_rewards_amount}>{accGpass} GPASS</div>
+                            <div className={cl.Accum_rewards_text}>Ready to claim</div>
+                            <div className={cl.Accum_rewards_amount}>{info.readyToClaim} GPASS</div>
                         </div>
                         <InterButton
                             onClick={getReward}
