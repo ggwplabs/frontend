@@ -5,13 +5,84 @@ import SolscanBox from "../SolscanBox";
 import cl from './TabFreezing.module.css'
 import MessagesList from "../../MessageList/MessagesList";
 import FreezingComponent from "./FreezingComponent/FreezingComponent";
-import GpassService from "../../../chain/GpassService";
 import GpassBalance from "./FreezingComponent/GpassBalance";
 
 
 const TabFreezing = ({wallet}) => {
     const [messages, setMessages] = useState([])
     const [isMessageLoading, setIsMessageLoading] = useState(false)
+    const [coreInfo, setCoreInfo] = useState(NaN)
+    const [chainInfo, setChainInfo] = useState(NaN)
+    const [timeOutFlag, setTimeOutFlag] = useState(false)
+
+    const calcReadyToClaim = (time, lastBurned, burnPeriod, lastGetingRewaed, rewardPeriod, reward) => {
+        if ((time - lastBurned) < burnPeriod) {
+            const amount = reward * ((time - lastBurned - lastGetingRewaed) / rewardPeriod | 0)
+            return amount < 0 ? 0 : amount
+        } else {
+            const numBurned = (time - lastBurned) / burnPeriod | 0
+            const amount = reward * (((time - lastBurned) - numBurned * burnPeriod - lastGetingRewaed) / rewardPeriod | 0)
+            return amount < 0 ? 0 : amount
+        }
+    }
+
+    const calcNextReward = (time, lastGettingGpass, rewardPeriod) => {
+        if ((time - lastGettingGpass) < rewardPeriod) {
+            return rewardPeriod - (time - lastGettingGpass)
+        } else {
+            return rewardPeriod - ((time - lastGettingGpass) % rewardPeriod)
+        }
+    }
+
+    const calcNextBurn = (time, lastBurned, burnPeriod) => {
+        if ((time - lastBurned) < burnPeriod) {
+            return burnPeriod - (time - lastBurned)
+        } else {
+            return burnPeriod - ((time - lastBurned) % burnPeriod)
+        }
+    }
+
+    const calcCoreInfo = () => {
+        const time = Date.now() / 1000 | 0
+        let reward = 0;
+        if (chainInfo.frozenBalance >= 1000 && chainInfo.frozenBalance < 2000) {
+            reward = 5;
+        }
+        if (chainInfo.frozenBalance >= 2000 && chainInfo.frozenBalance < 3000) {
+            reward = 10;
+        }
+        if (chainInfo.frozenBalance >= 3000 && chainInfo.frozenBalance < 4000) {
+            reward = 15;
+        }
+        if (chainInfo.frozenBalance >= 4000 && chainInfo.frozenBalance < 4800) {
+            reward = 20;
+        }
+        if (chainInfo.frozenBalance >= 4800) {
+            reward = 25;
+        }
+
+        return {
+            frozenBalance: chainInfo.frozenBalance,
+            gpassBalance: chainInfo.lastBurned + chainInfo.burnPeriod < time ? 0 : chainInfo.gpassBalance,
+            willBurn: calcNextBurn(time, chainInfo.lastBurned, chainInfo.burnPeriod),
+            nextReward: calcNextReward(time, chainInfo.lastGettingGpass, chainInfo.rewardPeriod),
+            readyToClaim: calcReadyToClaim(time, chainInfo.lastBurned, chainInfo.burnPeriod, chainInfo.lastGettingGpass, chainInfo.rewardPeriod, reward),
+        }
+    }
+
+    const [getInfo, isInfoLoading, getInfoError] = useInteract(async () => {
+        const info = await FreezeService.getInfo(wallet)
+        await setChainInfo(info)
+    })
+    useEffect(() => {
+        getInfo()
+    }, [wallet, isMessageLoading]);
+
+    useEffect(() => {
+        setCoreInfo(() => calcCoreInfo());
+        setTimeOutFlag(false)
+    }, [chainInfo, timeOutFlag]);
+
     const removeMessage = (id) => {
         setMessages(messages.filter(message => message.id !== id))
     }
@@ -23,28 +94,6 @@ const TabFreezing = ({wallet}) => {
             setMessages([message, ...messages.splice(0, 4)])
         }
     }
-
-    const [frozenBalance, setFrozenBalance] = useState()
-    const [lastGettingGpass, setLastGettingGpass] = useState()
-    const [rewardPeriod, setRewardPeriod] = useState()
-    const [gpassBalance, setGpassBalance] = useState()
-    const [willBurn, setWillBurn] = useState()
-
-    const [getInfo, isInfoLoading, getInfoError] = useInteract(async () => {
-        const gpassInfo = await GpassService.getInfo(wallet)
-        const freezingInfo = await FreezeService.getInfo(wallet)
-
-        await setWillBurn((Number(gpassInfo.lastBurned) + Number(gpassInfo.burnPeriod)));
-        await setFrozenBalance(freezingInfo.amount)
-        await setLastGettingGpass(freezingInfo.lastGettingGpass)
-        await setRewardPeriod(freezingInfo.rewardPeriod)
-        await setGpassBalance(Number(gpassInfo.amount))
-    })
-
-    useEffect(() => {
-        getInfo()
-
-    }, [wallet, isMessageLoading]);
 
     return (
         <div>
@@ -61,10 +110,10 @@ const TabFreezing = ({wallet}) => {
                     <p>Losing does not lead to extra burning of tokens.</p>
                 </div>
                 <div className={cl.loader}>
-                    {(gpassBalance > 0 && frozenBalance === 0 && !isInfoLoading && (willBurn - (Date.now() / 1000)) > 0)
+                    {(coreInfo.gpassBalance > 0 && coreInfo.frozenBalance === 0 && !isInfoLoading && coreInfo.willBurn > 0)
                         ? <GpassBalance
-                            gpassBalance={gpassBalance}
-                            willBurn={willBurn}
+                            gpassBalance={coreInfo.gpassBalance}
+                            willBurn={coreInfo.willBurn}
                         />
                         : <div></div>
                     }
@@ -75,11 +124,8 @@ const TabFreezing = ({wallet}) => {
                 setIsMessageLoading={setIsMessageLoading}
                 isMessageLoading={isMessageLoading}
                 isLoadingInfo={isInfoLoading}
-                frozenBalance={frozenBalance}
-                gpassBalance={gpassBalance}
-                willBurn={willBurn}
-                lastGettingGpass={lastGettingGpass}
-                rewardPeriod={rewardPeriod}
+                info={coreInfo}
+                calc={setTimeOutFlag}
             />
             <div className={cl.Info}>
                 <h1>TOKENS CAN BE UNFROZEN ACCORDING TO THE FOLLOWING</h1>
