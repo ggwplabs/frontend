@@ -4,7 +4,7 @@ import {ReactComponent as Gpass} from '../../../../images/Tabs/g_pass_logo.svg'
 import InterButton from "../../../UI/Buttons/InterButton";
 import FreezeService from "../../../../chain/FreezeService";
 
-const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading, items}) => {
+const RadioCards = ({create, setIsMessageLoading, isMessageLoading, items}) => {
     const [value, setValue] = useState(1)
 
     const freeze = async () => {
@@ -15,8 +15,7 @@ const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading, i
             create({id: Date.now(), error: false, text: tx})
         } catch (e) {
             create({id: Date.now(), error: true, text: e.message})
-        }
-        finally {
+        } finally {
             setIsMessageLoading(false)
         }
     }
@@ -33,7 +32,7 @@ const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading, i
                             borderColor: item.color,
                             color: item.id === value ? "#fff" : item.color,
                             backgroundColor: item.id === value ? item.color : "#fff",
-                            boxShadow: item.id === value ? "0px 0px 10px rgba(30, 95, 223, 0.5)": "",
+                            boxShadow: item.id === value ? "0px 0px 10px rgba(30, 95, 223, 0.5)" : "",
                         }}
                     >
                         <div className={cl.Level}>
@@ -52,11 +51,15 @@ const RadioCards = ({publicKey, create, setIsMessageLoading, isMessageLoading, i
                         <div className={cl.Gpass}>
                             <div className={cl.Amount}>{item.gpass}</div>
                             {item.id === value
-                                ? <Gpass fill={"#fff"} />
-                                : <Gpass fill={item.color} />
+                                ? <Gpass fill={"#fff"}/>
+                                : <Gpass fill={item.color}/>
                             }
                         </div>
-                        <div className={cl.Info} >you will received once in 24 hours</div>
+                        <div className={cl.Info}>you will received once in 24 hours</div>
+                        <div className={cl.feeInfo}>
+                            Fee for Freezing entry is 8%
+                            <p>Total amount: {(item.ggwp + item.ggwp * 0.08).toLocaleString('ru-RU')}</p>
+                        </div>
                     </div>
                 )
             )}

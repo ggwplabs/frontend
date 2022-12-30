@@ -5,7 +5,7 @@ import EpochCards from "./EpochCards";
 import Loader from "../../UI/Loader/Loader";
 import MessagesList from "../../MessageList/MessagesList";
 import cl from "../FreezingTab/TabFreezing.module.css";
-import SolscanBox from "../SolscanBox";
+import AptosBox from "../aptosBox";
 import Staking from "./Staking";
 import Apr from "./apr";
 
@@ -78,7 +78,7 @@ const TabStaking = ({wallet}) => {
                     <li>Staking parameters can be adjusted by the development team or by voting.</li>
                 </ul>
             </div>
-            <SolscanBox/>
+            <AptosBox/>
         </div>
     );
 };

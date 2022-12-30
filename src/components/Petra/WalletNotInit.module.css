@@ -1,0 +1,32 @@
+.testnet{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.testnet__box{
+    padding: 20px;
+    padding-left: 116px;
+    padding-right: 116px;
+
+    border: 1px solid #147EFF;
+    border-radius: 4px;
+    background: #ffffff;
+
+    display: block;
+
+}
+
+.testnet__text{
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 24px;
+    color: #147EFF;
+    text-transform: uppercase;
+
+    display: flex;
+    justify-content: center;
+}

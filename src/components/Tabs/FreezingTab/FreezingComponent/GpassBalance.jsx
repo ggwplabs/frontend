@@ -7,7 +7,9 @@ const GpassBalance = ({info, calc}) => {
     const [time, setTime] = useState()
 
     useEffect(() => {
-        setTime(info.willBurn)
+        if (info) {
+            setTime(info.willBurn)
+        }
     }, [info]);
 
     useEffect(() => {
@@ -20,30 +22,35 @@ const GpassBalance = ({info, calc}) => {
     const min = Math.floor((time % 3600) / 60)
     const sec = (time % 3600) % 60
 
-    if (hours === 0 && min === 0 && sec === 0) {
-        calc(true)
-    }
+    if (info) {
+        if (hours === 0 && min === 0 && sec === 0) {
+            calc(true)
+        }
 
-    return (
-        <div className={cl.Rewards}>
-            <div className={cl.Rewards_balance_and_time}>
-                <div className={cl.Rewards_balance}>
-                    <div className={cl.Rewards_text}>Your Rewards:</div>
+        return (
+            <div className={cl.Rewards}>
+                <div className={cl.Rewards_balance_and_time}>
+                    <div className={cl.Rewards_balance}>
+                        <div className={cl.Rewards_text}>Your Rewards:</div>
                         <div className={cl.Rewards_amount}>{info.gpassBalance}</div>
+                    </div>
+                    <div className={cl.Rewards_time}>
+                        <Burn className={cl.Rewards_burn}/>
+                        <div>Reward will burn in:</div>
+                        <div className={cl.Time__elem}>h: {hours}</div>
+                        <div className={cl.Time__border_white}>min: {min}</div>
+                        <div className={cl.Time__elem}>sec: {sec}</div>
+                    </div>
                 </div>
-                <div className={cl.Rewards_time}>
-                    <Burn className={cl.Rewards_burn}/>
-                    <div>Reward will burn in:</div>
-                    <div className={cl.Time__elem}>h: {hours}</div>
-                    <div className={cl.Time__border_white}>min: {min}</div>
-                    <div className={cl.Time__elem}>sec: {sec}</div>
+                <div className={cl.Rewards_icon}>
+                    <Gpass/>
                 </div>
             </div>
-            <div className={cl.Rewards_icon}>
-                <Gpass/>
-            </div>
-        </div>
-    );
+        );
+    }
+    return (<div></div>)
+
+
 };
 
 export default GpassBalance;

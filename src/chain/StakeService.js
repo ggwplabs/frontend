@@ -1,21 +1,6 @@
 import * as Addr from "./Addresses.js"
-
-import {Program, AnchorProvider, BN} from "@project-serum/anchor";
-import idlStaking from "../chain/idl/staking.json"
-import {clusterApiUrl, Connection, PublicKey} from "@solana/web3.js";
 import {AptosClient} from "aptos";
 import {STAKE_ACCOUNT} from "./Addresses.js";
-
-const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
-const GGWPM_MINT_ACCOUNT = new PublicKey('5J5iMoraQ962XW7uApXQRTCu9jEahBnVCsGvzAjQKm9x')
-const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
-const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111')
-const STAKING_INFO = new PublicKey('X6bHGGFC7RwgNyMKWRpLpy63gmNogSAdpZcb58Ut35K')
-const ACCUMULATIVE_FUND = new PublicKey('6Z1QsKwN2DUcuS7gpF1tvrmafPg3nQvdDctGgDUQqLLf')
-const PROGRAM_ID = new PublicKey('ELRFw9awBQFuvvxnf3R1Xaihdy6ypWY7sH6nTNXh8EX1')
-const STAKING_FUND = new PublicKey('6hmnXJEvdoWKY7CfGocFdtVvZeai1qsCFjwgLUKim99R');
-
-const opts = {preflightCommitment: "processed"}
 
 export default class StakeService {
 

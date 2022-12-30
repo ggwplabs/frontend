@@ -17,7 +17,7 @@ const Staked = ({balance, start, apr}) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setTime((time) => time >= 1 ? time - 1 : 0);
-        }, 999)
+        }, 1000)
     }, [])
 
     return (
