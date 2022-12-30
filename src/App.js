@@ -9,22 +9,20 @@ import Loader from "./components/UI/Loader/Loader";
 import {useInteract} from "./components/hooks/useInteract";
 import Testnet from "./components/Petra/Testnet";
 import WalletNotInit from "./components/Petra/WalletNotInit";
+import {AptosClient} from "aptos";
+import * as Addr from "./chain/Addresses";
 
 
 function App() {
 
     const [wallet, setWallet] = useState(null);
-    const [network, setNetwork] = useState(null);
+    const [resources, setResources] = useState(null)
+    const [network, setNetwork] = useState({networkName: 'null'});
     const [isPetraInstalled, setIsPetraInstalled] = useState(false)
 
     const getNetwork = async () => {
         const retVol = await window.aptos.network()
         return {networkName: retVol}
-    }
-
-    const connect = async () => {
-        await window.aptos.connect()
-        setWallet(await window.aptos.account())
     }
 
     const disconnect = async () => {
@@ -39,11 +37,25 @@ function App() {
         }
     })
 
+    const [connectWallet, isLoadConnect, errorConnect] = useInteract(async () => {
+        await window.aptos.connect()
+        const client = new AptosClient(Addr.NODE_URL)
+        const connectWallet = await window.aptos.account()
+        const resources = await client.getAccountResources(connectWallet.address)
+        // const resources = await client.getAccountResources(connectWallet.address)
+        setWallet(connectWallet)
+    })
+
+    const [changeWallet, isLoadChangeWallet, errorChangeWallet] = useInteract(async () => {
+        connectWallet()
+        setWallet(await window.aptos.account())
+    })
+
     useEffect(() => {
         if (window.aptos) {
             getInfo()
-            window.aptos.onAccountChange((newAccount) => {
-                setWallet(newAccount)
+            window.aptos.onAccountChange(async (newAccount) => {
+                changeWallet()
             })
             window.aptos.onNetworkChange((newNetwork) => {
                 getInfo()
@@ -51,108 +63,192 @@ function App() {
             window.aptos.onDisconnect(() => {
                 setWallet(null);
             });
+
         }
 
-    }, [window.aptos]);
+    }, [window.aptos, wallet]);
 
-    if (isLoading) {
+
+    if (isLoadConnect || isLoading || isLoadChangeWallet) {
         return (
             <div><Loader/></div>
         )
     }
 
+    if (errorChangeWallet || errorConnect) {
+        console.log(errorConnect)
+        return(
+            <div>Error: {errorConnect}</div>
+        )
+    }
+
+
     if (isPetraInstalled) {
-        if (network) {
+        if (wallet) {
             if (network.networkName === "Testnet") {
-                if (wallet) {
-                    return (
-                        <div>
-                            <Header
-                                isLogin={wallet}
-                                func= {wallet ? disconnect : connect}
-                            />
-                            <div className="Body"></div>
-                            <Tabs
-                                wallet={wallet}
-                            />
-                            <Footer
-                                isLogin={wallet}
-                                func= {wallet ? disconnect : connect}
-                            />
-                        </div>
-                    )
-                } else {
-                    return (
-                        <div>
-                            <Header
-                                isLogin={wallet}
-                                func= {wallet ? disconnect : connect}
-                            />
-                            <div className="Login">
-                                <LoginButton
-                                    onClick={connect}
-                                >
-                                    Login with Petra
-                                </LoginButton>
-                            </div>
-                            <Footer
-                                isLogin={wallet}
-                                func= {wallet ? disconnect : connect}
-                            />
-                        </div>
-                    )
-                }
-            } else {
                 return (
                     <div>
                         <Header
                             isLogin={wallet}
-                            func= {wallet ? disconnect : connect}
+                            func= {wallet ? disconnect : connectWallet}
                         />
-                        <div className="Login">
-                            <Testnet/>
-                        </div>
+                        <div className="Body"></div>
+                        <Tabs
+                            wallet={wallet}
+                        />
                         <Footer
                             isLogin={wallet}
-                            func= {wallet ? disconnect : connect}
+                            func= {wallet ? disconnect : connectWallet}
                         />
                     </div>
                 )
-            }
-        } else {
-            return (
+            } else {
+                return (
                 <div>
                     <Header
                         isLogin={wallet}
-                        func= {wallet ? disconnect : connect}
+                        func= {wallet ? disconnect : connectWallet}
                     />
                     <div className="Login">
-                        <WalletNotInit/>
+                        <Testnet/>
                     </div>
                     <Footer
                         isLogin={wallet}
-                        func= {wallet ? disconnect : connect}
+                        func= {wallet ? disconnect : connectWallet}
                     />
                 </div>
-            )
+                )
+            }
         }
-    } else {
         return (
             <div>
                 <Header
                     isLogin={wallet}
-                    func= {wallet ? disconnect : connect}
+                    func= {wallet ? disconnect : connectWallet}
                 />
                 <div className="Login">
-                    <Petra/>
+                    <LoginButton
+                        onClick={connectWallet}
+                    >
+                        Login with Petra
+                    </LoginButton>
                 </div>
                 <Footer
                     isLogin={wallet}
-                    func= {wallet ? disconnect : connect}
+                    func= {wallet ? disconnect : connectWallet}
                 />
             </div>
         )
     }
+
+    return (
+        <div>
+            <Header
+                isLogin={wallet}
+                func= {wallet ? disconnect : connectWallet}
+            />
+            <div className="Login">
+                <Petra/>
+            </div>
+            <Footer
+                isLogin={wallet}
+                func= {wallet ? disconnect : connectWallet}
+            />
+        </div>
+    )
+//
+// if (isPetraInstalled) {
+//     if (network) {
+//         if (network.networkName === "Testnet") {
+//             if (wallet) {
+//                 return (
+//                     <div>
+//                         <Header
+//                             isLogin={wallet}
+//                             func= {wallet ? disconnect : connectWallet}
+//                         />
+//                         <div className="Body"></div>
+//                         <Tabs
+//                             wallet={wallet}
+//                         />
+//                         <Footer
+//                             isLogin={wallet}
+//                             func= {wallet ? disconnect : connectWallet}
+//                         />
+//                     </div>
+//                 )
+//             } else {
+//                 return (
+//                     <div>
+//                         <Header
+//                             isLogin={wallet}
+//                             func= {wallet ? disconnect : connectWallet}
+//                         />
+//                         <div className="Login">
+//                             <LoginButton
+//                                 onClick={connectWallet}
+//                             >
+//                                 Login with Petra
+//                             </LoginButton>
+//                         </div>
+//                         <Footer
+//                             isLogin={wallet}
+//                             func= {wallet ? disconnect : connectWallet}
+//                         />
+//                     </div>
+//                 )
+//             }
+//         } else {
+//             return (
+//                 <div>
+//                     <Header
+//                         isLogin={wallet}
+//                         func= {wallet ? disconnect : connectWallet}
+//                     />
+//                     <div className="Login">
+//                         <Testnet/>
+//                     </div>
+//                     <Footer
+//                         isLogin={wallet}
+//                         func= {wallet ? disconnect : connectWallet}
+//                     />
+//                 </div>
+//             )
+//         }
+//     } else {
+//         return (
+//             <div>
+//                 <Header
+//                     isLogin={wallet}
+//                     func= {wallet ? disconnect : connectWallet}
+//                 />
+//                 <div className="Login">
+//                     <WalletNotInit/>
+//                 </div>
+//                 <Footer
+//                     isLogin={wallet}
+//                     func= {wallet ? disconnect : connectWallet}
+//                 />
+//             </div>
+//         )
+//     }
+// } else {
+//     return (
+//         <div>
+//             <Header
+//                 isLogin={wallet}
+//                 func= {wallet ? disconnect : connectWallet}
+//             />
+//             <div className="Login">
+//                 <Petra/>
+//             </div>
+//             <Footer
+//                 isLogin={wallet}
+//                 func= {wallet ? disconnect : connectWallet}
+//             />
+//         </div>
+//     )
+// }
 
 }
 
