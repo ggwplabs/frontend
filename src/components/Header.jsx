@@ -2,7 +2,8 @@ import React from 'react';
 import cl from './Header.module.css'
 import {ReactComponent as GGWP} from '../images/Header/GGWP.svg'
 
-const Header = () => {
+const Header = ({isLogin, func}) => {
+    const buttonText = isLogin ? "Logout" : "Login"
     return (
         <div className={cl.Header}>
             <div className={cl.Menu__box}>
@@ -30,8 +31,11 @@ const Header = () => {
                         <a href="#"> solscan </a>
                     </li>
                 </ul>
-                <button className={cl.Login__btn}>
-                    login
+                <button
+                    className={cl.Login__btn}
+                    onClick={func}
+                >
+                    {buttonText}
                 </button>
             </div>
         </div>

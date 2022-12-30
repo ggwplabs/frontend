@@ -7,7 +7,8 @@ import yt from '../images/Footer/socialNetworks/yt.png'
 import mail from '../images/Footer/socialNetworks/mail.png'
 import tg from '../images/Footer/socialNetworks/telegram.png'
 
-const Footer = () => {
+const Footer = ({isLogin, func}) => {
+    const buttonText = isLogin ? "Logout" : "Login"
     return (
         <div className={cl.Footer}>
             <div className={cl.Father_box}>
@@ -59,8 +60,10 @@ const Footer = () => {
                         </li>
                     </ul>
                     <div className={cl.Log__box}>
-                        <button className={cl.Log__btn}>
-                            Logout
+                        <button
+                            className={cl.Log__btn}
+                        onClick={func}>
+                            {buttonText}
                         </button>
                     </div>
                 </div>

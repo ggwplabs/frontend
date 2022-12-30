@@ -7,7 +7,6 @@ import Footer from "./components/Footer";
 import LoginButton from "./components/UI/Buttons/LoginButton";
 import Loader from "./components/UI/Loader/Loader";
 import {useInteract} from "./components/hooks/useInteract";
-import WalletService from "./chain/WalletService";
 import Testnet from "./components/Petra/Testnet";
 import WalletNotInit from "./components/Petra/WalletNotInit";
 
@@ -26,6 +25,11 @@ function App() {
     const connect = async () => {
         await window.aptos.connect()
         setWallet(await window.aptos.account())
+    }
+
+    const disconnect = async () => {
+        await window.aptos.disconnect()
+        setWallet(null)
     }
 
     const [getInfo, isLoading, Error] = useInteract(async () => {
@@ -63,18 +67,27 @@ function App() {
                 if (wallet) {
                     return (
                         <div>
-                            <Header/>
+                            <Header
+                                isLogin={wallet}
+                                func= {wallet ? disconnect : connect}
+                            />
                             <div className="Body"></div>
                             <Tabs
                                 wallet={wallet}
                             />
-                            <Footer/>
+                            <Footer
+                                isLogin={wallet}
+                                func= {wallet ? disconnect : connect}
+                            />
                         </div>
                     )
                 } else {
                     return (
                         <div>
-                            <Header/>
+                            <Header
+                                isLogin={wallet}
+                                func= {wallet ? disconnect : connect}
+                            />
                             <div className="Login">
                                 <LoginButton
                                     onClick={connect}
@@ -82,40 +95,61 @@ function App() {
                                     Login with Petra
                                 </LoginButton>
                             </div>
-                            <Footer/>
+                            <Footer
+                                isLogin={wallet}
+                                func= {wallet ? disconnect : connect}
+                            />
                         </div>
                     )
                 }
             } else {
                 return (
                     <div>
-                        <Header/>
+                        <Header
+                            isLogin={wallet}
+                            func= {wallet ? disconnect : connect}
+                        />
                         <div className="Login">
                             <Testnet/>
                         </div>
-                        <Footer/>
+                        <Footer
+                            isLogin={wallet}
+                            func= {wallet ? disconnect : connect}
+                        />
                     </div>
                 )
             }
         } else {
             return (
                 <div>
-                    <Header/>
+                    <Header
+                        isLogin={wallet}
+                        func= {wallet ? disconnect : connect}
+                    />
                     <div className="Login">
                         <WalletNotInit/>
                     </div>
-                    <Footer/>
+                    <Footer
+                        isLogin={wallet}
+                        func= {wallet ? disconnect : connect}
+                    />
                 </div>
             )
         }
     } else {
         return (
             <div>
-                <Header/>
+                <Header
+                    isLogin={wallet}
+                    func= {wallet ? disconnect : connect}
+                />
                 <div className="Login">
                     <Petra/>
                 </div>
-                <Footer/>
+                <Footer
+                    isLogin={wallet}
+                    func= {wallet ? disconnect : connect}
+                />
             </div>
         )
     }
