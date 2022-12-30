@@ -1,0 +1,143 @@
+.Frozen{
+    display: flex;
+    width: 1080px;
+    height: 210px;
+    margin-top: 40px;
+}
+
+.Ggwp_frozen{
+    border: 1px solid #147EFF;
+    width: 622px;
+    background: #EAF2FD;
+    border-radius: 4px;
+}
+
+.Frozen_balance{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 20px;
+}
+
+.Balance__amount{
+    font-family: ProximaNovaExtrabold;
+    font-style: normal;
+    font-size: 64px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #147EFF;
+}
+
+.Balance__icon{
+    display: flex;
+    align-items: center;
+    margin: 25px 0px;
+}
+
+.Balance__text{
+    font-family: ProximaNovaBold;
+    font-style: normal;
+    font-size: 20px;
+    color: #147EFF;
+    display: flex;
+    align-items: center;
+    margin: 25px 0px;
+}
+
+.Time{
+    display: flex;
+    justify-content: space-between;
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+    color: #147EFF;
+    margin: 0px 20px;
+}
+
+.Clock{
+    display: flex;
+    justify-content: space-between;
+    fill: #147EFF;
+}
+
+.Time__elem{
+    padding: 0px 8px;
+}
+
+.Time__border{
+    border: 1px #147EFF;
+    border-style: none solid none solid;
+    padding: 0px 8px;
+}
+
+.Unfreeze_button{
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #147EFF;
+    margin: 20px 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #147EFF;
+    border-radius: 2px;
+    width: 582px;
+    padding: 8px 0px;
+}
+
+.Unfreeze_button:hover{
+    color: #1E5FDF;
+    border-color: #1E5FDF;
+}
+
+.Unfreeze_button:active{
+    color: #00EA88;
+    border-color: #00EA88;
+}
+
+.Unfreeze_button:disabled{
+    color: #D2D2D2;
+    border-color: #D2D2D2;
+}
+
+.Unfreeze_button:disabled:hover{
+    color: #D2D2D2;
+    border-color: #D2D2D2;
+}
+
+.Unfreeze_button:disabled:active{
+    color: #D2D2D2;
+    border-color: #D2D2D2;
+}
+
+.Rewards_box{
+    margin-left: 20px;
+    width: 100%;
+}
+
+
+
+.Get_reward{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.Accum_rewards{
+    border: 1px #147EFF;
+    border-style: solid none solid none;
+    display: flex;
+    align-items: center;
+    color: #147EFF;
+    padding: 10px 0px;
+}
+
+.Accum_rewards_text{
+    font-family: ProximaNovaRegular;
+    font-size: 14px;
+}
+
+.Accum_rewards_amount{
+    font-family: ProximaNovaBold;
+    font-size: 20px;
+    margin-left: 4px;
+}

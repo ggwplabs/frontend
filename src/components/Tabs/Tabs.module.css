@@ -1,0 +1,25 @@
+.Father{
+    display: flex;
+    justify-content: center;
+}
+
+.Tabs_box{
+    width: 1080px;
+}
+
+.Tabs{
+    display: flex;
+    justify-content: center;
+}
+
+.NFT{
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #D2D2D2;
+    width: 270px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #D2D2D2;
+    border-radius: 4px 4px 0px 0px;
+}

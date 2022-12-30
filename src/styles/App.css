@@ -5,10 +5,30 @@
 }
 
 #root {
-    display: flex;
-    justify-content: center;
+
 }
 
 .App{
-    width: 800px;
+}
+
+.Loader{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+
+    height: 704px;
+    width: 100%;
+    background: url(../images/login.jpg)  center;
+}
+
+.Login{
+    height: 704px;
+    background: url(../images/login.jpg)  center;
+}
+
+.Body{
+    height: 100px;
+    background: url(../images/login.jpg)  center;
 }

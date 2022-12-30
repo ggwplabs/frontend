@@ -1,0 +1,78 @@
+.Box{
+    /*border: 1px solid;*/
+    height: 100%;
+    /*width: 100%;*/
+    /*margin-right: 10px;*/
+}
+
+.Convertor_box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Token_balance_box {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    border: 1px solid #12D6C2;
+    height: 60px;
+    border-radius: 4px;
+}
+
+.Token_balance {
+    font-family: ProximaNovaExtrabold;
+    font-style: normal;
+    font-size: 24px;
+    color: #12D6C2;
+    margin: 20px 40px;
+}
+
+.Token_logo {
+    border: 1px #12D6C2;
+    padding: 0px 20px;
+    border-style: none none none solid;
+}
+
+.Equal_box {
+    display: flex;
+    align-items: center;
+    margin: 0px 10px;
+    font-family: ProximaNovaExtrabold;
+    font-style: normal;
+    font-size: 24px;
+    color: #12D6C2;
+    height: 60px;
+}
+
+.Currency_box {
+    display: flex;
+    align-items: center;
+}
+
+.Currency {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    border: 1px solid #147EFF;
+    padding: 22px 46px;
+    border-radius: 4px 0px 0px 4px;
+    font-family: ProximaNovaRegular;
+    font-style: normal;
+    font-size: 20px;
+    color: #147EFF;
+}
+
+.Info{
+    border: 2px solid #12D6C2;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 8px 0px;
+
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #12D6C2;
+    box-shadow: 0px 0px 20px rgba(20, 126, 255, 0.3);
+}

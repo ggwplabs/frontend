@@ -1,0 +1,15 @@
+.Father {
+    display: flex;
+    justify-content: center;
+}
+
+.WalletTab_box {
+    justify-content: center;
+}
+
+.Wallet_block {
+    width: 1080px;
+    height: 140px;
+    display: flex;
+    justify-content: space-between;
+}

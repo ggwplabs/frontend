@@ -393,6 +393,11 @@
       "code": 6009,
       "name": "InvalidLastBurnedValue",
       "msg": "Invalid last burned value"
+    },
+    {
+      "code": 6010,
+      "name": "PeriodNotPassed",
+      "msg": "Burn period not yet passed"
     }
   ]
 }

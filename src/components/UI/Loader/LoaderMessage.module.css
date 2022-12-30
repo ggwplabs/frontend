@@ -1,0 +1,13 @@
+.LoaderMessage {
+    border: 20px solid #00EA88;
+    animation: loader 1s infinite;
+}
+
+@keyframes loader {
+    from {
+        transform: scale(0, 0.25);
+    }
+    to {
+        transform: scale(1, 0.25);
+    }
+}

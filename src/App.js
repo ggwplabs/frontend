@@ -1,102 +1,178 @@
 import React, {useEffect, useState} from "react";
-import Tabs from "./components/UI/tabs/Tabs";
+import Tabs from "./components/Tabs/Tabs";
+import Petra from "./components/Petra/Petra";
+import './styles/App.css'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import LoginButton from "./components/UI/Buttons/LoginButton";
+import Loader from "./components/UI/Loader/Loader";
+import {useInteract} from "./components/hooks/useInteract";
+import Testnet from "./components/Petra/Testnet";
+import WalletNotInit from "./components/Petra/WalletNotInit";
+import {AptosClient} from "aptos";
+import * as Addr from "./chain/Addresses";
 
 
 function App() {
-    const [pubKey, setPubKey] = useState(null);
-    const isPhantomInstalled = window.phantom?.solana?.isPhantom
 
-    const getProvider = () => {
-        if ('phantom' in window) {
-            const provider = window.phantom?.solana;
+    const [wallet, setWallet] = useState(null);
+    const [network, setNetwork] = useState({networkName: 'null'});
+    const [isPetraInstalled, setIsPetraInstalled] = useState(false)
 
-            if (provider?.isPhantom) {
-                return provider;
-            }
+    const getNetwork = async () => {
+        const retVol = await window.aptos.network()
+        return {networkName: retVol}
+    }
+
+    const disconnect = async () => {
+        await window.aptos.disconnect()
+        setWallet(null)
+    }
+
+    const [getInfo, isLoading, Error] = useInteract(async () => {
+        if (window.aptos) {
+            setIsPetraInstalled(true)
+            setNetwork(await getNetwork())
         }
-    };
+    })
 
-    const provider = getProvider()
+    const [connectWallet, isLoadConnect, errorConnect] = useInteract(async () => {
+        await window.aptos.connect()
+        const client = new AptosClient(Addr.NODE_URL)
+        const connectWallet = await window.aptos.account()
+        const resources = await client.getAccountResources(connectWallet.address)
+        setWallet(connectWallet)
+    })
+
+    const [changeWallet, isLoadChangeWallet, errorChangeWallet] = useInteract(async () => {
+        connectWallet()
+        setWallet(await window.aptos.account())
+    })
 
     useEffect(() => {
-
-        if (isPhantomInstalled) {
-            window.solana.on("connect", (publicKey) => {
-                setPubKey(publicKey);
+        if (window.aptos) {
+            getInfo()
+            window.aptos.onAccountChange(async (newAccount) => {
+                changeWallet()
+            })
+            window.aptos.onNetworkChange((newNetwork) => {
+                getInfo()
             });
-
-            window.solana.on("disconnect", () => {
-                setPubKey(null);
-            });
-
-            window.solana.on('accountChanged', (publicKey) => {
-                setPubKey(publicKey);
-                window.solana.connect()
+            window.aptos.onDisconnect(() => {
+                setWallet(null);
             });
         }
 
-    }, [window.solana, isPhantomInstalled]);
+    }, [window.aptos, wallet]);
 
-    if (!isPhantomInstalled) {
+    if (isLoadConnect || isLoading || isLoadChangeWallet) {
         return (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}>
-                <p>Please install <a
-                    target={"_blank"}
-                    href={"https://phantom.app/"}
-                >
-                    PHANTOM
-                </a> to continue</p>
+            <div>
+                <Header
+                    isLogin={wallet}
+                    func={wallet ? disconnect : connectWallet}
+                />
+                <div className="Loader" ><Loader/></div>
+                <Footer
+                    isLogin={wallet}
+                    func={wallet ? disconnect : connectWallet}
+                />
             </div>
         )
     }
 
-    if (pubKey) {
+    if (errorChangeWallet || errorConnect) {
         return (
             <div>
-                <Tabs
-                    publicKey={pubKey}
+                <Header
+                    isLogin={wallet}
+                    func={wallet ? disconnect : connectWallet}
                 />
-                <button
-                    style={{marginTop: 30}}
-                    onClick={async () => await provider.disconnect()}
-                > Logout
-                </button>
+                <div className="Login">
+                    <WalletNotInit/>
+                </div>
+                <Footer
+                    isLogin={wallet}
+                    func={wallet ? disconnect : connectWallet}
+                />
             </div>
         )
-    } else {
+    }
+
+    if (isPetraInstalled) {
+        if (wallet) {
+            if (network.networkName === "Testnet") {
+                return (
+                    <div>
+                        <Header
+                            isLogin={wallet}
+                            func={wallet ? disconnect : connectWallet}
+                        />
+                        <div className="Body"></div>
+                        <Tabs
+                            wallet={wallet}
+                        />
+                        <Footer
+                            isLogin={wallet}
+                            func={wallet ? disconnect : connectWallet}
+                        />
+                    </div>
+                )
+            } else {
+                return (
+                    <div>
+                        <Header
+                            isLogin={wallet}
+                            func={wallet ? disconnect : connectWallet}
+                        />
+                        <div className="Login">
+                            <Testnet/>
+                        </div>
+                        <Footer
+                            isLogin={wallet}
+                            func={wallet ? disconnect : connectWallet}
+                        />
+                    </div>
+                )
+            }
+        }
         return (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                <button
-                    style={{
-                        marginTop: 30
-                    }}
-                    onClick={async () => await window.solana.connect()}
-                >
-                    Login with phantom
-                </button>
+            <div>
+                <Header
+                    isLogin={wallet}
+                    func={wallet ? disconnect : connectWallet}
+                />
+                <div className="Login">
+                    <LoginButton
+                        onClick={connectWallet}
+                    >
+                        Login with Petra
+                    </LoginButton>
+                </div>
+                <Footer
+                    isLogin={wallet}
+                    func={wallet ? disconnect : connectWallet}
+                />
             </div>
         )
     }
 
     return (
         <div>
-            <a
-                target={"_blank"}
-                href={"https://phantom.app/"}
-            >
-                Install phantom
-            </a>
+            <Header
+                isLogin={wallet}
+                func={wallet ? disconnect : connectWallet}
+            />
+            <div className="Login">
+                <Petra/>
+            </div>
+            <Footer
+                isLogin={wallet}
+                func={wallet ? disconnect : connectWallet}
+            />
         </div>
     )
+
 }
 
 export default App;

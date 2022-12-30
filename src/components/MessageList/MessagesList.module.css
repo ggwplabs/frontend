@@ -1,0 +1,59 @@
+.messges_box{
+margin-top: 40px;
+}
+
+.message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 6px 20px ;
+    border: 1px solid;
+    border-radius: 4px;
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+}
+
+.message a {
+    color: #00EA88;
+    text-decoration: none;
+}
+
+.Button_failed{
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70px;
+    background-color: #FF1469;
+    border: none;
+    color: #FFFFFF;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.Button_sucessful{
+    font-family: ProximaNovaRegular;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70px;
+    background-color: #FFFFFF;
+    border: none;
+    color: #00EA88;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.error {
+    color: white;
+    background: #FF1469;
+    border-color: #FF1469;
+}
+.successful{
+    color: #FFFFFF;
+    background: white;
+    border-color: #00EA88;
+}
