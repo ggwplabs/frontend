@@ -110,7 +110,7 @@ const Unfreez = ({
                         </div>
                         <InterButton
                             onClick={getReward}
-                            disabled={isMessageLoading}
+                            disabled={isMessageLoading || info.readyToClaim == 0}
                         >
                             get reward
                         </InterButton>

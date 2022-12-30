@@ -8,7 +8,7 @@ import GgwpBalance from "./GgwpBalance";
 import Faucet from "./Faucet";
 import Convertor from "./Convertor";
 import BuyGgwp from "./BuyGgwp";
-import SolscanBox from "../SolscanBox";
+import AptosBox from "../aptosBox";
 
 const TabWallet = ({wallet}) => {
     const currencyList = [
@@ -108,7 +108,7 @@ const TabWallet = ({wallet}) => {
                     createMessage={createMessage}
                     wallet={wallet}
                 />
-                <SolscanBox/>
+                <AptosBox/>
             </div>
         </div>
     )

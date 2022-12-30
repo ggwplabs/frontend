@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useInteract} from "../../hooks/useInteract";
 import FreezeService from "../../../chain/FreezeService";
-import SolscanBox from "../SolscanBox";
+import AptosBox from "../aptosBox";
 import cl from './TabFreezing.module.css'
 import MessagesList from "../../MessageList/MessagesList";
 import FreezingComponent from "./FreezingComponent/FreezingComponent";
@@ -94,6 +94,12 @@ const TabFreezing = ({wallet}) => {
         }
     }
 
+    const elem = (coreInfo.gpassBalance > 0 && coreInfo.frozenBalance === 0 && !isInfoLoading && coreInfo.willBurn > 0)
+        ? <GpassBalance
+            info={coreInfo}
+        />
+        : <div></div>
+
     return (
         <div>
             <MessagesList
@@ -109,13 +115,7 @@ const TabFreezing = ({wallet}) => {
                     <p>Losing does not lead to extra burning of tokens.</p>
                 </div>
                 <div className={cl.loader}>
-                    {(coreInfo.gpassBalance > 0 && coreInfo.frozenBalance === 0 && !isInfoLoading && coreInfo.willBurn > 0)
-                        ? <GpassBalance
-                            gpassBalance={coreInfo.gpassBalance}
-                            willBurn={coreInfo.willBurn}
-                        />
-                        : <div></div>
-                    }
+                    {elem}
                 </div>
             </div>
             <FreezingComponent
@@ -133,7 +133,7 @@ const TabFreezing = ({wallet}) => {
                     <li>In 15 days, with no Royalty retained.</li>
                 </ol>
             </div>
-            <SolscanBox/>
+            <AptosBox/>
         </div>
     )
 }

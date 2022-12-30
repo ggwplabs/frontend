@@ -5,55 +5,49 @@ import Staked from "./Staked";
 import StakeService from "../../../chain/StakeService";
 
 const Apr = ({info, setIsMessageLoading, isMessageLoading, create}) => {
-    let Actualepoch = 1;
-    if (((Date.now() /1000 |0) - info.startTime) > 0) {
-        Actualepoch = ((Date.now() /1000 |0) - info.startTime) / (info.epochPeriodDays * 86400) |0
-    }
+    const Actualepoch = 1 + (((Date.now() / 1000 | 0) - info.startTime) / (info.epochPeriodDays * 86400)  | 0);
 
     const getEpochByTime = (start, now, period) => {
         const spentTime = now - start;
-        const spentDays = (spentTime / 24 * 60 * 60)  | 0
+        const spentDays = (spentTime / (24 * 60 * 60)) | 0
         const epoch = spentDays / period;
         let isFullEpoch;
-        if ((spentDays % period) === 0) {
+        if ((spentTime % (period * 24 * 60 * 60)) === 0) {
             isFullEpoch = true
         } else {
             isFullEpoch = false
         }
-        return [parseInt(epoch) + 1, isFullEpoch]
+        return [(epoch | 0) + 1, isFullEpoch]
     }
 
     const calcUserPastEpoch = (start, stake, now, period) => {
         let [startEpoch, isStartEpochFull] = getEpochByTime(start, stake, period)
-        let [endEpoch, isEndEpochFull] = getEpochByTime(start, stake, period)
-        if (!isStartEpochFull) {
+        let [endEpoch, isEndEpochFull] = getEpochByTime(start, now, period)
+        if (isStartEpochFull === false) {
             startEpoch += 1
         }
         return ([startEpoch, endEpoch])
     }
 
     const getAprByEpoch = (epoch, startApr, stepApr, endApr) => {
-        let currentApr = startApr - (stepApr * (epoch - 1))
-        if (currentApr < endApr) {
-            return endApr
-        } else {
-            return currentApr
-        }
+        const currentApr = startApr - (stepApr * (epoch - 1))
+        return currentApr < endApr ? endApr : currentApr
     }
 
-    const calcReawards = () =>{
-        const [startEpoch, endEpoch] = calcUserPastEpoch(info.startTime, info.stakeTime, (Date.now() /1000 |0), info.epochPeriodDays)
-        if ((endEpoch - startEpoch) === 0 ) {
+    const calcReawards = () => {
+        const [startEpoch, endEpoch] = calcUserPastEpoch(info.startTime, info.stakeTime, (Date.now() / 1000 | 0), info.epochPeriodDays)
+        if ((endEpoch - startEpoch) === 0) {
             return 0
         }
-        let newAmount = info.amount / (10 ** 9);
-        for (let i = startEpoch; i <= endEpoch; i++) {
-            const currentApr = getAprByEpoch(i, info.aprStart, info.aprStep, info.aprEnd) / 100
-            newAmount = (newAmount * (1 + currentApr / 365)) ** info.epochPeriodDays
-        }
-        const reward = newAmount
-        return reward
+        let newAmount = info.amount / (10 ** 8);
+        for (let i = startEpoch; i < endEpoch; i++) {
 
+            const currentApr = getAprByEpoch(i, info.aprStart, info.aprStep, info.aprEnd) / 100
+            const tmp = ((1 + currentApr / 365) ** info.epochPeriodDays)
+            newAmount = newAmount * tmp
+        }
+        const reward = newAmount - info.amount / (10 ** 8)
+        return reward
     }
 
     const unstake = async () => {
@@ -77,7 +71,7 @@ const Apr = ({info, setIsMessageLoading, isMessageLoading, create}) => {
                             GGWP Staked:
                         </div>
                         <div className={cl.Balance__amount}>
-                            <div>{Number(info.amount / (10**8)).toLocaleString('ru-RU')}</div>
+                            <div>{Number(info.amount / (10 ** 8)).toLocaleString('ru-RU')}</div>
                         </div>
                         <div className={cl.Balance__icon}>
                             <GgIcon/>
@@ -85,7 +79,8 @@ const Apr = ({info, setIsMessageLoading, isMessageLoading, create}) => {
                     </div>
                     <div className={cl.Time}>
                         <div>
-                            Epoch {Actualepoch} started at: {new Date((info.startTime + (info.epochPeriodDays * 86400 * Actualepoch)) * 1000).toLocaleDateString("en-US")}
+                            Epoch {Actualepoch} started
+                            at: {new Date((info.startTime + (info.epochPeriodDays * 86400 * (Actualepoch - 1))) * 1000).toLocaleDateString("en-US")}
                         </div>
                     </div>
                     <div>
@@ -100,8 +95,8 @@ const Apr = ({info, setIsMessageLoading, isMessageLoading, create}) => {
                 </div>
                 <div className={cl.Rewards_box}>
                     <Staked
-                        balance={(calcReawards() / 10 ** 9).toFixed(5)}
-                        start={info.startTime + (info.epochPeriodDays * 86400 * (Actualepoch + 1))}
+                        balance={calcReawards().toFixed(5)}
+                        start={info.startTime + (info.epochPeriodDays * 86400 * (Actualepoch))}
                         apr={getAprByEpoch(Actualepoch, info.aprStart, info.aprStep, info.aprEnd)}
                     />
                 </div>
