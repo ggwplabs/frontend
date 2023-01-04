@@ -15,9 +15,11 @@ const Unfreez = ({
                  }) => {
 
     const [time, setTime] = useState()
+    const [timeNextReward, setTimeNextReward] = useState()
 
     useEffect(() => {
         setTime(info.nextReward)
+        setTimeNextReward(info.nextReward * 1000 + Date.now())
     }, [info]);
 
     useEffect(() => {
@@ -79,7 +81,7 @@ const Unfreez = ({
                     <div className={cl.Time}>
                         <div>
                             Your next
-                            reward {new Date(info.nextReward * 1000 + Date.now()).toLocaleDateString("en-US")} at: {new Date(info.nextReward * 1000 + Date.now()).toLocaleTimeString("en-US")}
+                            reward {new Date(timeNextReward).toLocaleDateString("en-US")} at: {new Date(timeNextReward).toLocaleTimeString("en-US")}
                         </div>
                         <div className={cl.Clock}>
                             <Clock/>

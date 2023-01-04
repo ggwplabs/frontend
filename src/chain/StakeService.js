@@ -12,28 +12,28 @@ export default class StakeService {
             if (userResources[i].type === '0x' + STAKE_ACCOUNT + '::staking::UserInfo') {
                 const res = await client.getAccountResource(wallet.address, '0x' +STAKE_ACCOUNT + '::staking::UserInfo')
                 return ({
-                    aprEnd: Number(resources[1].data.apr_end),
-                    aprStart: Number(resources[1].data.apr_start),
-                    aprStep: Number(resources[1].data.apr_step),
+                    aprEnd: Number(resources[2].data.apr_end),
+                    aprStart: Number(resources[2].data.apr_start),
+                    aprStep: Number(resources[2].data.apr_step),
                     epoch: 1,
-                    epochPeriodDays: Number(resources[1].data.epoch_period / 86400),
-                    minStakeAmount: Number(resources[1].data.min_stake_amount),
-                    royalty: Number(resources[1].data.royalty),
-                    startTime: Number(resources[1].data.start_time),
+                    epochPeriodDays: Number(resources[2].data.epoch_period / 86400),
+                    minStakeAmount: Number(resources[2].data.min_stake_amount),
+                    royalty: Number(resources[2].data.royalty),
+                    startTime: Number(resources[2].data.start_time),
                     amount: Number(res.data.amount),
                     stakeTime: Number(res.data.stake_time),
                 })
             }
         }
         return ({
-            aprEnd: Number(resources[1].data.apr_end),
-            aprStart: Number(resources[1].data.apr_start),
-            aprStep: Number(resources[1].data.apr_step),
+            aprEnd: Number(resources[2].data.apr_end),
+            aprStart: Number(resources[2].data.apr_start),
+            aprStep: Number(resources[2].data.apr_step),
             epoch: 1,
-            epochPeriodDays: Number(resources[1].data.epoch_period / 86400),
-            minStakeAmount: Number(resources[1].data.min_stake_amount),
-            royalty: Number(resources[1].data.royalty),
-            startTime: Number(resources[1].data.start_time),
+            epochPeriodDays: Number(resources[2].data.epoch_period / 86400),
+            minStakeAmount: Number(resources[2].data.min_stake_amount),
+            royalty: Number(resources[2].data.royalty),
+            startTime: Number(resources[2].data.start_time),
             amount: 0,
             stakeTime: 0,
         })

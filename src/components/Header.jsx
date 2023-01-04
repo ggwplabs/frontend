@@ -28,7 +28,7 @@ const Header = ({isLogin, func}) => {
                         <a href="#"> community </a>
                     </li>
                     <li>
-                        <a href="#"> solscan </a>
+                        <a href="#"> aptos </a>
                     </li>
                 </ul>
                 <button
