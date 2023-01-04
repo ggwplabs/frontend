@@ -60,6 +60,7 @@ const Unfreez = ({
         }
     }
 
+
     return (
         <div>
             <div className={cl.Frozen}>
@@ -78,7 +79,7 @@ const Unfreez = ({
                     <div className={cl.Time}>
                         <div>
                             Your next
-                            reward {new Date(info.nextReward * 1000).toLocaleDateString("en-US")} at: {new Date(info.nextReward * 1000).toLocaleTimeString("en-US")}
+                            reward {new Date(info.nextReward * 1000 + Date.now()).toLocaleDateString("en-US")} at: {new Date(info.nextReward * 1000 + Date.now()).toLocaleTimeString("en-US")}
                         </div>
                         <div className={cl.Clock}>
                             <Clock/>

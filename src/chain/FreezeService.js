@@ -17,7 +17,6 @@ export default class FreezeService {
         }
         for (let i = 0; i < userResources.length; i++) {
             if (userResources[i].type === '0x6442c17767e7f2cdb1b931565680dc84ab857c1fc12e68fadc7cec1ab4bfa3::gpass::UserInfo') {
-                console.log(resources)
                 retVol.frozenBalance = Number(userResources[1].data.freezed_amount / 10 ** 8);
                 retVol.lastGettingGpass = Number(userResources[1].data.last_getting_gpass);
                 retVol.rewardPeriod = Number(resources[3].data.reward_period);
@@ -28,7 +27,6 @@ export default class FreezeService {
                 retVol.burnPeriod = Number(resources[1].data.burn_period);
             }
         }
-         console.log(retVol)
         return retVol
     }
 
