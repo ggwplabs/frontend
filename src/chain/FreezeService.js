@@ -1,5 +1,6 @@
 import {AptosClient} from "aptos";
 import * as Addr from "./Addresses";
+import {STAKE_ACCOUNT} from "./Addresses";
 
 export default class FreezeService {
 
@@ -15,16 +16,30 @@ export default class FreezeService {
             lastBurned: 0,
             burnPeriod: 0,
         }
+        let indexGpassInfo = NaN
+        let indexFreezingInfo = NaN
+        for (var i = 0; i < resources.length; i++) {
+            if (resources[i].type === '0x6442c17767e7f2cdb1b931565680dc84ab857c1fc12e68fadc7cec1ab4bfa3' + '::gpass::GpassInfo') {
+                indexGpassInfo = i
+            }
+            if (resources[i].type === '0x6442c17767e7f2cdb1b931565680dc84ab857c1fc12e68fadc7cec1ab4bfa3' + '::gpass::FreezingInfo') {
+                indexFreezingInfo = i
+            }
+        }
+        console.log(resources)
+        if (indexGpassInfo === NaN || indexFreezingInfo === NaN){
+            throw "Stake account have not resource";
+        }
         for (let i = 0; i < userResources.length; i++) {
             if (userResources[i].type === '0x6442c17767e7f2cdb1b931565680dc84ab857c1fc12e68fadc7cec1ab4bfa3::gpass::UserInfo') {
-                retVol.frozenBalance = Number(userResources[1].data.freezed_amount / 10 ** 8);
-                retVol.lastGettingGpass = Number(userResources[1].data.last_getting_gpass);
-                retVol.rewardPeriod = Number(resources[3].data.reward_period);
+                retVol.frozenBalance = Number(userResources[i].data.freezed_amount / 10 ** 8);
+                retVol.lastGettingGpass = Number(userResources[i].data.last_getting_gpass);
+                retVol.rewardPeriod = Number(resources[indexFreezingInfo].data.reward_period);
             }
             if (userResources[i].type === '0x6442c17767e7f2cdb1b931565680dc84ab857c1fc12e68fadc7cec1ab4bfa3::gpass::Wallet') {
-                retVol.gpassBalance = Number(userResources[0].data.amount);
-                retVol.lastBurned = Number(userResources[0].data.last_burned);
-                retVol.burnPeriod = Number(resources[1].data.burn_period);
+                retVol.gpassBalance = Number(userResources[i].data.amount);
+                retVol.lastBurned = Number(userResources[i].data.last_burned);
+                retVol.burnPeriod = Number(resources[indexGpassInfo].data.burn_period);
             }
         }
         return retVol

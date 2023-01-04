@@ -8,9 +8,18 @@ export default class StakeService {
         const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1')
         const resources = await client.getAccountResources(Addr.STAKE_ACCOUNT)
         const userResources = await client.getAccountResources(wallet.address)
+        let index = NaN;
+        for (var i = 0; i < resources.length; i++) {
+            if (resources[i].type === '0x' + STAKE_ACCOUNT + '::staking::StakingInfo') {
+                index = i
+            }
+        }
+        if (index === NaN){
+            throw "Core account have not resource";
+        }
         for (var i = 0; i < userResources.length; i++) {
             if (userResources[i].type === '0x' + STAKE_ACCOUNT + '::staking::UserInfo') {
-                const res = await client.getAccountResource(wallet.address, '0x' +STAKE_ACCOUNT + '::staking::UserInfo')
+                const res = await client.getAccountResource(wallet.address, '0x' + STAKE_ACCOUNT + '::staking::UserInfo')
                 return ({
                     aprEnd: Number(resources[2].data.apr_end),
                     aprStart: Number(resources[2].data.apr_start),
